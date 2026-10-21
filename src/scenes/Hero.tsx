@@ -16,7 +16,7 @@ export function Hero({ active, reduced }: SceneProps) {
         const geometry = new TextGeometry(word, {
           font,
           size: 1.22,
-          depth: 0.27,
+          depth: 0.1755,
           curveSegments: 10,
           bevelEnabled: true,
           bevelSize: 0.022,
@@ -25,7 +25,7 @@ export function Hero({ active, reduced }: SceneProps) {
         });
         geometry.computeBoundingBox();
         const box = geometry.boundingBox!;
-        geometry.translate(-(box.max.x + box.min.x) / 2, 0, -0.135);
+        geometry.translate(-(box.max.x + box.min.x) / 2, 0, -0.08775);
         return geometry;
       }),
     [font],
@@ -35,8 +35,8 @@ export function Hero({ active, reduced }: SceneProps) {
       new MeshPhysicalMaterial({
         color: "#b9b9b3",
         metalness: 1,
-        roughness: 0.13,
-        envMapIntensity: 1.7,
+        roughness: 0.22,
+        envMapIntensity: 1.3,
         clearcoat: 0.65,
         clearcoatRoughness: 0.2,
       }),

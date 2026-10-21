@@ -1,3 +1,4 @@
+import { InstrumentDetails, Chamfer, Turned } from "./instrumentGeometry";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { ExtrudeGeometry, Group, Shape } from "three";
@@ -44,16 +45,17 @@ export default function Prism({ active, reduced, mobile }: SceneProps) {
     ];
   return (
     <group>
+      <InstrumentDetails index={1} />
       <mesh position={[0, -1.85, 0]}>
-        <boxGeometry args={[10.3, 0.15, 2.2]} />
+        <Chamfer args={[10.3, 0.15, 2.2]} />
         <meshStandardMaterial {...DARK} />
       </mesh>
       <mesh position={[0, -1.76, 0.15]}>
-        <boxGeometry args={[10.1, 0.025, 1.7]} />
+        <Chamfer args={[10.1, 0.025, 1.7]} />
         <meshStandardMaterial {...CHROME} roughness={0.35} />
       </mesh>
       <mesh position={[-4.12, 0.1, -0.6]}>
-        <boxGeometry args={[1.0, 2.9, 0.65]} />
+        <Chamfer args={[1.0, 2.9, 0.65]} />
         <meshStandardMaterial
           color="#0c0c0a"
           roughness={0.68}
@@ -73,11 +75,11 @@ export default function Prism({ active, reduced, mobile }: SceneProps) {
       {[-3.55, -2.95, -2.35].map((x) => (
         <group key={x} position={[x, 0.62, 0.5]}>
           <mesh>
-            <boxGeometry args={[0.4, 0.24, 0.045]} />
+            <Chamfer args={[0.4, 0.24, 0.045]} />
             <meshStandardMaterial {...CHROME} roughness={0.4} />
           </mesh>
           <mesh position={[0, 0, 0.026]}>
-            <boxGeometry args={[0.24, 0.02, 0.008]} />
+            <Chamfer args={[0.24, 0.02, 0.008]} />
             <meshBasicMaterial color="#39392f" />
           </mesh>
         </group>
@@ -106,24 +108,24 @@ export default function Prism({ active, reduced, mobile }: SceneProps) {
       {/* Real neutral calibration geometry exposes physical transmission and dispersion. */}
       <group position={[-1.62, 0.2, -1.03]}>
         <mesh position={[0, 0, -0.05]}>
-          <boxGeometry args={[2, 2, 0.05]} />
+          <Chamfer args={[2, 2, 0.05]} />
           <meshBasicMaterial color="#292921" />
         </mesh>
         {Array.from({ length: 9 }, (_, i) => (
           <mesh key={i} position={[-0.88 + i * 0.22, 0, 0]}>
-            <boxGeometry args={[i % 2 ? 0.018 : 0.05, 1.85, 0.015]} />
+            <Chamfer args={[i % 2 ? 0.018 : 0.05, 1.85, 0.015]} />
             <meshBasicMaterial color="#ded8c8" />
           </mesh>
         ))}
         {[-0.6, 0, 0.6].map((y) => (
           <mesh key={y} position={[0, y, 0.01]}>
-            <boxGeometry args={[1.88, 0.018, 0.01]} />
+            <Chamfer args={[1.88, 0.018, 0.01]} />
             <meshBasicMaterial color="#aaa494" />
           </mesh>
         ))}
       </group>
       <mesh position={[-1.62, -1.35, 0]}>
-        <cylinderGeometry args={[0.5, 0.6, 0.7, 32]} />
+        <Turned args={[0.5, 0.6, 0.7, 32]} />
         <meshStandardMaterial {...CHROME} />
       </mesh>
       {risks.map((risk, i) => {
@@ -150,7 +152,7 @@ export default function Prism({ active, reduced, mobile }: SceneProps) {
       })}
       <group position={[1.3, 0.2, -0.05]}>
         <mesh>
-          <boxGeometry args={[2.5, 2.8, 0.07]} />
+          <Chamfer args={[2.5, 2.8, 0.07]} />
           <meshStandardMaterial {...DARK} roughness={0.65} />
         </mesh>
         {[0, 1, 2, 3].map((i) => (
@@ -189,7 +191,7 @@ export default function Prism({ active, reduced, mobile }: SceneProps) {
       />
       <group position={[4.15, 0.1, 0]}>
         <mesh>
-          <boxGeometry args={[1.05, 2.8, 0.7]} />
+          <Chamfer args={[1.05, 2.8, 0.7]} />
           <meshStandardMaterial
             {...DARK}
             color={strong ? "#8c887a" : "#25251e"}
@@ -199,7 +201,7 @@ export default function Prism({ active, reduced, mobile }: SceneProps) {
         </mesh>
         {[0, 1, 2, 3, 4].map((i) => (
           <mesh key={i} position={[0, 0.9 - i * 0.4, 0.36]}>
-            <boxGeometry args={[0.7, 0.06, 0.025]} />
+            <Chamfer args={[0.7, 0.06, 0.025]} />
             <meshBasicMaterial
               color={strong ? spectrum[selected] : "#555347"}
             />
@@ -207,7 +209,7 @@ export default function Prism({ active, reduced, mobile }: SceneProps) {
         ))}
       </group>
       <mesh position={[3.3, -1.2, 0.45]}>
-        <boxGeometry args={[0.55, 0.55, 0.55]} />
+        <Chamfer args={[0.55, 0.55, 0.55]} />
         <meshStandardMaterial
           {...CHROME}
           color={!strong ? spectrum[selected] : "#555347"}
@@ -215,11 +217,11 @@ export default function Prism({ active, reduced, mobile }: SceneProps) {
           emissiveIntensity={!strong ? 0.4 : 0}
         />
       </mesh>
-      <SceneLabel active={active} position={[1.3, mobile ? 2.45 : 1.95, 0.1]}>
+      <SceneLabel active={active} position={[1.3, mobile ? 3.3 : 1.95, 0.1]}>
         Difficulty →
         <small>
           {mobile
-            ? "x domain / illustrative"
+            ? "domain × difficulty"
             : "domain × difficulty / illustrative grid"}
         </small>
       </SceneLabel>

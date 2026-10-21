@@ -1,3 +1,4 @@
+import { InstrumentDetails, Chamfer } from "./instrumentGeometry";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import {
@@ -85,15 +86,16 @@ export default function CodeReviewer({ active, mobile, reduced }: SceneProps) {
   });
   return (
     <group>
+      <InstrumentDetails index={4} />
       <mesh position={[0, -1.85, 0]}>
-        <boxGeometry args={[8, 0.12, 2]} />
+        <Chamfer args={[8, 0.12, 2]} />
         <meshStandardMaterial {...DARK} />
       </mesh>
       <points geometry={geometry} material={material} />
       {files.map((p, i) => (
         <group key={i} position={p}>
           <mesh>
-            <boxGeometry args={[0.54, 0.72, 0.08]} />
+            <Chamfer args={[0.54, 0.72, 0.08]} />
             <meshStandardMaterial
               {...DARK}
               color={i === index ? "#8a877a" : "#34342c"}
@@ -101,7 +103,7 @@ export default function CodeReviewer({ active, mobile, reduced }: SceneProps) {
           </mesh>
           {[0, 1, 2].map((n) => (
             <mesh key={n} position={[0, 0.18 - n * 0.16, 0.05]}>
-              <boxGeometry args={[0.34, 0.018, 0.01]} />
+              <Chamfer args={[0.34, 0.018, 0.01]} />
               <meshBasicMaterial color="#c8c3b5" />
             </mesh>
           ))}
@@ -126,7 +128,7 @@ export default function CodeReviewer({ active, mobile, reduced }: SceneProps) {
       ))}
       <group ref={report} position={[2.8, -0.2, 0.15]}>
         <mesh>
-          <boxGeometry args={[1.85, 2.65, 0.12]} />
+          <Chamfer args={[1.85, 2.65, 0.12]} />
           <meshStandardMaterial {...CHROME} roughness={0.42} />
         </mesh>
         <mesh position={[0, 0, 0.072]}>
@@ -136,11 +138,11 @@ export default function CodeReviewer({ active, mobile, reduced }: SceneProps) {
         {[0, 1, 2].map((n) => (
           <group key={n} position={[0, 0.8 - n * 0.6, 0.09]}>
             <mesh>
-              <boxGeometry args={[1.25, 0.1, 0.015]} />
+              <Chamfer args={[1.25, 0.1, 0.015]} />
               <meshBasicMaterial color="#aaa699" />
             </mesh>
             <mesh position={[0.18, -0.17, 0]}>
-              <boxGeometry args={[0.9, 0.02, 0.01]} />
+              <Chamfer args={[0.9, 0.02, 0.01]} />
               <meshBasicMaterial color="#716f61" />
             </mesh>
           </group>
@@ -151,7 +153,7 @@ export default function CodeReviewer({ active, mobile, reduced }: SceneProps) {
       </group>
       <group ref={floating} position={[2.8, 1.8, 0]}>
         <mesh rotation={[0, 0.12, 0.08]}>
-          <boxGeometry args={[1.5, 0.5, 0.06]} />
+          <Chamfer args={[1.5, 0.5, 0.06]} />
           <meshStandardMaterial {...DARK} />
         </mesh>
         <SceneLabel

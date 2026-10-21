@@ -208,6 +208,18 @@ button svg {
   color: var(--muted);
   margin-top: 12px;
 }
+.chapter-summary {
+  display: none;
+}
+.chapter-description {
+  display: block;
+}
+.hero-description {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
 .hero-role {
   font-size: 14px;
   font-weight: 500;
@@ -1043,6 +1055,12 @@ textarea::placeholder {
 [data-reader="true"] .chapter-7 .chapter-deck {
   display: block;
 }
+[data-reader="true"] .chapter-description {
+  display: block;
+}
+[data-reader="true"] .chapter-summary {
+  display: none;
+}
 @media (min-width: 1600px) {
   .caption-card {
     width: 430px;
@@ -1057,6 +1075,8 @@ textarea::placeholder {
 }
 @media (max-width: 1199px) and (min-width: 701px) {
   .caption-card {
+    top: auto;
+    transform: none;
     width: 350px;
     left: 24px;
     bottom: 24px;
@@ -1078,6 +1098,8 @@ textarea::placeholder {
 }
 @media (max-height: 760px) and (min-width: 701px) {
   .caption-card {
+    top: auto;
+    transform: none;
     bottom: 20px;
     padding: 18px 20px;
     width: 350px;
@@ -1110,6 +1132,12 @@ textarea::placeholder {
   }
 }
 @media (max-width: 700px) {
+  .chapter-summary {
+    display: block;
+  }
+  .chapter-description {
+    display: none;
+  }
   :root {
     --gutter: 16px;
     font-size: 14px;
@@ -1306,7 +1334,7 @@ textarea::placeholder {
     margin-top: 4px;
   }
   .scene-label {
-    font-size: 10px;
+    font-size: 9px;
     padding: 3px 5px;
     max-width: 112px;
     white-space: normal;

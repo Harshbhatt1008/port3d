@@ -58,13 +58,13 @@
       "file": "hb-points.bin",
       "origin": "scripts/bake-portrait.mjs",
       "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
-      "sha256": "42ab55294a5f3382258694eee7394f7a50fb315ec2a30010a6d22dd493dfa823"
+      "sha256": "326c374975f31c5b0a88ff3a59e0a293b89b750f05bee4eac42063ef3372a582"
     },
     {
       "file": "hb-points-mobile.bin",
       "origin": "scripts/bake-portrait.mjs",
       "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
-      "sha256": "b4155a5ecb083c350577a1d198ceb439a7ce5a174cd9d8839d36745cf1cb24d0"
+      "sha256": "44fbc4dede28ba2e4b56931f9856e1b3de8c5531e2d5db7416d0847355111432"
     },
     {
       "file": "portrait-meta.json",

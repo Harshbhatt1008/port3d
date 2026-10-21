@@ -1,14 +1,10 @@
+import { InstrumentDetails, Chamfer } from "./instrumentGeometry";
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import {
-  BoxGeometry,
-  InstancedMesh,
-  Mesh,
-  MeshStandardMaterial,
-  Object3D,
-} from "three";
+import { InstancedMesh, Mesh, MeshStandardMaterial, Object3D } from "three";
 import { CHROME, DARK, useExperience, type SceneProps } from "../state";
 import { Rod } from "./researchGeometry";
+import { chamferedGeometry } from "./instrumentGeometry";
 import { SceneLabel } from "./SceneLabel";
 const examples = [
   "That explanation helped.",
@@ -21,7 +17,7 @@ export default function InstaGuard({ active, reduced, mobile }: SceneProps) {
     shared = useRef<Mesh>(null),
     time = useRef(0),
     dummy = useMemo(() => new Object3D(), []);
-  const geometry = useMemo(() => new BoxGeometry(0.65, 0.32, 0.055), []),
+  const geometry = useMemo(() => chamferedGeometry(0.65, 0.32, 0.055), []),
     material = useMemo(
       () => new MeshStandardMaterial({ ...CHROME, roughness: 0.4 }),
       [],
@@ -61,12 +57,13 @@ export default function InstaGuard({ active, reduced, mobile }: SceneProps) {
   });
   return (
     <group>
+      <InstrumentDetails index={3} />
       <mesh position={[0, -1.8, 0]}>
-        <boxGeometry args={[7.8, 0.13, 1.6]} />
+        <Chamfer args={[7.8, 0.13, 1.6]} />
         <meshStandardMaterial {...DARK} />
       </mesh>
       <mesh ref={shared} position={[0, 1.45, 0]}>
-        <boxGeometry args={[1.15, 0.72, 0.6]} />
+        <Chamfer args={[1.15, 0.72, 0.39]} />
         <meshStandardMaterial {...CHROME} roughness={0.21} />
       </mesh>
       {[-1.1, 0, 1.1].map((x, i) => (
@@ -104,21 +101,21 @@ export default function InstaGuard({ active, reduced, mobile }: SceneProps) {
       </SceneLabel>
       <SceneLabel
         active={active}
-        position={[-2.8, 0.95, 0.4]}
+        position={[mobile ? -3.2 : -2.8, mobile ? 1.7 : 0.95, 0.4]}
         className="comment-label"
       >
         {examples[selected]}
       </SceneLabel>
       <SceneLabel active={active} position={[mobile ? 2.5 : 3.05, 1.2, 0.1]}>
-        Useful conversation
+        {mobile ? "Pass" : "Useful conversation"}
       </SceneLabel>
       <SceneLabel active={active} position={[mobile ? 2.5 : 3, -1.33, 0.1]}>
-        Unwanted comments
+        {mobile ? "Deflect" : "Unwanted comments"}
       </SceneLabel>
       <mesh
         position={[selected === 1 ? 3 : 2.8, selected === 1 ? -1.05 : 0.9, 0.3]}
       >
-        <boxGeometry args={[1.1, 0.4, 0.07]} />
+        <Chamfer args={[1.1, 0.4, 0.07]} />
         <meshStandardMaterial {...DARK} />
       </mesh>
     </group>

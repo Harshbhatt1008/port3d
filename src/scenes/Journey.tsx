@@ -1,10 +1,10 @@
+import { InstrumentDetails, Chamfer, Turned } from "./instrumentGeometry";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Line } from "@react-three/drei";
 import {
   BufferAttribute,
   BufferGeometry,
-  CatmullRomCurve3,
   DoubleSide,
   Group,
   Vector3,
@@ -12,22 +12,13 @@ import {
 import { CHROME, DARK, probe, useExperience } from "../state";
 import type { SceneProps } from "../state";
 import { timeline } from "../content";
+import {
+  JOURNEY_ANCHORS as ANCHORS,
+  JOURNEY_CURVE as CURVE,
+} from "./journeyGeometry";
 
-// Seven supplied journey landmarks; the rail is illustrative, not measured loss.
+// Supplied journey landmarks; the rail is illustrative, not measured loss.
 // Dates belong to the source timeline: the internships and awards have no invented years.
-const ORIGINAL_ANCHORS = [
-  new Vector3(-3.1, 1.8, -0.4),
-  new Vector3(-2.25, 1.04, 0.12),
-  new Vector3(-1.22, 0.42, 0.45),
-  new Vector3(-0.18, -0.22, 0.15),
-  new Vector3(0.92, -0.64, -0.27),
-  new Vector3(2.02, -0.87, -0.05),
-  new Vector3(3.02, -1.02, 0.32),
-];
-const ANCHORS = timeline.map((_, i) =>
-  new CatmullRomCurve3(ORIGINAL_ANCHORS).getPoint(i / (timeline.length - 1)),
-);
-const CURVE = new CatmullRomCurve3(ANCHORS, false, "catmullrom", 0.4);
 
 function makeRibbon() {
   const positions: number[] = [];
@@ -37,10 +28,10 @@ function makeRibbon() {
     positions.push(
       point.x,
       point.y,
-      point.z - 0.22,
+      point.z - 0.143,
       point.x,
       point.y,
-      point.z + 0.22,
+      point.z + 0.143,
     );
     if (i < 160) {
       const a = i * 2;
@@ -124,6 +115,7 @@ export default function Journey({ active, reduced }: SceneProps) {
   const rail = useMemo(() => CURVE.getPoints(100), []);
   return (
     <group position={[0, 0, 0]} rotation={[0.06, -0.14, 0]}>
+      <InstrumentDetails index={6} />
       <mesh
         geometry={ribbon}
         {...probe(
@@ -132,7 +124,7 @@ export default function Journey({ active, reduced }: SceneProps) {
       >
         <meshStandardMaterial {...CHROME} side={DoubleSide} roughness={0.29} />
       </mesh>
-      {[-0.24, 0.24].map((offset) => (
+      {[-0.15, 0.15].map((offset) => (
         <Line
           key={offset}
           points={rail.map(
@@ -149,7 +141,7 @@ export default function Journey({ active, reduced }: SceneProps) {
           {...probe(`${timeline[i].year} · ${timeline[i].title}`)}
         >
           <mesh position={[0, (-2.05 - p.y) / 2, 0]}>
-            <cylinderGeometry args={[0.025, 0.05, p.y + 2.05, 10]} />
+            <Turned args={[0.025, 0.05, p.y + 2.05, 10]} />
             <meshStandardMaterial
               color="#626459"
               metalness={0.8}
@@ -157,7 +149,7 @@ export default function Journey({ active, reduced }: SceneProps) {
             />
           </mesh>
           <mesh position={[0, -2.05 - p.y, 0]}>
-            <cylinderGeometry args={[0.2, 0.24, 0.09, 20]} />
+            <Turned args={[0.2, 0.24, 0.09, 20]} />
             <meshStandardMaterial {...DARK} />
           </mesh>
           <mesh rotation={[Math.PI / 2, 0, 0]}>
@@ -187,7 +179,7 @@ export default function Journey({ active, reduced }: SceneProps) {
           />
           {[0, 1, 2].map((n) => (
             <mesh key={n} position={[0.24 + n * 0.1, 0.43, 0]}>
-              <boxGeometry args={[0.045, 0.05 + n * 0.03, 0.06]} />
+              <Chamfer args={[0.045, 0.05 + n * 0.03, 0.06]} />
               <meshStandardMaterial {...CHROME} />
             </mesh>
           ))}
@@ -234,7 +226,7 @@ export default function Journey({ active, reduced }: SceneProps) {
               {i % 3 === 0 ? (
                 <octahedronGeometry args={[0.11]} />
               ) : i % 3 === 1 ? (
-                <boxGeometry args={[0.13, 0.13, 0.13]} />
+                <Chamfer args={[0.13, 0.13, 0.13]} />
               ) : (
                 <sphereGeometry args={[0.085, 12, 10]} />
               )}

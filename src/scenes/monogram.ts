@@ -53,15 +53,15 @@ export function createMonogramGeometry() {
   b.holes.push(upper, lower);
 
   const geometry = new ExtrudeGeometry([h, b], {
-    depth: 0.44,
+    depth: 0.286,
     bevelEnabled: true,
-    bevelSize: 0.06,
-    bevelThickness: 0.055,
-    bevelSegments: 5,
+    bevelSize: 0.039,
+    bevelThickness: 0.03575,
+    bevelSegments: 3,
     steps: 1,
     curveSegments: 24,
   });
-  geometry.translate(0, 0, -0.22);
+  geometry.translate(0, 0, -0.143);
   geometry.computeVertexNormals();
   return geometry;
 }

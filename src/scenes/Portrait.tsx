@@ -77,6 +77,7 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     let cancelled = false;
+    setReady(false);
     preloadPortrait(mobile)
       .then((data) => {
         if (cancelled) return;
@@ -155,7 +156,7 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
     if (!active || !geometry.current) return;
     const s = useExperience.getState();
     // Let the visitor arrive before the monogram starts becoming a person.
-    if (!s.paused && !document.hidden && !s.flying && !s.cameraMoving)
+    if (!s.paused && !document.hidden && !s.cameraMoving)
       time.current += Math.min(delta, 0.05);
     const t = reduced ? 4.4 : time.current;
     const offset = retry.current ? 0.8 : 0;
@@ -165,6 +166,7 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
     material.uniforms.uNoise.value = noise;
     material.uniforms.uTime.value = t;
     material.uniforms.uDpr.value = gl.getPixelRatio();
+    material.uniforms.uPointScale.value = mobile ? 1.2 : 1;
     const p = material.uniforms.uPointer.value as Vector2;
     if (reduced) p.set(0, 0);
     else if (!s.paused) p.lerp(pointer.current, 1 - Math.exp(-delta * 5));

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Quaternion, Vector3 } from "three";
 import type { ColorRepresentation } from "three";
+import { Turned } from "./instrumentGeometry";
 
 export type Point = [number, number, number];
 
@@ -34,7 +35,7 @@ export function Rod({
   }, [from[0], from[1], from[2], to[0], to[1], to[2]]);
   return (
     <mesh position={transform.center} quaternion={transform.rotation}>
-      <cylinderGeometry args={[radius, radius, transform.length, 7]} />
+      <Turned args={[radius, radius, transform.length, 8]} />
       <meshStandardMaterial
         color={color}
         metalness={0.7}

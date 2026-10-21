@@ -1,5 +1,7 @@
 # Verification record
 
+**Current portrait/model recovery:** see [docs/refinement/REPORT.md](docs/refinement/REPORT.md) for all eight chapters before/after at 1440×900 and 390×844, the 45K/12K portrait bake, measured FPS/draw calls and current checks. The sections below are retained as the earlier implementation's historical record, not fresh results for the recovery.
+
 Tested locally on 21 October 2026. Browser automation drove the actual running application; screenshots were opened and inspected. This is a measured local verification record, not a claim of universal device performance.
 
 ## Build and runtime

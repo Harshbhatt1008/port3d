@@ -160,7 +160,26 @@ function useNavigation() {
         });
       },
     });
+    // A viewport-height change also changes the rail's pixel length. Preserve
+    // its normalized position instead of leaving Contact between chapter stops.
+    let resizeFrame = 0;
+    const resize = () => {
+      const progress = useExperience.getState().chapter;
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => {
+        lenis.resize();
+        ScrollTrigger.refresh();
+        lenis.scrollTo(
+          (progress / LAST) *
+            (document.documentElement.scrollHeight - innerHeight),
+          { immediate: true },
+        );
+      });
+    };
+    window.addEventListener("resize", resize);
     return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(resizeFrame);
       scroll.kill();
       gsap.ticker.remove(raf);
       lenis.destroy();
@@ -447,11 +466,19 @@ function Chapter({ index, children }: { index: number; children: ReactNode }) {
               <span>{profile.location}</span>
             </p>
             <p className="chapter-deck hero-tagline">{profile.tagline}</p>
+            <p className="chapter-description hero-description">
+              {chapters[0].description}
+            </p>
           </>
         ) : (
           <>
             <h2 id={`title-${index}`}>{chapters[index].name}</h2>
-            <p className="chapter-deck">{chapters[index].caption}</p>
+            <p className="chapter-deck">
+              <span className="chapter-summary">{chapters[index].caption}</span>
+              <span className="chapter-description">
+                {chapters[index].description}
+              </span>
+            </p>
           </>
         )}
         {children}

@@ -1,3 +1,9 @@
+import {
+  InstrumentDetails,
+  Chamfer,
+  Turned,
+  RoverDetails,
+} from "./instrumentGeometry";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Instance, Instances, Line } from "@react-three/drei";
@@ -79,16 +85,17 @@ export function shortestRoomRoute(start: Cell, goal: Cell): Cell[] {
 function Rover({ small = false }: { small?: boolean }) {
   return (
     <group scale={small ? 0.58 : 1}>
+      <RoverDetails />
       <mesh position={[0, 0.21, 0]} castShadow>
-        <boxGeometry args={[0.48, 0.25, 0.59]} />
+        <Chamfer args={[0.48, 0.1625, 0.59]} />
         <meshStandardMaterial {...CHROME} />
       </mesh>
       <mesh position={[0, 0.36, -0.02]}>
-        <boxGeometry args={[0.34, 0.07, 0.33]} />
+        <Chamfer args={[0.34, 0.07, 0.33]} />
         <meshStandardMaterial {...DARK} />
       </mesh>
       <Instances limit={4} range={4}>
-        <cylinderGeometry args={[0.13, 0.13, 0.105, 16]} />
+        <Turned args={[0.13, 0.13, 0.105, 16]} />
         <meshStandardMaterial color="#33332f" roughness={0.72} />
         {[-1, 1].flatMap((x) =>
           [-1, 1].map((z) => (
@@ -101,11 +108,11 @@ function Rover({ small = false }: { small?: boolean }) {
         )}
       </Instances>
       <mesh position={[0, 0.54, -0.13]}>
-        <cylinderGeometry args={[0.024, 0.034, 0.35, 8]} />
+        <Turned args={[0.024, 0.034, 0.35, 8]} />
         <meshStandardMaterial {...CHROME} />
       </mesh>
       <mesh position={[0, 0.72, -0.13]}>
-        <cylinderGeometry args={[0.115, 0.115, 0.08, 24]} />
+        <Turned args={[0.115, 0.115, 0.08, 24]} />
         <meshStandardMaterial
           color="#e5e1d5"
           metalness={0.85}
@@ -113,7 +120,7 @@ function Rover({ small = false }: { small?: boolean }) {
         />
       </mesh>
       <mesh position={[0, 0.33, -0.305]}>
-        <boxGeometry args={[0.22, 0.07, 0.018]} />
+        <Chamfer args={[0.22, 0.07, 0.018]} />
         <meshBasicMaterial color="#e7e3d8" />
       </mesh>
       {[-0.075, 0.075].map((x) => (
@@ -135,7 +142,7 @@ function DetectionBox({
 }) {
   return (
     <mesh position={position}>
-      <boxGeometry args={size} />
+      <Chamfer args={size} />
       <meshBasicMaterial
         color="#dedace"
         wireframe
@@ -166,7 +173,7 @@ function Room() {
   return (
     <group>
       <mesh position={[0, FLOOR - 0.11, 0]} receiveShadow>
-        <boxGeometry args={[6.9, 0.22, 5.35]} />
+        <Chamfer args={[6.9, 0.22, 5.35]} />
         <meshStandardMaterial
           color="#30312b"
           metalness={0.4}
@@ -174,16 +181,16 @@ function Room() {
         />
       </mesh>
       <mesh position={[0, FLOOR + 1.2, -2.63]} receiveShadow>
-        <boxGeometry args={[6.9, 2.4, 0.14]} />
+        <Chamfer args={[6.9, 2.4, 0.14]} />
         <meshStandardMaterial color="#373831" metalness={0.4} roughness={0.6} />
       </mesh>
       <mesh position={[-3.38, FLOOR + 0.8, 0]}>
-        <boxGeometry args={[0.12, 1.6, 5.35]} />
+        <Chamfer args={[0.12, 1.6, 5.35]} />
         <meshStandardMaterial {...DARK} />
       </mesh>
       {/* A cutaway interior; the camera-facing sides remain open. */}
       <Instances limit={12} range={12}>
-        <boxGeometry args={[0.012, 0.006, 5.15]} />
+        <Chamfer args={[0.012, 0.006, 5.15]} />
         <meshStandardMaterial color="#484940" roughness={0.7} />
         {Array.from({ length: 12 }, (_, i) => (
           <Instance key={i} position={[-3.2 + i * 0.57, FLOOR + 0.007, 0]} />
@@ -193,7 +200,7 @@ function Room() {
         position={[1.95, FLOOR + 1.04, -2.54]}
         {...probe("Door · route destination")}
       >
-        <boxGeometry args={[0.85, 2.08, 0.09]} />
+        <Chamfer args={[0.85, 2.08, 0.09]} />
         <meshStandardMaterial color="#22231e" metalness={0.6} roughness={0.4} />
       </mesh>
       <Line
@@ -207,7 +214,7 @@ function Room() {
         lineWidth={1}
       />
       <mesh position={[2.26, FLOOR + 1, -2.45]}>
-        <boxGeometry args={[0.06, 0.12, 0.04]} />
+        <Chamfer args={[0.06, 0.12, 0.04]} />
         <meshStandardMaterial {...CHROME} />
       </mesh>
       <group
@@ -215,19 +222,19 @@ function Room() {
         {...probe("Desk · occupied cells; route stops in front")}
       >
         <mesh position={[0, 0.85, 0]} castShadow>
-          <boxGeometry args={[2.08, 0.13, 1.04]} />
+          <Chamfer args={[2.08, 0.13, 1.04]} />
           <meshStandardMaterial {...CHROME} />
         </mesh>
         {[-0.89, 0.89].flatMap((x) =>
           [-0.38, 0.38].map((z) => (
             <mesh key={`${x}${z}`} position={[x, 0.4, z]}>
-              <boxGeometry args={[0.07, 0.8, 0.07]} />
+              <Chamfer args={[0.07, 0.8, 0.07]} />
               <meshStandardMaterial {...DARK} />
             </mesh>
           )),
         )}
         <mesh position={[0.05, 1.3, -0.24]} rotation={[-0.06, 0, 0]}>
-          <boxGeometry args={[0.85, 0.5, 0.06]} />
+          <Chamfer args={[0.85, 0.5, 0.06]} />
           <meshStandardMaterial {...DARK} />
         </mesh>
         <mesh position={[0.05, 1.3, -0.202]}>
@@ -235,33 +242,33 @@ function Room() {
           <meshBasicMaterial color="#5f6257" />
         </mesh>
         <mesh position={[0.05, 1.01, -0.22]}>
-          <cylinderGeometry args={[0.035, 0.06, 0.22, 12]} />
+          <Turned args={[0.035, 0.06, 0.22, 12]} />
           <meshStandardMaterial {...CHROME} />
         </mesh>
         <mesh position={[0.05, 0.94, 0.24]}>
-          <boxGeometry args={[0.58, 0.025, 0.21]} />
+          <Chamfer args={[0.58, 0.025, 0.21]} />
           <meshStandardMaterial {...DARK} />
         </mesh>
         <mesh position={[-0.7, 0.98, 0.1]}>
-          <cylinderGeometry args={[0.075, 0.06, 0.2, 16]} />
+          <Turned args={[0.075, 0.06, 0.2, 16]} />
           <meshStandardMaterial color="#c0bdb1" roughness={0.45} />
         </mesh>
       </group>
       <group position={[-0.72, FLOOR, 0]}>
         <mesh position={[0, 0.44, 0]}>
-          <boxGeometry args={[0.49, 0.12, 0.48]} />
+          <Chamfer args={[0.49, 0.12, 0.48]} />
           <meshStandardMaterial color="#5b5b50" roughness={0.65} />
         </mesh>
         <mesh position={[0, 0.73, 0.22]}>
-          <boxGeometry args={[0.49, 0.52, 0.06]} />
+          <Chamfer args={[0.49, 0.52, 0.06]} />
           <meshStandardMaterial {...DARK} />
         </mesh>
         <mesh position={[0, 0.21, 0]}>
-          <cylinderGeometry args={[0.04, 0.04, 0.4, 12]} />
+          <Turned args={[0.04, 0.04, 0.4, 12]} />
           <meshStandardMaterial {...CHROME} />
         </mesh>
         <mesh position={[0, 0.05, 0]}>
-          <boxGeometry args={[0.49, 0.05, 0.4]} />
+          <Chamfer args={[0.49, 0.05, 0.4]} />
           <meshStandardMaterial {...DARK} />
         </mesh>
       </group>
@@ -270,7 +277,7 @@ function Room() {
         {...probe("Plant · detected room object")}
       >
         <mesh position={[0, 0.25, 0]}>
-          <cylinderGeometry args={[0.25, 0.18, 0.5, 24]} />
+          <Turned args={[0.25, 0.18, 0.5, 24]} />
           <meshStandardMaterial
             color="#aaa79a"
             metalness={0.15}
@@ -278,7 +285,7 @@ function Room() {
           />
         </mesh>
         <mesh position={[0, 0.8, 0]}>
-          <cylinderGeometry args={[0.025, 0.035, 0.9, 8]} />
+          <Turned args={[0.025, 0.035, 0.9, 8]} />
           <meshStandardMaterial color="#66695b" roughness={0.7} />
         </mesh>
       </group>
@@ -298,18 +305,18 @@ function Room() {
       <group position={[-2.9, FLOOR, -0.36]}>
         {[0.12, 0.67, 1.22, 1.77].map((y) => (
           <mesh key={y} position={[0, y, 0]}>
-            <boxGeometry args={[0.52, 0.065, 2.7]} />
+            <Chamfer args={[0.52, 0.065, 2.7]} />
             <meshStandardMaterial {...CHROME} />
           </mesh>
         ))}
         {[-1.23, 1.23].map((z) => (
           <mesh key={z} position={[0, 0.92, z]}>
-            <boxGeometry args={[0.055, 1.84, 0.055]} />
+            <Chamfer args={[0.055, 1.84, 0.055]} />
             <meshStandardMaterial {...CHROME} />
           </mesh>
         ))}
         <Instances limit={9} range={9}>
-          <boxGeometry args={[0.38, 0.31, 0.47]} />
+          <Chamfer args={[0.38, 0.31, 0.47]} />
           <meshStandardMaterial metalness={0.4} roughness={0.5} />
           {Array.from({ length: 9 }, (_, i) => (
             <Instance
@@ -325,12 +332,12 @@ function Room() {
         </Instances>
       </group>
       <mesh position={[0.72, FLOOR + 0.27, 0.36]}>
-        <boxGeometry args={[0.53, 0.54, 1.22]} />
+        <Chamfer args={[0.53, 0.54, 1.22]} />
         <meshStandardMaterial {...DARK} />
       </mesh>
       {[0, 1, 2].map((i) => (
         <mesh key={i} position={[0.72, FLOOR + 0.56, -0.02 + i * 0.35]}>
-          <cylinderGeometry args={[0.14, 0.14, 0.07, 20]} />
+          <Turned args={[0.14, 0.14, 0.07, 20]} />
           <meshStandardMaterial {...CHROME} />
         </mesh>
       ))}
@@ -408,7 +415,7 @@ function Heading() {
     </group>
   );
 }
-function Fusion({ active, reduced }: { active: boolean; reduced: boolean }) {
+function Fusion({ active, reduced, mobile }: SceneProps) {
   const pulses = useRef<Group>(null),
     time = useRef(0);
   const sources: [
@@ -439,11 +446,14 @@ function Fusion({ active, reduced }: { active: boolean; reduced: boolean }) {
       {sources.map((p, i) => (
         <group key={i}>
           <mesh position={p}>
-            <boxGeometry args={[0.55, 0.22, 0.3]} />
+            <Chamfer args={[0.55, 0.22, 0.3]} />
             <meshStandardMaterial {...CHROME} />
           </mesh>
           <Rod from={p} to={[0, -0.4, 0]} radius={0.018 + i * 0.004} />
-          <SceneLabel active={active} position={[p[0], p[1] + 0.42, p[2]]}>
+          <SceneLabel
+            active={active}
+            position={[p[0] * (mobile ? 1.2 : 1), p[1] + 0.42, p[2]]}
+          >
             {["Camera", "Ultrasonic", "IMU"][i]}
           </SceneLabel>
         </group>
@@ -461,7 +471,7 @@ function Fusion({ active, reduced }: { active: boolean; reduced: boolean }) {
         ))}
       </group>
       <SceneLabel active={active} position={[0, -0.94, 0.1]}>
-        Weighted fusion<small>illustrative stream balance</small>
+        Weighted fusion{!mobile && <small>illustrative stream balance</small>}
       </SceneLabel>
     </group>
   );
@@ -497,7 +507,7 @@ function Fleet({ active, reduced }: { active: boolean; reduced: boolean }) {
           {[-0.45, 0, 0.45].map((x, n) => (
             <group key={n} position={[x, 1.55, 0]}>
               <mesh>
-                <boxGeometry args={[0.22, 0.22, 0.22]} />
+                <Chamfer args={[0.22, 0.22, 0.22]} />
                 <meshStandardMaterial {...CHROME} />
               </mesh>
               <Rod from={[0, 0, 0]} to={[-x, -0.45, 0]} radius={0.014} />
@@ -509,7 +519,7 @@ function Fleet({ active, reduced }: { active: boolean; reduced: boolean }) {
           </mesh>
           <group position={[0.8, 0.15, 0.35]}>
             <mesh>
-              <cylinderGeometry args={[0.23, 0.23, 0.52, 20]} />
+              <Turned args={[0.23, 0.23, 0.52, 20]} />
               <meshPhysicalMaterial
                 color="#c8c2b3"
                 transmission={0.8}
@@ -521,12 +531,12 @@ function Fleet({ active, reduced }: { active: boolean; reduced: boolean }) {
               />
             </mesh>
             <mesh position={[0, 0.29, 0]}>
-              <cylinderGeometry args={[0.24, 0.24, 0.05, 20]} />
+              <Turned args={[0.24, 0.24, 0.05, 20]} />
               <meshStandardMaterial {...CHROME} />
             </mesh>
             {[0, 1, 2].map((n) => (
               <mesh key={n} position={[0, -0.13 + n * 0.12, 0]}>
-                <boxGeometry args={[0.12, 0.08, 0.12]} />
+                <Chamfer args={[0.12, 0.08, 0.12]} />
                 <meshStandardMaterial {...DARK} />
               </mesh>
             ))}
@@ -567,7 +577,7 @@ function Fleet({ active, reduced }: { active: boolean; reduced: boolean }) {
     </group>
   );
 }
-export default function Omni({ active, reduced }: SceneProps) {
+export default function Omni({ active, reduced, mobile }: SceneProps) {
   const robotRun = useExperience((s) => s.robotRun),
     fed = useExperience((s) => s.fedAvg);
   const robot = useRef<Group>(null),
@@ -647,9 +657,10 @@ export default function Omni({ active, reduced }: SceneProps) {
   });
   return (
     <group rotation={[0.17, -0.23, 0]}>
+      <InstrumentDetails index={5} />
       <group visible={!fed}>
         <Room />
-        <Fusion active={active && !fed} reduced={reduced} />
+        <Fusion active={active && !fed} reduced={reduced} mobile={mobile} />
         {routePoints.length > 1 && (
           <Line
             points={routePoints}
@@ -669,7 +680,7 @@ export default function Omni({ active, reduced }: SceneProps) {
           <Heading />
         </group>
         <SceneLabel active={active && !fed} position={[-1.2, -0.5, 2.3]}>
-          Ultrasonic cones + IMU heading
+          {mobile ? "Depth + heading" : "Ultrasonic cones + IMU heading"}
         </SceneLabel>
       </group>
       <group visible={fed}>

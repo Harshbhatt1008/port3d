@@ -26,7 +26,7 @@ Preview runs at **http://localhost:4173**; `dist/` is deployable static output. 
 | Chapter | Instrument | Interaction |
 | --- | --- | --- |
 | Training Run | 120K desktop / 30K mobile particles, projected cluster names, chrome HB, stamp and counter flight | Immediate Skip intro / Escape |
-| 00 Identity | Huge reflected Archivo Black name | Bounded pointer lean |
+| 00 Identity | Reflected Archivo Black name beside a readable biography | Bounded pointer lean |
 | 01 PRISM | Idle LLM, dispersive glass, three risk beams, difficulty/domain grid and model destinations | Six stored dataset rows; no inference |
 | 02 CommerceAI | Affinity loom, ordered purchase tower, dot-product meeting and Redis shelf | Three histories reweave the match |
 | 03 InstaGuard | Comment sieve and one reused ALBERT parameter block | Three illustrative comment routes |
@@ -41,7 +41,7 @@ All metrics are **reported results**. PRISM and OmniVision retain **manuscript i
 
 Scroll travels along the camera rail. The console has named destinations, next/return, sound off by default, pause and **Read instead**. `Alt+0` through `Alt+7` jump chapters outside forms. Mobile has the same destinations in its chapter menu. The custom comboboxes support arrows, Home/End, typeahead, Enter and Escape.
 
-Floating captions never have an internal scrollbar. **Research notes** opens a native modal drawer for full context, qualifications, stacks and the email composer. Escape closes it and returns focus. The composer opens a correctly encoded `mailto:` draft in the visitor's email application; the page sends nothing. Clipboard failure supplies a direct email link.
+Chapter descriptions stay visible during scrolling, beside the model on desktop and below it on mobile. Floating captions never have an internal scrollbar. **Research notes** opens a native modal drawer for full context, qualifications, stacks and the email composer. Escape closes it and returns focus. The composer opens a correctly encoded `mailto:` draft in the visitor's email application; the page sends nothing. Clipboard failure supplies a direct email link.
 
 Reduced motion uses a short opening fade and static resolved scenes. Reader mode removes the Canvas and exposes all substantive notes as normal HTML; it also handles WebGL failure. The Contact image has meaningful alternative text in this mode. Sound uses procedural WebAudio after opt-in; no audio files load.
 
@@ -63,7 +63,7 @@ public/                    Baked points, owner assets, redacted CV, vCard and OG
 
 Edit factual content in **`src/content.ts`**, preserving result qualifiers and source labels. Interaction instructions are beside controls in `App.tsx`. `CV.md` is transcribed from the supplied `Harsh-Bhatt-CV (3).pdf`; the phone is removed from the public PDF and vCard. The six dataset examples preserve their published wording, labels and confidence. Difficulty/domain placement is an illustration, not a new prediction.
 
-Palette, type and motion rationale are in `DESIGN.md` and `.impeccable/design.json`. Room fits use the fixed resting camera distance so resizing after deep navigation does not enlarge the scenes. The low-contrast dust can be disabled for comparison with `?dust=off`.
+Palette, type and motion rationale are in `DESIGN.md` and `.impeccable/design.json`. `src/sceneSettings.ts` owns one scale multiplier per chapter (0.80 for Identity, 0.82 for the other chapters), the 0.65 structural gauge and connector instance caps (128 high / 36 mobile / 24 low). Chamfered shells, turned profiles, merged wire/band geometry and instanced connectors keep detail bounded. Room fits use the fixed resting camera distance so resizing after deep navigation does not enlarge the scenes. Contact uses a fixed 4:5 portrait frame at about half the viewport height, opposite its caption. The low-contrast dust can be disabled for comparison with `?dust=off`.
 
 ## Rebuild the portrait
 
@@ -83,6 +83,6 @@ At runtime one portrait Points object morphs/parallaxes in its vertex shader. No
 
 ## Verification and limits
 
-See **[TESTING.md](TESTING.md)** for measured frame rates, Lighthouse scores, responsive captures and known limits. GPU measurements on an RTX 3070 do not certify an integrated laptop or physical phone. First-time engine initialization and shader compilation remain more expensive than settled animation.
+See **[the portrait/model repair report](docs/refinement/REPORT.md)** for the current before/after images of every chapter, frame rates, draw calls and browser checks. **[TESTING.md](TESTING.md)** retains the earlier verification history. GPU measurements on an RTX 3070 do not certify an integrated laptop or physical phone. First-time engine initialization and shader compilation remain more expensive than settled animation.
 
 **[PRODUCT.md](PRODUCT.md)** records the brief; **[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)** records sources and licences. Impeccable and Taste Skill were used. No Magic key was connected, so the owner-permitted handmade controls ship. Only ThreeUI Community techniques were studied, with attribution; no Pro or Envato assets are included. Source pushes target the authorised `Harshbhatt1008/port3d` repository, not the old site's deployment.

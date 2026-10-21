@@ -1,3 +1,4 @@
+import { InstrumentDetails, Chamfer, Turned } from "./instrumentGeometry";
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import {
@@ -84,6 +85,7 @@ function Tower({ side }: { side: -1 | 1 }) {
   return (
     <group
       position={[side * 2.08, 0, 0]}
+      scale={[0.65, 1, 0.65]}
       {...probe(
         side < 0
           ? "User history · thread spindles"
@@ -92,30 +94,30 @@ function Tower({ side }: { side: -1 | 1 }) {
     >
       {[-0.44, 0.44].map((x) => (
         <mesh key={x} position={[x, 0, -0.08]}>
-          <boxGeometry args={[0.065, 3.92, 0.22]} />
+          <Chamfer thin={false} args={[0.065, 3.92, 0.22]} />
           <meshStandardMaterial {...CHROME} />
         </mesh>
       ))}
       {[-1.93, 1.93].map((y) => (
         <mesh key={y} position={[0, y, -0.08]}>
-          <boxGeometry args={[0.94, 0.08, 0.3]} />
+          <Chamfer thin={false} args={[0.94, 0.08, 0.3]} />
           <meshStandardMaterial {...CHROME} />
         </mesh>
       ))}
       <mesh position={[0, 0, -0.23]}>
-        <boxGeometry args={[0.8, 3.78, 0.055]} />
+        <Chamfer thin={false} args={[0.8, 3.78, 0.055]} />
         <meshStandardMaterial {...DARK} roughness={0.4} />
       </mesh>
       <instancedMesh ref={axles} args={[undefined, undefined, 7]}>
-        <cylinderGeometry args={[0.11, 0.11, 0.82, 20]} />
+        <Turned thin={false} args={[0.11, 0.11, 0.82, 20]} />
         <meshStandardMaterial {...CHROME} roughness={0.24} />
       </instancedMesh>
       <instancedMesh ref={caps} args={[undefined, undefined, 14]}>
-        <cylinderGeometry args={[0.18, 0.18, 0.045, 24]} />
+        <Turned thin={false} args={[0.18, 0.18, 0.045, 24]} />
         <meshStandardMaterial {...CHROME} />
       </instancedMesh>
       <instancedMesh ref={barrels} args={[undefined, undefined, 7]}>
-        <cylinderGeometry args={[0.137, 0.137, 0.53, 24]} />
+        <Turned thin={false} args={[0.137, 0.137, 0.53, 24]} />
         <meshStandardMaterial
           color={side < 0 ? "#73746a" : "#a5a397"}
           metalness={0.6}
@@ -131,7 +133,7 @@ function Tower({ side }: { side: -1 | 1 }) {
         />
       </instancedMesh>
       <mesh position={[0, -2.08, 0]}>
-        <boxGeometry args={[1.18, 0.15, 0.9]} />
+        <Chamfer thin={false} args={[1.18, 0.15, 0.9]} />
         <meshStandardMaterial {...DARK} />
       </mesh>
     </group>
@@ -190,6 +192,7 @@ export default function Loom({ active, mobile, reduced }: SceneProps) {
   });
   return (
     <group position={[0, 0, 0]} rotation={[0.035, -0.14, 0]}>
+      <InstrumentDetails index={2} />
       <Tower side={-1} />
       <Tower side={1} />
       <SceneLabel active={active} position={[-2.08, 2.35, 0]}>
@@ -222,7 +225,7 @@ export default function Loom({ active, mobile, reduced }: SceneProps) {
       <group position={[2.25, -2.48, 0.15]}>
         {[0, 1, 2].map((i) => (
           <mesh key={i} position={[(i - 1) * 0.35, 0, 0]}>
-            <boxGeometry args={[0.27, 0.28, 0.38]} />
+            <Chamfer args={[0.27, 0.28, 0.38]} />
             <meshStandardMaterial {...CHROME} roughness={0.4} />
           </mesh>
         ))}
@@ -253,7 +256,7 @@ export default function Loom({ active, mobile, reduced }: SceneProps) {
         args={[undefined, undefined, 5]}
         frustumCulled={false}
       >
-        <boxGeometry args={[0.21, 0.065, 0.09]} />
+        <Chamfer args={[0.21, 0.065, 0.09]} />
         <meshStandardMaterial {...CHROME} roughness={0.14} />
       </instancedMesh>
       {[-0.43, 0.43].map((z) => (
@@ -271,16 +274,16 @@ export default function Loom({ active, mobile, reduced }: SceneProps) {
         {...probe("Illustrative recommendation · changes with history")}
       >
         <mesh>
-          <boxGeometry args={[1.44, 0.49, 0.08]} />
+          <Chamfer args={[1.44, 0.49, 0.08]} />
           <meshStandardMaterial {...DARK} />
         </mesh>
         <mesh position={[-0.54 + history * 0.54, 0, 0.048]}>
-          <boxGeometry args={[0.31, 0.32, 0.025]} />
+          <Chamfer args={[0.31, 0.32, 0.025]} />
           <meshStandardMaterial {...CHROME} roughness={0.26} />
         </mesh>
         {[0, 1, 2].map((index) => (
           <mesh key={index} position={[-0.54 + index * 0.54, -0.17, 0.05]}>
-            <boxGeometry args={[0.31, 0.018, 0.01]} />
+            <Chamfer args={[0.31, 0.018, 0.01]} />
             <meshStandardMaterial
               ref={index === history ? plateLight : undefined}
               color="#d9d6c8"

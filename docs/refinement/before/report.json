@@ -1,0 +1,858 @@
+{
+  "phase": "before",
+  "at": "2026-10-21T14:19:08.357Z",
+  "errors": [],
+  "warnings": [
+    "THREE.WebGLProgram: Program Info Log: (221,81-129): warning X4122: sum of 0.996094 and -2.98545e-017 cannot be represented accurately in double precision\n(220,37-61): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(221,82-106): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(220,37-61): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision\n(221,82-106): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision\n(207,10-67): warning X4008: floating point division by zero\n(207,10-67): warning X4008: floating point division by zero\n(207,10-67): warning X4008: floating point division by zero"
+  ],
+  "views": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "chapter": 0,
+      "name": "1440-chapter-0.png",
+      "sample": {
+        "chapter": 0,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 46.078125,
+          "y": 595.578125,
+          "width": 400,
+          "height": 272.421875
+        },
+        "description": "Language. Learning. The physical world.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          1.7340193847428624,
+          1.7340193847428624,
+          1.7340193847428624
+        ],
+        "objectPosition": [
+          0,
+          0.2,
+          0
+        ],
+        "camera": [
+          0,
+          0.3,
+          -10
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.5659097079949,
+        "seconds": 1.1052999999985096,
+        "telemetry": {
+          "fps": 166,
+          "frames": 166,
+          "dpr": 1.5,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 21,
+          "triangles": 10525,
+          "points": 4200
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "chapter": 1,
+      "name": "1440-chapter-1.png",
+      "sample": {
+        "chapter": 1,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 46.078125,
+          "y": 449.625,
+          "width": 400,
+          "height": 418.375
+        },
+        "description": "What can a prompt tell us before a model speaks?",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.9747469511967248,
+          0.9747469511967248,
+          0.9747469511967248
+        ],
+        "objectPosition": [
+          0,
+          -0.1,
+          0
+        ],
+        "camera": [
+          3.799765785564828,
+          -0.89990637337679,
+          -32.00342319985515
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.58089033659056,
+        "seconds": 1.1052000000000006,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1.5,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 110,
+          "triangles": 3881,
+          "points": 4200
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "chapter": 2,
+      "name": "1440-chapter-2.png",
+      "sample": {
+        "chapter": 2,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 46.078125,
+          "y": 491.34375,
+          "width": 400,
+          "height": 376.65625
+        },
+        "description": "Purchase sequences become an affinity loom.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          1.2229399871344397,
+          1.2229399871344397,
+          1.2229399871344397
+        ],
+        "objectPosition": [
+          0,
+          -0.1,
+          0
+        ],
+        "camera": [
+          -2.9998462848924063,
+          1.499859340146666,
+          -53.99486446715555
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.8359764388283,
+        "seconds": 1.1034999999985102,
+        "telemetry": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1.5,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 53,
+          "triangles": 24681,
+          "points": 4200
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "chapter": 3,
+      "name": "1440-chapter-3.png",
+      "sample": {
+        "chapter": 3,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 46.078125,
+          "y": 454.5625,
+          "width": 400,
+          "height": 413.4375
+        },
+        "description": "One ALBERT block, reused across the comment sieve.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          1.3292003879955339,
+          1.3292003879955339,
+          1.3292003879955339
+        ],
+        "objectPosition": [
+          0,
+          -0.1,
+          0
+        ],
+        "camera": [
+          2.4999920146452457,
+          0.30002337777419735,
+          -75.99828864446255
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.56590970732546,
+        "seconds": 1.1053000000029787,
+        "telemetry": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 34,
+          "triangles": 2348,
+          "points": 4200
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "chapter": 4,
+      "name": "1440-chapter-4.png",
+      "sample": {
+        "chapter": 4,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 46.078125,
+          "y": 454.5625,
+          "width": 400,
+          "height": 413.4375
+        },
+        "description": "Every grounded flag has a thread back to code.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          1.2229399871344397,
+          1.2229399871344397,
+          1.2229399871344397
+        ],
+        "objectPosition": [
+          0,
+          -0.1,
+          0
+        ],
+        "camera": [
+          -2.8001554979039365,
+          0.8999610717310562,
+          -98.00171135553745
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.8059255236875,
+        "seconds": 1.1036999999970212,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 32,
+          "triangles": 414,
+          "points": 5100
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "chapter": 5,
+      "name": "1440-chapter-5.png",
+      "sample": {
+        "chapter": 5,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 46.078125,
+          "y": 444.5,
+          "width": 400,
+          "height": 423.5
+        },
+        "description": "Plain-English commands. Camera, depth and heading.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.8992205787753235,
+          0.8992205787753235,
+          0.8992205787753235
+        ],
+        "objectPosition": [
+          0,
+          -0.8,
+          0
+        ],
+        "camera": [
+          -1.4993223430164806,
+          -0.7003035032800005,
+          -120.00513553284446
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.6858306926211,
+        "seconds": 1.1045,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 62,
+          "triangles": 3576,
+          "points": 4200
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "chapter": 6,
+      "name": "1440-chapter-6.png",
+      "sample": {
+        "chapter": 6,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 46.078125,
+          "y": 444.6875,
+          "width": 400,
+          "height": 423.3125
+        },
+        "description": "Two degrees. Nine months in industry. Still learning.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          1.2738958199317083,
+          1.2738958199317083,
+          1.2738958199317083
+        ],
+        "objectPosition": [
+          0,
+          -0.1,
+          0
+        ],
+        "camera": [
+          2.99988281883616,
+          -1.7000776400158022,
+          -141.99657680014488
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.76086956566476,
+        "seconds": 1.1039999999970205,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 104,
+          "triangles": 11370,
+          "points": 4200
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "chapter": 7,
+      "name": "1440-chapter-7.png",
+      "sample": {
+        "chapter": 7,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 46.078125,
+          "y": 498.515625,
+          "width": 400,
+          "height": 369.484375
+        },
+        "description": "Noise starts to mean something.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.9847049247056529,
+          0.9847049247056529,
+          0.9847049247056529
+        ],
+        "objectPosition": [
+          0,
+          -0.1,
+          0
+        ],
+        "camera": [
+          0,
+          0.3,
+          -164
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 94.54545454519814,
+        "seconds": 1.100000000002983,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 2,
+          "triangles": 0,
+          "points": 32200
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "chapter": 0,
+      "name": "390-chapter-0.png",
+      "sample": {
+        "chapter": 0,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 16,
+          "y": 545.9375,
+          "width": 343,
+          "height": 282.0625
+        },
+        "description": "Language. Learning. The physical world.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.5213551138070734,
+          0.5213551138070734,
+          0.5213551138070734
+        ],
+        "objectPosition": [
+          0,
+          1.35,
+          0
+        ],
+        "camera": [
+          0,
+          0.3,
+          -10
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.40943379123235,
+        "seconds": 1.1002999999970198,
+        "telemetry": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1.25,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 4,
+          "triangles": 10508,
+          "points": 1050
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "chapter": 1,
+      "name": "390-chapter-1.png",
+      "sample": {
+        "chapter": 1,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 16,
+          "y": 459.734375,
+          "width": 343,
+          "height": 368.265625
+        },
+        "description": "What can a prompt tell us before a model speaks?",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.33267421547689446,
+          0.33267421547689446,
+          0.33267421547689446
+        ],
+        "objectPosition": [
+          0,
+          1.35,
+          0
+        ],
+        "camera": [
+          3.799750182939855,
+          -0.8999001404358835,
+          -32.003650400758744
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.70083303151037,
+        "seconds": 1.1043999999999996,
+        "telemetry": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1.25,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 93,
+          "triangles": 3864,
+          "points": 1050
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "chapter": 2,
+      "name": "390-chapter-2.png",
+      "sample": {
+        "chapter": 2,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 16,
+          "y": 474.25,
+          "width": 343,
+          "height": 353.75
+        },
+        "description": "Purchase sequences become an affinity loom.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.5292544337132412,
+          0.5292544337132412,
+          0.5292544337132412
+        ],
+        "objectPosition": [
+          0,
+          1.35,
+          0
+        ],
+        "camera": [
+          -2.9998359408859354,
+          1.499849960589781,
+          -53.99452356531506
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.76086956544108,
+        "seconds": 1.1039999999985102,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1.25,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 36,
+          "triangles": 21864,
+          "points": 1050
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "chapter": 3,
+      "name": "390-chapter-3.png",
+      "sample": {
+        "chapter": 3,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 16,
+          "y": 464.671875,
+          "width": 343,
+          "height": 363.328125
+        },
+        "description": "One ALBERT block, reused across the comment sieve.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.4536466574684925,
+          0.4536466574684925,
+          0.4536466574684925
+        ],
+        "objectPosition": [
+          0,
+          1.35,
+          0
+        ],
+        "camera": [
+          2.499991470125739,
+          0.3000249320501946,
+          -75.99817507751348
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.61085972828351,
+        "seconds": 1.1050000000014897,
+        "telemetry": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 34,
+          "triangles": 2348,
+          "points": 1050
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "chapter": 4,
+      "name": "390-chapter-4.png",
+      "sample": {
+        "chapter": 4,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 16,
+          "y": 448.734375,
+          "width": 343,
+          "height": 379.265625
+        },
+        "description": "Every grounded flag has a thread back to code.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.436634907813424,
+          0.436634907813424,
+          0.436634907813424
+        ],
+        "objectPosition": [
+          0,
+          1.35,
+          0
+        ],
+        "camera": [
+          -2.800165811221578,
+          0.8999584860266765,
+          -98.00182492248652
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.74585635403866,
+        "seconds": 1.1040999999970191,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 32,
+          "triangles": 414,
+          "points": 1410
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "chapter": 5,
+      "name": "390-chapter-5.png",
+      "sample": {
+        "chapter": 5,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 16,
+          "y": 419.34375,
+          "width": 343,
+          "height": 408.65625
+        },
+        "description": "Plain-English commands. Camera, depth and heading.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.43124435339597433,
+          0.43124435339597433,
+          0.43124435339597433
+        ],
+        "objectPosition": [
+          0,
+          1.35,
+          0
+        ],
+        "camera": [
+          -1.4992773099438734,
+          -0.7003236529586228,
+          -120.00547643468494
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.64083997081195,
+        "seconds": 1.1048000000014908,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 62,
+          "triangles": 3576,
+          "points": 1050
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "chapter": 6,
+      "name": "390-chapter-6.png",
+      "sample": {
+        "chapter": 6,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 16,
+          "y": 488.171875,
+          "width": 343,
+          "height": 339.828125
+        },
+        "description": "Two degrees. Nine months in industry. Still learning.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.4478306746804349,
+          0.4478306746804349,
+          0.4478306746804349
+        ],
+        "objectPosition": [
+          0,
+          1.35,
+          0
+        ],
+        "camera": [
+          2.9998750073856852,
+          -1.7000827817401472,
+          -141.99634959924126
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 165.64083997081195,
+        "seconds": 1.1048000000014908,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 104,
+          "triangles": 11370,
+          "points": 1050
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "chapter": 7,
+      "name": "390-chapter-7.png",
+      "sample": {
+        "chapter": 7,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 16,
+          "y": 487.171875,
+          "width": 343,
+          "height": 340.828125
+        },
+        "description": "Noise starts to mean something.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.5920473326283715,
+          0.5920473326283715,
+          0.5920473326283715
+        ],
+        "objectPosition": [
+          0,
+          1.35,
+          0
+        ],
+        "camera": [
+          0,
+          0.3,
+          -164
+        ],
+        "portraitBounds": null,
+        "overflow": false
+      },
+      "fps": {
+        "fps": 100.62550992643465,
+        "seconds": 1.10310000000149,
+        "telemetry": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 2,
+          "triangles": 0,
+          "points": 12250
+        }
+      }
+    }
+  ]
+}

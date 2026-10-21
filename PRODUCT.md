@@ -18,7 +18,7 @@ An entire portfolio explored through a continuous, persistent 3D world. The owne
 New repository https://github.com/Harshbhatt1008/port3d cloned into K:/port3d/harsh-portfolio-3d. K:/pp and K:/hb-portfolio-exploration remain untouched. The owner explicitly authorizes pushing this new work to port3d. Development binds localhost:5173; preview binds localhost:4173. No deployment to the former Netlify site is requested.
 
 ## Current revision
-The owner requests eight individually navigable chapters (00–07), full-bleed scenes behind floating captions, expandable Research notes instead of caption scrollbars, an offline-matted 28K/11.2K HB-to-person portrait, custom accessible controls and a quiet procedural latent-dust field. CV.md extracted from the updated supplied CV is now the factual authority. PRISM latency is removed; precision/recall retain their exact supplied meanings. Phone is omitted from public content, downloads and vCard. All existing manuscript and reported-results qualifications survive.
+The owner requests eight individually navigable chapters (00–07), full-bleed scenes behind floating captions, expandable Research notes instead of caption scrollbars, an offline-matted 45K/12K HB-to-person portrait, custom accessible controls and a quiet procedural latent-dust field. CV.md extracted from the updated supplied CV is now the factual authority. PRISM latency is removed; precision/recall retain their exact supplied meanings. Phone is omitted from public content, downloads and vCard. All existing manuscript and reported-results qualifications survive.
 
 ## Capabilities and Constraints
 - One persistent Canvas; scroll moves a camera along a continuous spline, with native chapter jumps and a reading mode.

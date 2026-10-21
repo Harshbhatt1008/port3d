@@ -27,6 +27,7 @@ import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { Training } from "./scenes/Training";
 import Backdrop from "./scenes/Backdrop";
 import { SCENE_GAP, useExperience } from "./state";
+import { CHAPTER_SCALE } from "./sceneSettings";
 
 const scenes = [
   lazy(() => import("./scenes/Hero").then((m) => ({ default: m.Hero }))),
@@ -200,6 +201,13 @@ function LightRig() {
   });
   return (
     <group ref={ref}>
+      <pointLight
+        position={[4, 3, -3]}
+        intensity={12}
+        distance={18}
+        decay={2}
+        color="#f1efe7"
+      />
       <rectAreaLight
         position={[3.7, 4, 5]}
         rotation={[-0.45, 0.3, 0]}
@@ -248,7 +256,8 @@ function Room({
     (height * (mobile ? 0.45 : index === 7 ? 0.62 : 0.7)) / h,
   );
   // The portrait has a fixed 4:5 bake and its own half-height framing.
-  const scale = index === 7 ? (height * 0.5) / 5.3 : fittedScale;
+  const scale =
+    (index === 7 ? (height * 0.61) / 5.3 : fittedScale) * CHAPTER_SCALE[index];
   return (
     <group
       ref={ref}
@@ -259,7 +268,7 @@ function Room({
       <group
         scale={scale}
         position={[
-          index === 7 && !mobile ? width * 0.21 : 0,
+          mobile ? 0 : width * (index === 7 ? 0.21 : index === 0 ? 0.15 : 0.16),
           mobile
             ? index === 7
               ? 1.32
@@ -303,8 +312,7 @@ export default function World() {
     paused = useExperience((s) => s.paused),
     intro = useExperience((s) => s.introRunning),
     portraitBusy = useExperience((s) => s.portraitBusy),
-    cameraMoving = useExperience((s) => s.cameraMoving),
-    flying = useExperience((s) => s.flying);
+    cameraMoving = useExperience((s) => s.cameraMoving);
   const [visible, setVisible] = useState(!document.hidden),
     [dpr, setDpr] = useState(Math.min(devicePixelRatio, 1.5)),
     [preloading, setPreloading] = useState(false);
@@ -325,13 +333,8 @@ export default function World() {
   }, []);
   if (reader) return null;
   const contactIdle =
-    chapter === 7 &&
-    renderChapter === 7 &&
-    !portraitBusy &&
-    !cameraMoving &&
-    !flying;
-  const contactSettled =
-    chapter === 7 && renderChapter === 7 && !cameraMoving && !flying;
+    chapter === 7 && renderChapter === 7 && !portraitBusy && !cameraMoving;
+  const contactSettled = chapter === 7 && renderChapter === 7 && !cameraMoving;
   return (
     <div className="world" aria-hidden="true" data-testid="world">
       <GraphicsBoundary>

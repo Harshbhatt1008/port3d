@@ -94,7 +94,7 @@ async function measure(page, ms = 1100) {
           chapter,
         );
         await page.waitForTimeout(1600);
-        if (chapter === 7)
+        if (chapter === 7) {
           await page.waitForFunction(
             () =>
               document.querySelector("canvas")?.dataset.portraitPhase ===
@@ -102,6 +102,8 @@ async function measure(page, ms = 1100) {
             null,
             { timeout: 25000 },
           );
+          await page.waitForTimeout(1300);
+        }
         const name = `${viewport.width}-chapter-${chapter}.png`;
         await page.screenshot({ path: path.join(dir, name) });
         const sample = await page.evaluate((i) => {
