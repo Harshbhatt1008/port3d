@@ -1,0 +1,34 @@
+{
+  "assets": [
+    {
+      "file": "images/harsh-hero-906.avif",
+      "origin": "https://harshbhattd.vercel.app/images/harsh-hero-906.avif",
+      "process": "Owner photograph, copied unchanged.",
+      "sha256": "55ef79f321011668332e06611a61a250da48488a2800ec5fe25aa167187f657b"
+    },
+    {
+      "file": "images/harsh-hero-906.webp",
+      "origin": "images/harsh-hero-906.avif",
+      "process": "Same owner photograph, format conversion only: Sharp WebP quality92, effort6; original906x805 crop.",
+      "sha256": "af8f0d7a2eb9cca7f8fc33fe9e949b256d2ee4526035614b69794f3c9f04cbb2"
+    },
+    {
+      "file": "Harsh-Bhatt-CV.pdf",
+      "origin": "https://harshbhattd.vercel.app/Harsh-Bhatt-CV.pdf",
+      "process": "Owner CV, copied unchanged.",
+      "sha256": "4bb7eda1b9f685d3b85d52bd34f68b8e3fb68714ba09fdacf3f799fbfb4d06f8"
+    },
+    {
+      "file": "Harsh-Bhatt.vcf",
+      "origin": "https://harshbhattd.vercel.app/Harsh-Bhatt.vcf",
+      "process": "Owner contact card, copied unchanged.",
+      "sha256": "458d96cf1ad6ef7eac84d5b4727fde2e96db30423d3ca34d21fe7869548358e8"
+    },
+    {
+      "file": "og-latent.png",
+      "origin": "This application, identity chapter, http://localhost:5173",
+      "process": "Actual Chrome screenshot at1200x630, captured2026-10-21 by .qa/capture-og.cjs. No generated imagery.",
+      "sha256": "6bc148e198ca3cd877a59943d01b815ba10d2c5a5cc4140cbfa1586837b6ce93"
+    }
+  ]
+}
