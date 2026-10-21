@@ -36,6 +36,7 @@ async function measure(page, ms = 1100) {
 }
 (async () => {
   const browser = await chromium.launch({ channel: "chrome", headless: true });
+  let currentPage;
   try {
     for (const viewport of [
       { width: 1440, height: 900 },
@@ -46,6 +47,7 @@ async function measure(page, ms = 1100) {
         deviceScaleFactor: 1,
         reducedMotion: "no-preference",
       });
+      currentPage = page;
       page.on("pageerror", (e) => report.errors.push(e.stack));
       page.on("console", (m) => {
         if (m.type() === "error") report.errors.push(m.text());
@@ -195,6 +197,31 @@ async function measure(page, ms = 1100) {
       }
       await page.close();
     }
+  } catch (e) {
+    report.failure = e.stack;
+    if (currentPage && !currentPage.isClosed()) {
+      report.debug = await currentPage.evaluate(() => {
+        const r = window.qaRoot?.getState(),
+          p = r?.scene.getObjectByName("portrait-points");
+        return {
+          canvas: { ...document.querySelector("canvas")?.dataset },
+          mode: r?.frameloop,
+          uniforms: p
+            ? Object.fromEntries(
+                Object.entries(p.material.uniforms).map(([k, v]) => [
+                  k,
+                  v.value,
+                ]),
+              )
+            : null,
+          frames: window.qaFrames,
+          scrollY,
+          hidden: document.hidden,
+        };
+      });
+      await currentPage.screenshot({ path: path.join(dir, "failure.png") });
+    }
+    throw e;
   } finally {
     await browser.close();
     fs.writeFileSync(

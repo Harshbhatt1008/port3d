@@ -219,8 +219,64 @@ export const retrievalFiles = [
     description: "Usage constraints and documented behaviour.",
   },
 ];
+export const projectPicker = {
+  title: "Choose a project",
+  note: "Five experiments. One continuous flight.",
+  items: [
+    { chapter: 1, name: "PRISM", topic: "Language / risk", glyph: "prism" },
+    {
+      chapter: 2,
+      name: "CommerceAI",
+      topic: "Sequence / match",
+      glyph: "towers",
+    },
+    {
+      chapter: 3,
+      name: "InstaGuard",
+      topic: "Language / filter",
+      glyph: "sieve",
+    },
+    {
+      chapter: 4,
+      name: "Code Reviewer",
+      topic: "Retrieval / grounding",
+      glyph: "lattice",
+    },
+    {
+      chapter: 5,
+      name: "OmniVision",
+      topic: "Perception / robotics",
+      glyph: "rover",
+    },
+  ],
+};
+export const sceneCopy = {
+  guard: {
+    core: "ALBERT / shared weights",
+    incoming: "Comment stream",
+    pass: "Genuine / through",
+    deflect: "Spam / deflect",
+  },
+  review: {
+    report: "Grounded report",
+    unsupported: "Unsupported / untethered",
+    repository: "Repository / nearest chunks",
+  },
+  journey: {
+    note: "Every milestone, together.",
+    tools: "Explore the full timeline and tools",
+  },
+};
+export const finaleCopy = {
+  unfold: "Unfold the signal",
+  resolve: "Return to the person",
+  hint: "A portrait, folded into a light sculpture. Move your pointer to turn it.",
+  reducedHint: "A portrait, folded into a still light sculpture.",
+};
 export const timeline = [
   {
+    shortTitle: "Diploma · Computer Engineering",
+    proof: "GTU · 7.75 CGPA · Distinction",
     year: "Sep 2020 – Jul 2023",
     title: "Diploma, Computer Engineering",
     place: "Gyanmanjari Diploma Engineering College / GTU",
@@ -228,6 +284,8 @@ export const timeline = [
   },
   {
     year: "Sep 2023 – Jul 2026",
+    shortTitle: "BE · Computer Engineering",
+    proof: "LDRP-ITR · Completed · 7.42 CGPA",
     title: "BE, Computer Engineering",
     place: "LDRP-ITR / KSV University, Gandhinagar",
     detail:
@@ -235,6 +293,8 @@ export const timeline = [
   },
   {
     year: "3 months",
+    shortTitle: "JSTECHNO · Full stack intern",
+    proof: "GPT support tools · Dockerised APIs",
     title: "Full Stack Developer Intern",
     place: "JSTECHNO Solutions, Ahmedabad",
     detail:
@@ -242,6 +302,8 @@ export const timeline = [
   },
   {
     year: "6 months",
+    shortTitle: "Tanish · Development & QA",
+    proof: "140+ Selenium tests · 35% fewer bugs",
     title: "Software Development & QA Intern",
     place: "Tanish Info Services, Ahmedabad",
     detail:
@@ -249,6 +311,8 @@ export const timeline = [
   },
   {
     year: "Hackathon",
+    shortTitle: "State finalist & co-leader",
+    proof: "National Hackathon · Crash-detection SOS",
     title: "State finalist & co-leader",
     place: "Azadi ka Amrit Mahotsav National Hackathon",
     detail:
@@ -256,6 +320,8 @@ export const timeline = [
   },
   {
     year: "College fest",
+    shortTitle: "First place · IoT",
+    proof: "Smart umbrella · Weather response",
     title: "First place, IoT",
     place: "Smart umbrella",
     detail:
@@ -263,12 +329,16 @@ export const timeline = [
   },
   {
     year: "May 2026",
+    shortTitle: "IELTS Academic · 7.5 / C1",
+    proof: "L 8.5 · R 7.5 · W 6.5 · S 8.0",
     title: "IELTS Academic 7.5 / C1",
     place: "English proficiency",
     detail: "CEFR C1. Listening 8.5, Reading 7.5, Writing 6.5, Speaking 8.0.",
   },
   {
     year: "Continuing",
+    shortTitle: "Learning beyond the classroom",
+    proof: "Columbia · Stanford · NVIDIA · NPTEL",
     title: "Courses beyond the classroom",
     place: "Columbia · Stanford Online · NVIDIA · NPTEL",
     detail:

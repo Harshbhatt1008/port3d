@@ -28,6 +28,7 @@ export type ExperienceState = {
   portraitResolved: boolean;
   portraitRun: number;
   portraitBusy: boolean;
+  portraitFinale: boolean;
   portraitPhase: "hb" | "morph" | "resolved" | "noise";
   cameraMoving: boolean;
   dustEnabled: boolean;
@@ -69,6 +70,7 @@ export const useExperience = create<ExperienceState>()((set) => ({
   portraitResolved: true,
   portraitRun: 0,
   portraitBusy: false,
+  portraitFinale: false,
   portraitPhase: "hb",
   cameraMoving: false,
   dustEnabled:
@@ -81,8 +83,8 @@ export const useExperience = create<ExperienceState>()((set) => ({
 }));
 export type SceneProps = { active: boolean; mobile: boolean; reduced: boolean };
 export const SCENE_GAP = 22;
-export const CHROME = { color: "#c9c6bd", metalness: 1, roughness: 0.2 };
-export const DARK = { color: "#252520", metalness: 0.7, roughness: 0.28 };
+export const CHROME = { color: "#c9d3e0", metalness: 1, roughness: 0.2 };
+export const DARK = { color: "#161d2b", metalness: 0.7, roughness: 0.28 };
 export function probe(label: string) {
   return {
     onPointerOver: () => useExperience.getState().set({ hoverLabel: label }),

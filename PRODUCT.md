@@ -30,7 +30,7 @@ The owner requests eight individually navigable chapters (00–07), full-bleed s
 - Lower particle count, adaptive resolution, bounded transmission/postprocessing, offscreen/hidden pause and proper GPU disposal.
 
 ## Brand Commitments
-Harsh Bhatt, AI & ML researcher, Ahmedabad. LATENT is the owner-pinned concept: warm obsidian, bone, chrome and dark glass. Colour appears only in the PRISM spectrum and LOW/MEDIUM/HIGH labels. A single continuous world, not stacked card sections. Training Run is the authored focal sequence. It is an illustrative visual metaphor with real asset progress, never a claim that a model is being trained in the browser. Sound is procedural, opt-in and off by default.
+Harsh Bhatt, AI & ML researcher, Ahmedabad. LATENT is the owner-pinned concept: dark ink, ice text, chrome and optical glass. Colour appears in the PRISM spectrum, LOW/MEDIUM/HIGH labels and the single signal accent for focus/interactive emphasis. A single continuous world, not stacked card sections. Training Run is the authored focal sequence. It is an illustrative visual metaphor with real asset progress, never a claim that a model is being trained in the browser. Sound is procedural, opt-in and off by default.
 
 ## Evidence on Hand
 The owner-supplied Harsh-Bhatt-CV (3).pdf, transcribed into CV.md, is the current factual authority. The original site and local code provided the authentic portrait, contact card and previously verified animated stats. The public dataset contains 107,584 prompts; curated rows preserve its API labels. ThreeUI Community source is cloned into ignored _reference/threeui at 68802d5428071ada5c20db8094b1649e6bb770ed. Only Community techniques may be adapted, with attribution. 21st.dev Magic has no connected key; handmade controls are the explicitly authorised fallback.
@@ -43,3 +43,6 @@ The owner-supplied Harsh-Bhatt-CV (3).pdf, transcribed into CV.md, is the curren
 
 ## Accessibility & Inclusion
 WCAG AA text contrast, meaningful portrait alternative, visible focus, keyboard chapter navigation, real DOM copy and controls, reduced-motion alternative, no-WebGL reader and no autoplay sound. Do not claim universal 60fps or physical-device compatibility from one machine's measurements.
+
+## Catalogue recovery
+Five hero project links provide immediate destinations. InstaGuard and Code Reviewer use distinct volumetric optical instruments with illustrative selection responses. Journey shows all eight milestones together rather than hiding facts behind a selector. Contact can reversibly fold the authentic portrait points into an interactive light sculpture. The default face, reader, reduced motion, pause and single persistent Canvas remain. Current evidence is in `docs/catalogue/REPORT.md`; earlier model/portrait recovery is in `docs/refinement/REPORT.md`.

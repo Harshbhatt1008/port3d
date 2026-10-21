@@ -10,6 +10,7 @@ import {
 } from "three";
 import { useExperience } from "../state";
 import { dustPosition } from "./dustData";
+import { SCENE_LINEAR_INK } from "../sceneSettings";
 
 const skyVertex = `varying vec3 vP; void main(){vP=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`;
 const skyFragment = `
@@ -18,13 +19,13 @@ float hash(vec3 p){p=fract(p*.3183099+vec3(.13,.27,.41));p*=17.;return fract(p.x
 float noise(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);}
 float fbm(vec3 p){float s=0.,a=.5;for(int i=0;i<4;i++){s+=a*noise(p);p=p*2.03+vec3(11.3,7.7,3.1);a*=.5;}return s;}
 void main(){vec3 p=normalize(vP)*3.1+vec3(uChapter*.31,uChapter*-.17,uTime*.008);float field=fbm(p);float veil=smoothstep(.28,.76,field)*uDensity;
-// Linear warm obsidian, converted exactly once with or without postprocessing.
-vec3 ground=vec3(.008568,.008023,.00605);vec3 ink=ground+vec3(.010,.009,.0075)*veil;gl_FragColor=vec4(ink,1.);
+// Linear ink, converted exactly once with or without postprocessing.
+vec3 ground=vec3(${SCENE_LINEAR_INK.join(",")});vec3 ink=ground+vec3(.002,.003,.006)*veil;gl_FragColor=vec4(ink,1.);
 #include <colorspace_fragment>
 }
 `;
 const dustVertex = `attribute float aSeed;uniform float uTime;uniform float uDensity;uniform float uTight;uniform float uDpr;varying float vAlpha;void main(){vec3 p=position;p.xy*=uTight;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp((7.+aSeed*10.)*uDpr/max(10.,-mv.z),.65,1.9);vAlpha=uDensity*(.065+aSeed*.07)*(1.+sin(uTime*.18+aSeed*41.)*.025);vAlpha*=smoothstep(3.,17.,-mv.z);}`;
-const dustFragment = `varying float vAlpha;void main(){float d=length(gl_PointCoord-.5);if(d>.5||vAlpha<.001)discard;gl_FragColor=vec4(.64,.60,.51,(1.-smoothstep(.12,.5,d))*vAlpha);
+const dustFragment = `varying float vAlpha;void main(){float d=length(gl_PointCoord-.5);if(d>.5||vAlpha<.001)discard;gl_FragColor=vec4(.58,.64,.72,(1.-smoothstep(.12,.5,d))*vAlpha);
 #include <colorspace_fragment>
 }`;
 const density = [0.65, 0.85, 0.72, 0.5, 0.55, 0.7, 0.42, 0.035];

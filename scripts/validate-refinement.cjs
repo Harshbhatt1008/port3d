@@ -2,7 +2,12 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const dir = process.argv[2] || ".qa/refinement/final";
 const report = JSON.parse(fs.readFileSync(`${dir}/report.json`));
-const before = JSON.parse(fs.readFileSync(".qa/refinement/before/report.json"));
+assert.equal(
+  report.failure,
+  undefined,
+  "browser run completed without harness failure",
+);
+const before = JSON.parse(fs.readFileSync("docs/refinement/before/report.json"));
 assert.equal(report.errors.length, 0, "zero console/page errors");
 for (const view of report.views) {
   if (view.transitCaptionVisible !== undefined)
@@ -31,12 +36,19 @@ for (const view of report.views) {
     const old = before.views.find(
       (v) => v.chapter === view.chapter && v.viewport.width === w,
     );
+    // New volumetric instruments have narrower authored mobile envelopes.
+    const fitCorrection =
+      w === 390 && view.chapter === 3
+        ? 7.7 / 5.8
+        : w === 390 && view.chapter === 4
+          ? 8 / 6.7
+          : 1;
     assert.ok(
       Math.abs(
         s.objectScale[0] / old.sample.objectScale[0] -
-          (view.chapter === 0 ? 0.8 : 0.82),
+          (view.chapter === 0 ? 0.8 : 0.82) * fitCorrection,
       ) < 0.00001,
-      "single authored 18–20% reduction",
+      "single authored 18–20% reduction applied after envelope fit",
     );
     assert.ok(
       view.fps.fps >= 55,

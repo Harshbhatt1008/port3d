@@ -1,123 +1,214 @@
-import { InstrumentDetails, Chamfer } from "./instrumentGeometry";
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { InstancedMesh, Mesh, MeshStandardMaterial, Object3D } from "three";
-import { CHROME, DARK, useExperience, type SceneProps } from "../state";
-import { Rod } from "./researchGeometry";
-import { chamferedGeometry } from "./instrumentGeometry";
+import {
+  ExtrudeGeometry,
+  Group,
+  InstancedMesh,
+  Object3D,
+  Path,
+  Shape,
+} from "three";
+import { CHROME, useExperience, type SceneProps } from "../state";
+import { chamferedGeometry, Chamfer } from "./instrumentGeometry";
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { OpticalGlass, FineLines, dialSegments } from "./optics";
 import { SceneLabel } from "./SceneLabel";
-const examples = [
-  "That explanation helped.",
-  "Follow me for free offers!",
-  "How did you label the prompts?",
-];
+import { sceneCopy } from "../content";
+
+function sieveGeometry() {
+  const plate = new Shape();
+  plate.absarc(0, 0, 1.67, 0, Math.PI * 2, false);
+  for (let y = -4; y <= 4; y++)
+    for (let x = -4; x <= 4; x++) {
+      const px = x * 0.37 + (Math.abs(y) % 2) * 0.185,
+        py = y * 0.32;
+      if (Math.hypot(px, py) > 1.42) continue;
+      const hole = new Path();
+      hole.absarc(px, py, 0.126, 0, Math.PI * 2, true);
+      plate.holes.push(hole);
+    }
+  const g = new ExtrudeGeometry(plate, {
+    depth: 0.035,
+    bevelEnabled: true,
+    bevelSegments: 2,
+    steps: 1,
+    bevelSize: 0.012,
+    bevelThickness: 0.012,
+    curveSegments: 8,
+  });
+  g.translate(0, 0, -0.0175);
+  return g;
+}
+function commentGeometry() {
+  const s = new Shape();
+  s.moveTo(-0.21, -0.1);
+  s.lineTo(-0.21, 0.1);
+  s.quadraticCurveTo(-0.21, 0.14, -0.17, 0.14);
+  s.lineTo(0.17, 0.14);
+  s.quadraticCurveTo(0.21, 0.14, 0.21, 0.1);
+  s.lineTo(0.21, -0.07);
+  s.quadraticCurveTo(0.21, -0.1, 0.17, -0.1);
+  s.lineTo(-0.06, -0.1);
+  s.lineTo(-0.14, -0.17);
+  s.lineTo(-0.14, -0.1);
+  s.closePath();
+  return new ExtrudeGeometry(s, {
+    depth: 0.035,
+    bevelEnabled: true,
+    bevelSegments: 2,
+    bevelSize: 0.012,
+    bevelThickness: 0.012,
+    curveSegments: 4,
+    steps: 1,
+  });
+}
 export default function InstaGuard({ active, reduced, mobile }: SceneProps) {
-  const selected = useExperience((s) => s.guardSample),
-    cards = useRef<InstancedMesh>(null),
-    shared = useRef<Mesh>(null),
-    time = useRef(0),
-    dummy = useMemo(() => new Object3D(), []);
-  const geometry = useMemo(() => chamferedGeometry(0.65, 0.32, 0.055), []),
-    material = useMemo(
-      () => new MeshStandardMaterial({ ...CHROME, roughness: 0.4 }),
-      [],
-    );
+  const selected = useExperience((s) => s.guardSample);
+  const root = useRef<Group>(null),
+    rotor = useRef<Group>(null);
+  const cards = useRef<InstancedMesh>(null),
+    ink = useRef<InstancedMesh>(null),
+    time = useRef(0);
+  const dummy = useMemo(() => new Object3D(), []);
+  const plate = useMemo(sieveGeometry, []);
+  const card = useMemo(commentGeometry, []);
+  const print = useMemo(() => {
+    const lines = [
+      chamferedGeometry(0.26, 0.018, 0.012, false),
+      chamferedGeometry(0.18, 0.018, 0.012, false),
+    ];
+    lines[0].translate(0, 0.055, 0.057);
+    lines[1].translate(-0.04, -0.015, 0.057);
+    const merged = mergeGeometries(lines);
+    lines.forEach((g) => g.dispose());
+    return merged;
+  }, []);
+  const ticks = useMemo(() => dialSegments(1.86, mobile ? 36 : 72), [mobile]);
+  const count = mobile ? 12 : navigator.hardwareConcurrency <= 4 ? 16 : 28;
   useEffect(
     () => () => {
-      geometry.dispose();
-      material.dispose();
+      plate.dispose();
+      card.dispose();
+      print.dispose();
     },
-    [geometry, material],
+    [plate, card, print],
   );
-  const place = (moving: boolean) => {
-    for (let i = 0; i < 12; i++) {
-      const p = moving ? (time.current * 0.12 + i / 12) % 1 : i / 12;
-      const x = -3.55 + p * 7.1;
-      const reject = (i + selected) % 3 === 1;
+  const place = (t: number) => {
+    for (let i = 0; i < count; i++) {
+      const p = (i / count + t * 0.075) % 1,
+        a = ((i % 6) * Math.PI) / 3;
+      const deflect =
+        (i + selected) % 3 === 1 ? Math.max(0, (p - 0.48) / 0.52) : 0;
+      const r = 0.38 + (i % 5) * 0.14 + deflect * 2.1;
       dummy.position.set(
-        x,
-        p > 0.52 ? (reject ? -1.1 : 0.45) * (p - 0.52) * 2.1 : 0.12,
-        Math.sin(i * 2.1) * 0.18,
+        Math.cos(a) * r,
+        Math.sin(a) * r - deflect * 0.7,
+        3.4 - p * 6.8 + deflect * 2.7,
       );
-      dummy.rotation.set(0, 0.12, Math.sin(i) * 0.035);
+      dummy.rotation.set(
+        deflect * 1.6,
+        Math.sin(a) * 0.15 + deflect * 0.7,
+        Math.sin(a) * 0.07,
+      );
+      dummy.scale.setScalar(i === selected ? 1.2 : 0.8);
       dummy.updateMatrix();
       cards.current?.setMatrixAt(i, dummy.matrix);
+      ink.current?.setMatrixAt(i, dummy.matrix);
     }
     if (cards.current) cards.current.instanceMatrix.needsUpdate = true;
+    if (ink.current) ink.current.instanceMatrix.needsUpdate = true;
   };
   useLayoutEffect(() => {
-    place(false);
-  }, [selected]);
-  useFrame((_, delta) => {
-    if (!active || reduced || useExperience.getState().paused) return;
-    time.current += Math.min(delta, 0.05);
-    place(true);
-    if (shared.current)
-      shared.current.rotation.y = Math.sin(time.current * 0.35) * 0.15;
+    place(reduced ? 2 : time.current);
+  }, [selected, count, reduced]);
+  useFrame(({ pointer }, delta) => {
+    if (!active) return;
+    const s = useExperience.getState();
+    if (!reduced && !s.paused) {
+      time.current += Math.min(delta, 0.05);
+      place(time.current);
+    }
+    if (root.current) {
+      if (!s.paused)
+        root.current.rotation.y = -0.52 + (reduced ? 0 : pointer.x * 0.06);
+      root.current.position.z = -Math.abs(s.progress - 3) * 1.6;
+    }
+    if (rotor.current)
+      rotor.current.rotation.z = reduced ? 0.15 : time.current * 0.055;
   });
   return (
-    <group>
-      <InstrumentDetails index={3} />
-      <mesh position={[0, -1.8, 0]}>
-        <Chamfer args={[7.8, 0.13, 1.6]} />
-        <meshStandardMaterial {...DARK} />
-      </mesh>
-      <mesh ref={shared} position={[0, 1.45, 0]}>
-        <Chamfer args={[1.15, 0.72, 0.39]} />
-        <meshStandardMaterial {...CHROME} roughness={0.21} />
-      </mesh>
-      {[-1.1, 0, 1.1].map((x, i) => (
-        <group key={x} position={[x, 0.05, 0]}>
-          <Rod from={[0, 0.43, 0]} to={[-x, 1.05, 0]} radius={0.018} />
-          <mesh>
-            <torusGeometry args={[0.65, 0.025, 6, 40]} />
-            <meshStandardMaterial {...CHROME} />
+    <group ref={root} rotation={[0.12, -0.52, -0.13]}>
+      {[-0.8, 0, 0.8].map((z, i) => (
+        <group key={z} position={[0, 0, z]}>
+          <mesh geometry={plate}>
+            <OpticalGlass opacity={0.22} />
           </mesh>
-          {Array.from({ length: 7 }, (_, j) => (
-            <Rod
-              key={j}
-              from={[-0.48 + j * 0.16, -0.49, 0]}
-              to={[-0.48 + j * 0.16, 0.49, 0]}
-              radius={0.014}
-              color="#68675d"
-            />
-          ))}
-          <SceneLabel active={active} position={[0, -0.95, 0.15]}>
-            {mobile ? `L${i + 1}` : `Layer ${i + 1}`}
-          </SceneLabel>
+          <mesh>
+            <torusGeometry args={[1.73, 0.035, 8, 80]} />
+            <meshStandardMaterial {...CHROME} roughness={0.18} />
+          </mesh>
+          <mesh>
+            <torusGeometry args={[1.82, 0.009, 6, 80]} />
+            <meshBasicMaterial color="#aebdce" />
+          </mesh>
+          {i === 1 && <FineLines segments={ticks} opacity={0.7} />}
         </group>
       ))}
+      <group ref={rotor} rotation={[0, 0, 0.15]}>
+        <mesh rotation={[0.1, 0.3, 0]}>
+          <torusGeometry args={[2.07, 0.022, 8, 100, Math.PI * 1.65]} />
+          <meshStandardMaterial {...CHROME} />
+        </mesh>
+        <mesh position={[2.01, -0.15, 0]} rotation={[0, 0, -0.1]}>
+          <Chamfer args={[0.22, 0.5, 0.28]} />
+          <meshStandardMaterial {...CHROME} />
+        </mesh>
+      </group>
+      <group position={[0, 2.17, 0]}>
+        <mesh>
+          <Chamfer args={[0.67, 0.29, 0.36]} />
+          <meshStandardMaterial {...CHROME} />
+        </mesh>
+        <mesh position={[0, 0, 0.195]}>
+          <Chamfer args={[0.46, 0.03, 0.015]} />
+          <meshBasicMaterial color="#e4edf8" />
+        </mesh>
+        <SceneLabel active={active} position={[0, 0.4, 0]}>
+          {sceneCopy.guard.core}
+        </SceneLabel>
+      </group>
       <instancedMesh
         ref={cards}
-        geometry={geometry}
-        material={material}
-        args={[geometry, material, 12]}
+        name="guard-comments"
+        args={[card, undefined, count]}
         frustumCulled={false}
-      />
-      <Rod from={[-3.6, -1.1, 0.1]} to={[-3.6, -1.72, 0.1]} radius={0.03} />
-      <Rod from={[3.4, -1.1, 0.1]} to={[3.4, -1.72, 0.1]} radius={0.03} />
-      <SceneLabel active={active} position={[0, 2.15, 0]}>
-        ALBERT<small>one shared parameter block</small>
-      </SceneLabel>
+      >
+        <meshPhysicalMaterial
+          color="#d7e1ee"
+          metalness={0.55}
+          roughness={0.22}
+          clearcoat={1}
+        />
+      </instancedMesh>
+      <instancedMesh
+        ref={ink}
+        args={[print, undefined, count]}
+        frustumCulled={false}
+      >
+        <meshBasicMaterial color="#172335" />
+      </instancedMesh>
       <SceneLabel
         active={active}
-        position={[mobile ? -3.2 : -2.8, mobile ? 1.7 : 0.95, 0.4]}
-        className="comment-label"
+        position={mobile ? [-1.65, 0.8, 1.4] : [-2.45, 0.6, 2.4]}
       >
-        {examples[selected]}
+        {sceneCopy.guard.incoming}
       </SceneLabel>
-      <SceneLabel active={active} position={[mobile ? 2.5 : 3.05, 1.2, 0.1]}>
-        {mobile ? "Pass" : "Useful conversation"}
+      <SceneLabel active={active} position={[0.3, -0.5, -3.3]}>
+        {sceneCopy.guard.pass}
       </SceneLabel>
-      <SceneLabel active={active} position={[mobile ? 2.5 : 3, -1.33, 0.1]}>
-        {mobile ? "Deflect" : "Unwanted comments"}
+      <SceneLabel active={active} position={[2.5, -1.8, 0]}>
+        {sceneCopy.guard.deflect}
       </SceneLabel>
-      <mesh
-        position={[selected === 1 ? 3 : 2.8, selected === 1 ? -1.05 : 0.9, 0.3]}
-      >
-        <Chamfer args={[1.1, 0.4, 0.07]} />
-        <meshStandardMaterial {...DARK} />
-      </mesh>
     </group>
   );
 }

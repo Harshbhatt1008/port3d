@@ -1,0 +1,276 @@
+{
+  "at": "2026-10-21T15:29:49.190Z",
+  "errors": [],
+  "checks": [
+    "1440: all five hero project buttons navigate by keyboard.",
+    "1440: all eight Journey milestones and proof lines visible together.",
+    "1440: comment flow animates, pauses and changes its illustrative route with keyboard selection.",
+    "1440: changing repository file lifts a new retrieved chunk selection.",
+    "1440: reversible GPU light sculpture keeps the portrait buffers/Canvas and returns to demand idle.",
+    "1440: reduced-motion finale resolves directly as a still sculpture.",
+    "390: all five hero project buttons navigate by keyboard.",
+    "390: all eight Journey milestones and proof lines visible together.",
+    "390: comment flow animates, pauses and changes its illustrative route with keyboard selection.",
+    "390: changing repository file lifts a new retrieved chunk selection.",
+    "390: reversible GPU light sculpture keeps the portrait buffers/Canvas and returns to demand idle.",
+    "390: reduced-motion finale resolves directly as a still sculpture."
+  ],
+  "samples": [
+    {
+      "width": 1440,
+      "chapter": 3,
+      "rate": 1,
+      "fps": 69.86944104436543,
+      "seconds": 1.9608000000029806,
+      "telemetry": {
+        "fps": 43,
+        "frames": 65,
+        "dpr": 1.5,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 54,
+        "triangles": 66161,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": 3,
+      "rate": 4,
+      "fps": 154.0546323373721,
+      "seconds": 1.4020999999985106,
+      "telemetry": {
+        "fps": 149,
+        "frames": 150,
+        "dpr": 1.5,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 35,
+        "triangles": 65933,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": 4,
+      "rate": 1,
+      "fps": 165.61964591661916,
+      "seconds": 1.4007999999999994,
+      "telemetry": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1.5,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 33,
+        "triangles": 22429,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": 4,
+      "rate": 4,
+      "fps": 150.53149746752118,
+      "seconds": 1.4016999999985091,
+      "telemetry": {
+        "fps": 144,
+        "frames": 144,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 15,
+        "triangles": 21692,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": 6,
+      "rate": 1,
+      "fps": 165.4660865847609,
+      "seconds": 1.402099999997019,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 20,
+        "triangles": 5012,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": 6,
+      "rate": 4,
+      "fps": 165.4660865847609,
+      "seconds": 1.402099999997019,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 20,
+        "triangles": 5012,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": "finale",
+      "rate": 1,
+      "fps": 165.2892561983473,
+      "seconds": 1.4035999999999986,
+      "telemetry": {
+        "fps": 163,
+        "frames": 163,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 2,
+        "triangles": 0,
+        "points": 49200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": "finale",
+      "rate": 4,
+      "fps": 165.38351867693152,
+      "seconds": 1.402800000000003,
+      "telemetry": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 2,
+        "triangles": 0,
+        "points": 49200
+      }
+    },
+    {
+      "width": 390,
+      "chapter": 3,
+      "rate": 1,
+      "fps": 165.41889483048382,
+      "seconds": 1.4025000000014898,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 18,
+        "triangles": 52732,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": 3,
+      "rate": 4,
+      "fps": 165.45428612216028,
+      "seconds": 1.4021999999970194,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1.25,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 18,
+        "triangles": 52732,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": 4,
+      "rate": 1,
+      "fps": 165.3717299877067,
+      "seconds": 1.4029000000014893,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1.25,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 16,
+        "triangles": 17612,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": 4,
+      "rate": 4,
+      "fps": 165.4188948311869,
+      "seconds": 1.402499999995529,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1.25,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 16,
+        "triangles": 17612,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": 6,
+      "rate": 1,
+      "fps": 165.4424873422236,
+      "seconds": 1.4022999999999992,
+      "telemetry": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 20,
+        "triangles": 5012,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": 6,
+      "rate": 4,
+      "fps": 165.43069024529362,
+      "seconds": 1.4024000000000014,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 20,
+        "triangles": 5012,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "finale",
+      "rate": 1,
+      "fps": 165.27748094322183,
+      "seconds": 1.403699999999997,
+      "telemetry": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 2,
+        "triangles": 0,
+        "points": 13050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "finale",
+      "rate": 4,
+      "fps": 165.39530904683858,
+      "seconds": 1.4026999999999972,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 2,
+        "triangles": 0,
+        "points": 13050
+      }
+    }
+  ]
+}

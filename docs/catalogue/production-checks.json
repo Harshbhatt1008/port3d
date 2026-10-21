@@ -1,0 +1,40 @@
+{
+  "errors": [],
+  "views": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "contrast": {
+        "--ice-50/--ink-950": 18.4405623652727,
+        "--ice-300/--ink-950": 10.09576227321464,
+        "--ice-50/--ink-900": 17.54830878214712,
+        "--ice-300/--ink-900": 9.607274998031338
+      },
+      "projectPicker": true,
+      "journey": true,
+      "portrait": true,
+      "finale": true,
+      "reader": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "contrast": {
+        "--ice-50/--ink-950": 18.4405623652727,
+        "--ice-300/--ink-950": 10.09576227321464,
+        "--ice-50/--ink-900": 17.54830878214712,
+        "--ice-300/--ink-900": 9.607274998031338
+      },
+      "projectPicker": true,
+      "journey": true,
+      "portrait": true,
+      "finale": true,
+      "reader": true
+    }
+  ],
+  "passed": true
+}

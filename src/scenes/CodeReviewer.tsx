@@ -1,177 +1,247 @@
-import { InstrumentDetails, Chamfer } from "./instrumentGeometry";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import {
-  BufferAttribute,
-  BufferGeometry,
+  CatmullRomCurve3,
   Group,
-  ShaderMaterial,
+  InstancedMesh,
+  Mesh,
+  Object3D,
   Vector3,
 } from "three";
 import { CHROME, DARK, useExperience, type SceneProps } from "../state";
-import { retrievalFiles } from "../content";
-import { Rod } from "./researchGeometry";
+import { retrievalFiles, sceneCopy } from "../content";
+import { chamferedGeometry, Chamfer } from "./instrumentGeometry";
+import { OpticalGlass, FineLines, curveSegments } from "./optics";
 import { SceneLabel } from "./SceneLabel";
-const files = [
-  [-2.7, 1.1, -0.4],
-  [-1.7, -0.5, 0.5],
-  [-0.6, 1.2, 0.3],
-  [-0.1, -0.9, -0.3],
-] as [number, number, number][];
+import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+
+const source = (i: number) =>
+  new Vector3(
+    -1.55 + ((i % 4) - 1.5) * 0.64,
+    ((Math.floor(i / 4) % 4) - 1.5) * 0.64,
+    (Math.floor(i / 16) - 1) * 0.72,
+  );
+const selectedIndices = (file: number) => [
+  file * 4 + 1,
+  file * 4 + 16,
+  file * 4 + 34,
+];
+
 export default function CodeReviewer({ active, mobile, reduced }: SceneProps) {
-  const index = useExperience((s) => s.fileIndex),
-    report = useRef<Group>(null),
-    floating = useRef<Group>(null),
-    time = useRef(0);
-  const query = useMemo(
-    () => new Vector3(...files[index]).add(new Vector3(0.18, 0.12, 0.25)),
-    [index],
-  );
-  const nearest = useMemo(
-    () =>
-      files
-        .map((p, i) => ({ i, d: new Vector3(...p).distanceTo(query) }))
-        .sort((a, b) => a.d - b.d)
-        .slice(0, 3),
-    [query],
-  );
-  const geometry = useMemo(() => {
-    const count = mobile ? 360 : 900,
-      p = new Float32Array(count * 3),
-      seed = new Float32Array(count);
-    for (let i = 0; i < count; i++) {
-      const center = files[i % 4];
-      p.set(
-        [
-          center[0] + Math.sin(i * 2.39) * 0.38,
-          center[1] + Math.cos(i * 1.73) * 0.5,
-          center[2] + Math.sin(i * 0.91) * 0.4,
-        ],
-        i * 3,
-      );
-      seed[i] = (i * 0.618) % 1;
+  const index = useExperience((s) => s.fileIndex);
+  const root = useRef<Group>(null),
+    chunks = useRef<InstancedMesh>(null);
+  const dots = useRef<(Mesh | null)[]>([]),
+    floating = useRef<Group>(null);
+  const clock = useRef(0),
+    lift = useRef(reduced ? 1 : 0);
+  const dummy = useMemo(() => new Object3D(), []);
+  const count = mobile ? 32 : 48;
+  const geometry = useMemo(() => chamferedGeometry(0.4, 0.4, 0.4, false), []);
+  const reportInk = useMemo(() => {
+    const pieces = [];
+    for (let n = 0; n < 3; n++) {
+      const badge = chamferedGeometry(0.1, 0.1, 0.025, false);
+      badge.rotateZ(Math.PI / 4);
+      badge.translate(-0.56, 0.805 - n * 0.65, 0.23);
+      pieces.push(badge);
+      for (let j = 0; j < 3; j++) {
+        const line = chamferedGeometry(
+          j === 1 ? 0.86 : 1.04,
+          0.022,
+          0.012,
+          false,
+        );
+        line.translate(0.05, 0.83 - n * 0.65 - j * 0.115, 0.23);
+        pieces.push(line);
+      }
     }
-    const g = new BufferGeometry();
-    g.setAttribute("position", new BufferAttribute(p, 3));
-    g.setAttribute("aSeed", new BufferAttribute(seed, 1));
-    return g;
-  }, [mobile]);
-  const material = useMemo(
-    () =>
-      new ShaderMaterial({
-        uniforms: { uTime: { value: 0 } },
-        vertexShader: `attribute float aSeed;uniform float uTime;varying float vA;void main(){vec3 p=position;p.z+=sin(uTime*.4+aSeed*31.)*.04;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=2.2;vA=.2+aSeed*.5;}`,
-        fragmentShader: `varying float vA;void main(){if(length(gl_PointCoord-.5)>.5)discard;gl_FragColor=vec4(.85,.83,.77,vA);}`,
-        transparent: true,
-        depthWrite: false,
-        toneMapped: false,
-      }),
-    [],
+    const merged = mergeGeometries(pieces);
+    pieces.forEach((g) => g.dispose());
+    return merged;
+  }, []);
+  const nearest = useMemo(
+    () => selectedIndices(index).map((i) => i % count),
+    [index, count],
   );
-  useEffect(() => () => geometry.dispose(), [geometry]);
-  useEffect(() => () => material.dispose(), [material]);
-  useEffect(() => {
-    time.current = 0;
-    if (report.current) report.current.scale.y = reduced ? 1 : 0.8;
-  }, [index, reduced]);
-  useFrame((_, delta) => {
-    if (!active || reduced || useExperience.getState().paused) return;
-    time.current += Math.min(delta, 0.05);
-    material.uniforms.uTime.value += Math.min(delta, 0.05);
-    if (report.current)
-      report.current.scale.y +=
-        (1 - report.current.scale.y) * (1 - Math.exp(-delta * 6));
-    if (floating.current)
-      floating.current.position.y = 1.8 + Math.sin(time.current * 0.8) * 0.12;
+  const curves = useMemo(
+    () =>
+      nearest.map((i, n) => {
+        const p = source(i).add(new Vector3(0.4, 0.55, 0.9));
+        return new CatmullRomCurve3([
+          p,
+          p.clone().add(new Vector3(0.9, 0.6, 0.2)),
+          new Vector3(1.25, 1.2 - n * 0.5, 1),
+          new Vector3(2.3, 0.7 - n * 0.63, 0.3),
+        ]);
+      }),
+    [nearest],
+  );
+  const threads = useMemo(
+    () => [
+      ...curves.flatMap((c) => curveSegments(c.getPoints(40))),
+      -3.5,
+      1.4,
+      1.4,
+      ...source(nearest[0]).toArray(),
+    ],
+    [curves],
+  );
+  const structure = useMemo(() => {
+    const lines: number[] = [];
+    for (let i = 0; i < 4; i++)
+      for (let j = 0; j < 3; j++) {
+        lines.push(
+          -2.8,
+          (i - 1.5) * 0.64,
+          (j - 1) * 0.72,
+          -0.2,
+          (i - 1.5) * 0.64,
+          (j - 1) * 0.72,
+        );
+        lines.push(
+          -1.55 + (i - 1.5) * 0.64,
+          -1.3,
+          (j - 1) * 0.72,
+          -1.55 + (i - 1.5) * 0.64,
+          1.3,
+          (j - 1) * 0.72,
+        );
+      }
+    return lines;
+  }, []);
+  const place = (amount: number) => {
+    for (let i = 0; i < count; i++) {
+      dummy.position.copy(source(i));
+      if (nearest.includes(i))
+        dummy.position.addScaledVector(new Vector3(0.4, 0.55, 0.9), amount);
+      dummy.rotation.set(
+        0.08,
+        -0.12 + (nearest.includes(i) ? amount * 0.28 : 0),
+        0.035,
+      );
+      dummy.scale.setScalar(nearest.includes(i) ? 1.12 : 0.9);
+      dummy.updateMatrix();
+      chunks.current?.setMatrixAt(i, dummy.matrix);
+    }
+    if (chunks.current) chunks.current.instanceMatrix.needsUpdate = true;
+  };
+  useLayoutEffect(() => {
+    lift.current = reduced ? 1 : 0;
+    place(lift.current);
+  }, [index, count, reduced]);
+  useEffect(
+    () => () => {
+      geometry.dispose();
+      reportInk.dispose();
+    },
+    [geometry, reportInk],
+  );
+  useFrame(({ pointer }, delta) => {
+    if (!active) return;
+    const s = useExperience.getState();
+    if (!reduced && !s.paused) {
+      clock.current += Math.min(delta, 0.05);
+      if (lift.current < 0.999) {
+        lift.current += (1 - lift.current) * (1 - Math.exp(-delta * 3));
+        place(lift.current);
+      }
+      dots.current.forEach((dot, i) =>
+        dot?.position.copy(
+          curves[i].getPoint((clock.current * 0.2 + i * 0.3) % 1),
+        ),
+      );
+      if (floating.current)
+        floating.current.position.y = 2.4 + Math.sin(clock.current * 0.7) * 0.1;
+    }
+    if (root.current && !s.paused)
+      root.current.rotation.y = -0.13 + (reduced ? 0 : pointer.x * 0.045);
   });
   return (
-    <group>
-      <InstrumentDetails index={4} />
-      <mesh position={[0, -1.85, 0]}>
-        <Chamfer args={[8, 0.12, 2]} />
-        <meshStandardMaterial {...DARK} />
-      </mesh>
-      <points geometry={geometry} material={material} />
-      {files.map((p, i) => (
-        <group key={i} position={p}>
-          <mesh>
-            <Chamfer args={[0.54, 0.72, 0.08]} />
-            <meshStandardMaterial
-              {...DARK}
-              color={i === index ? "#8a877a" : "#34342c"}
-            />
-          </mesh>
-          {[0, 1, 2].map((n) => (
-            <mesh key={n} position={[0, 0.18 - n * 0.16, 0.05]}>
-              <Chamfer args={[0.34, 0.018, 0.01]} />
-              <meshBasicMaterial color="#c8c3b5" />
-            </mesh>
-          ))}
-        </group>
-      ))}
-      <Rod
-        from={[-3.8, -0.6, 0.4]}
-        to={query.toArray() as [number, number, number]}
-        radius={0.021}
-        color="#e2ddd0"
-        glow={0.35}
-      />
-      {nearest.map(({ i }, n) => (
-        <Rod
-          key={i}
-          from={files[i]}
-          to={[2.7, 0.6 - n * 0.55, 0.2]}
-          radius={0.012}
-          color="#e4dfd1"
-          opacity={0.65}
+    <group ref={root} rotation={[0.1, -0.13, -0.035]}>
+      <FineLines segments={structure} opacity={0.18} />
+      <instancedMesh
+        ref={chunks}
+        name="review-chunks"
+        args={[geometry, undefined, count]}
+        frustumCulled={false}
+      >
+        <meshPhysicalMaterial
+          color="#94a6bb"
+          metalness={0.68}
+          roughness={0.18}
+          clearcoat={1}
+          transparent
+          opacity={0.8}
         />
-      ))}
-      <group ref={report} position={[2.8, -0.2, 0.15]}>
-        <mesh>
-          <Chamfer args={[1.85, 2.65, 0.12]} />
-          <meshStandardMaterial {...CHROME} roughness={0.42} />
+      </instancedMesh>
+      <group position={[-1.55, 0, 0]}>
+        <mesh rotation={[Math.PI / 2, 0.25, 0]}>
+          <torusGeometry args={[1.8, 0.014, 6, 90, Math.PI * 1.7]} />
+          <meshStandardMaterial {...CHROME} />
         </mesh>
-        <mesh position={[0, 0, 0.072]}>
-          <planeGeometry args={[1.66, 2.45]} />
-          <meshBasicMaterial color="#25251f" />
+        <mesh rotation={[0.2, -0.3, 0.4]}>
+          <torusGeometry args={[1.9, 0.008, 6, 90, Math.PI * 1.3]} />
+          <meshBasicMaterial color="#aebfd2" />
         </mesh>
-        {[0, 1, 2].map((n) => (
-          <group key={n} position={[0, 0.8 - n * 0.6, 0.09]}>
-            <mesh>
-              <Chamfer args={[1.25, 0.1, 0.015]} />
-              <meshBasicMaterial color="#aaa699" />
-            </mesh>
-            <mesh position={[0.18, -0.17, 0]}>
-              <Chamfer args={[0.9, 0.02, 0.01]} />
-              <meshBasicMaterial color="#716f61" />
-            </mesh>
-          </group>
-        ))}
-        <SceneLabel active={active} position={[0, -1.63, 0.15]}>
-          Grounded review report
-        </SceneLabel>
       </group>
-      <group ref={floating} position={[2.8, 1.8, 0]}>
-        <mesh rotation={[0, 0.12, 0.08]}>
-          <Chamfer args={[1.5, 0.5, 0.06]} />
-          <meshStandardMaterial {...DARK} />
-        </mesh>
-        <SceneLabel
-          active={active}
-          position={[0, 0, 0.1]}
-          className="no-surface"
+      <FineLines segments={threads} opacity={0.85} />
+      <mesh position={[-3.5, 1.4, 1.4]} rotation={[0, 0.35, 0]}>
+        <torusGeometry args={[0.12, 0.018, 6, 24]} />
+        <meshStandardMaterial {...CHROME} />
+      </mesh>
+      {curves.map((c, i) => (
+        <mesh
+          key={i}
+          ref={(m) => {
+            dots.current[i] = m;
+          }}
+          position={c.getPoint(0.4)}
         >
-          Unsupported flag<small>no source thread</small>
+          <sphereGeometry args={[0.045, 8, 8]} />
+          <meshBasicMaterial color="#f1f7ff" />
+        </mesh>
+      ))}
+      <group position={[2.55, -0.15, 0]} rotation={[0, -0.22, -0.1]}>
+        {[-0.16, 0, 0.16].map((z, i) => (
+          <mesh
+            key={z}
+            position={[i * 0.12, -i * 0.08, z]}
+            rotation={[0, i * 0.045, 0]}
+          >
+            <Chamfer args={[1.72, 2.54, 0.055]} />
+            {i === 2 ? (
+              <OpticalGlass opacity={0.4} />
+            ) : (
+              <meshStandardMaterial {...DARK} roughness={0.23} />
+            )}
+          </mesh>
+        ))}
+        <mesh geometry={reportInk}>
+          <meshBasicMaterial color="#b8cbdf" />
+        </mesh>
+        <SceneLabel active={active} position={[0, -1.7, 0.2]}>
+          {sceneCopy.review.report}
         </SceneLabel>
       </group>
-      <SceneLabel active={active} position={[-2, 2.03, 0]}>
-        Repository → vectors
-      </SceneLabel>
-      <SceneLabel active={active} position={[-3.1, -1.32, 0.2]}>
-        Query → nearest chunks
-      </SceneLabel>
-      <SceneLabel active={active} position={[0, 0.2, 0.8]}>
+      <group
+        ref={floating}
+        position={[1.8, 2.4, -0.1]}
+        rotation={[0, 0.2, 0.12]}
+      >
+        <mesh>
+          <octahedronGeometry args={[0.16, 0]} />
+          <OpticalGlass opacity={0.75} />
+        </mesh>
+        <SceneLabel active={active} position={[0, 0.55, 0]}>
+          {sceneCopy.review.unsupported}
+        </SceneLabel>
+      </group>
+      <SceneLabel active={active} position={[-1.6, 2.15, 0.4]}>
         {retrievalFiles[index].name}
+      </SceneLabel>
+      <SceneLabel active={active} position={[-1.5, -1.8, 0.6]}>
+        {sceneCopy.review.repository}
       </SceneLabel>
     </group>
   );

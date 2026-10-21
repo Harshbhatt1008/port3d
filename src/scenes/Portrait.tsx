@@ -32,9 +32,11 @@ export function preloadPortrait(mobile: boolean) {
   }
   return cache.get(mobile)!;
 }
-const vertex = `attribute vec3 aHB;attribute float aTone;uniform float uMorph;uniform float uNoise;uniform float uTime;uniform float uDpr;uniform float uPointScale;uniform vec2 uPointer;varying float vTone;
+const vertex = `attribute vec3 aHB;attribute float aTone;attribute float aIndex;uniform float uMorph;uniform float uFinale;uniform float uNoise;uniform float uTime;uniform float uDpr;uniform float uPointScale;uniform vec2 uPointer;varying float vTone;
 float hash(float n){return fract(sin(n*127.1+311.7)*43758.5453);}
-void main(){float seed=hash(aHB.x*17.+aHB.y*83.+aHB.z*251.);vec3 p=mix(aHB,position,uMorph);vec3 spread=vec3(hash(seed*137.)-.5,hash(seed*293.)-.5,hash(seed*613.)-.5)*vec3(8.,6.,3.5);spread+=sin(spread*1.4+uTime*.6)*.1;p=mix(p,spread,uNoise);float angle=uPointer.x*.035;float c=cos(angle),s=sin(angle);p.xz=mat2(c,-s,s,c)*p.xz;p.x+=uPointer.x*position.z*.12*uMorph;p.y+=uPointer.y*position.z*.09*uMorph;vTone=mix(.72,aTone,uMorph);vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp((.55+2.05*pow(clamp(vTone,0.,1.),.7))*uPointScale*uDpr*12./max(2.,-mv.z),.45,4.5);}`;
+void main(){float seed=hash(aHB.x*17.+aHB.y*83.+aHB.z*251.);vec3 p=mix(aHB,position,uMorph);vec3 spread=vec3(hash(seed*137.)-.5,hash(seed*293.)-.5,hash(seed*613.)-.5)*vec3(8.,6.,3.5);spread+=sin(spread*1.4+uTime*.6)*.1;p=mix(p,spread,uNoise);
+float a=aIndex*6.283185,b=fract(aIndex*278.164)*6.283185;float r=1.45+.5*cos(3.*a)+(aTone-.5)*.12;vec3 knot=vec3(r*cos(2.*a),r*sin(2.*a),sin(3.*a)*.85);knot+=vec3(cos(b)*.12,sin(b)*.12,sin(b)*.12);float turn=uTime*.13+uPointer.x*.35;knot.xz=mat2(cos(turn),-sin(turn),sin(turn),cos(turn))*knot.xz;knot.y+=sin(a*5.+uTime*.5)*.06;p=mix(p,knot,uFinale);
+float angle=uPointer.x*.035;float c=cos(angle),s=sin(angle);p.xz=mat2(c,-s,s,c)*p.xz;p.x+=uPointer.x*position.z*.12*uMorph;p.y+=uPointer.y*position.z*.09*uMorph;vTone=mix(mix(.72,aTone,uMorph),.25+.75*hash(seed*499.),uFinale);vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp((.55+2.05*pow(clamp(vTone,0.,1.),.7))*uPointScale*uDpr*12./max(2.,-mv.z),.45,4.5);}`;
 const fragment = `varying float vTone;void main(){float d=length(gl_PointCoord-.5)*2.;if(d>1.)discard;float t=clamp(vTone,0.,1.);float a=(1.-d*d)*(.015+.96*pow(t,1.15));vec3 light=vec3(.137+.824*pow(t,.65));gl_FragColor=vec4(light,a);}`;
 const ease = (a: number, b: number, t: number) => {
   const x = Math.max(0, Math.min(1, (t - a) / (b - a)));
@@ -45,6 +47,7 @@ const ease = (a: number, b: number, t: number) => {
 export default function Portrait({ active, mobile, reduced }: SceneProps) {
   const { gl, invalidate } = useThree();
   const run = useExperience((s) => s.portraitRun);
+  const finale = useExperience((s) => s.portraitFinale);
   const baked = useRef<Baked | null>(null),
     geometry = useRef<BufferGeometry | null>(null),
     time = useRef(0),
@@ -59,6 +62,7 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
         fragmentShader: fragment,
         uniforms: {
           uMorph: { value: reduced ? 1 : 0 },
+          uFinale: { value: 0 },
           uNoise: { value: 0 },
           uTime: { value: 0 },
           uDpr: { value: 1 },
@@ -93,6 +97,18 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
           new InterleavedBufferAttribute(interleaved, 1, 3),
         );
         g.setAttribute("aHB", new BufferAttribute(data.hb, 3));
+        // A continuous ordinal avoids float-hash collisions collapsing 45K
+        // points into a few hundred positions in the final light sculpture.
+        g.setAttribute(
+          "aIndex",
+          new BufferAttribute(
+            Float32Array.from(
+              { length: data.face.length / 4 },
+              (_, i) => i / (data.face.length / 4),
+            ),
+            1,
+          ),
+        );
         g.computeBoundingSphere();
         geometry.current = g;
         setReady(true);
@@ -111,6 +127,12 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
     };
   }, [mobile, invalidate]);
   useEffect(() => () => material.dispose(), [material]);
+  useEffect(() => {
+    if (active) {
+      useExperience.getState().set({ portraitBusy: true });
+      invalidate();
+    }
+  }, [finale, active, invalidate]);
   useEffect(() => {
     if (!active) {
       wasActive.current = false;
@@ -163,6 +185,14 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
     const morph = reduced ? 1 : ease(1.15 + offset, 3.7 + offset, t);
     const noise = reduced ? 0 : retry.current ? 1 - ease(0.45, 1.15, t) : 0;
     material.uniforms.uMorph.value = morph;
+    const finalAmount = material.uniforms.uFinale;
+    if (reduced || s.paused) finalAmount.value = finale ? 1 : 0;
+    else if (!s.paused)
+      finalAmount.value +=
+        ((finale ? 1 : 0) - finalAmount.value) * (1 - Math.exp(-delta * 2.6));
+    if (Math.abs(finalAmount.value - (finale ? 1 : 0)) < 0.0001)
+      finalAmount.value = finale ? 1 : 0;
+    gl.domElement.dataset.portraitFinale = finalAmount.value.toFixed(4);
     material.uniforms.uNoise.value = noise;
     material.uniforms.uTime.value = t;
     material.uniforms.uDpr.value = gl.getPixelRatio();
@@ -189,7 +219,9 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
     if (s.portraitPhase !== phase) s.set({ portraitPhase: phase });
     const moving =
       !reduced &&
-      (t < 4.4 + offset ||
+      (finale ||
+        finalAmount.value > 0.0001 ||
+        t < 4.4 + offset ||
         p.distanceTo(pointer.current) > 0.0003 ||
         performance.now() - lastPointer.current < 180);
     if (moving && !s.paused) invalidate();

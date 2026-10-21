@@ -80,3 +80,8 @@ Local raw reports, scripts and captures are kept under gitignored `.qa/` and `.i
 6. Set deployment-specific absolute OG/canonical URLs when a public domain is chosen. The current artifact is local and source-controlled; the previous hosted portfolio is unchanged.
 
 21st.dev Magic integration was not available without a key; the owner-authorized handmade interface shipped instead. No live ML inference or training backend is part of this portfolio.
+
+
+## Catalogue revision
+
+Current browser evidence lives in `docs/catalogue/REPORT.md`. `scripts/check-catalogue.cjs` checks all five hero links by keyboard, all eight visible Journey rows, comment animation/pause/selection, repository selection, reversible GPU finale buffers, reduced-motion static output and demand idle after return. It records 1x/4x CPU samples of the three rebuilt chapters and the finale at 1440x900 and 390x844. `scripts/check-refinement.cjs catalogue-final` captures all eight resting chapters, and `scripts/validate-refinement.cjs .qa/refinement/catalogue-final` verifies bounds, counts, actual rendered FPS and draw-call budgets. The mobile fit corrections for the new sieve/repository are explicit in validation.

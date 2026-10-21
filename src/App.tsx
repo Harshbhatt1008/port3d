@@ -19,6 +19,7 @@ import {
   Play,
   Plus,
   RotateCcw,
+  Sparkles,
   Volume2,
   VolumeX,
   X,
@@ -33,6 +34,9 @@ import {
   histories,
   profile,
   projects,
+  projectPicker,
+  sceneCopy,
+  finaleCopy,
   retrievalFiles,
   stats,
   timeline,
@@ -443,7 +447,15 @@ function NotesButton() {
     </button>
   );
 }
-function Chapter({ index, children }: { index: number; children: ReactNode }) {
+function Chapter({
+  index,
+  children,
+  after,
+}: {
+  index: number;
+  children: ReactNode;
+  after?: ReactNode;
+}) {
   const active = useExperience((s) => s.chapter === index),
     intro = useExperience((s) => s.introRunning),
     reader = useExperience((s) => s.reader);
@@ -488,12 +500,13 @@ function Chapter({ index, children }: { index: number; children: ReactNode }) {
           </div>
         )}
       </div>
+      {after}
     </section>
   );
 }
 function Identity() {
   return (
-    <Chapter index={0}>
+    <Chapter index={0} after={<HeroProjectPicker />}>
       <div className="caption-actions">
         <button className="primary" onClick={() => jumpTo(1)}>
           Enter the work <ArrowRight size={17} />
@@ -504,6 +517,53 @@ function Identity() {
         Scroll to fly. Move the light with your pointer.
       </p>
     </Chapter>
+  );
+}
+function ProjectGlyph({ name }: { name: string }) {
+  const paths: Record<string, string> = {
+    prism: "M8 33 24 6l16 27H8Zm16-27v27m-16 0 16-12 16 12M2 21h14m16 0h14",
+    towers: "M9 36V10l9-4v30m12 0V6l9 4v26M9 18l30 9M9 27l30-9M24 6v30",
+    sieve:
+      "M24 5a17 17 0 1 0 0 34 17 17 0 0 0 0-34ZM14 14l20 20m-20 0 20-20M7 22h34M24 5v34",
+    lattice:
+      "m8 14 16-8 16 8v19l-16 8-16-8V14Zm0 0 16 9 16-9M24 23v18M8 23l16 9 16-9M16 10v27m16-27v27",
+    rover:
+      "m9 16 15-6 15 6v13l-15 6-15-6V16Zm0 0 15 7 15-7M24 23v12M4 30v8m40-8v8M15 4v8m18-8v8",
+  };
+  return (
+    <svg
+      viewBox="0 0 48 46"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+      aria-hidden="true"
+    >
+      <path d={paths[name]} />
+    </svg>
+  );
+}
+function HeroProjectPicker() {
+  return (
+    <nav className="hero-project-picker" aria-label={projectPicker.title}>
+      <div className="picker-heading">
+        <span>{projectPicker.title}</span>
+        <span>{projectPicker.note}</span>
+      </div>
+      <div className="picker-items">
+        {projectPicker.items.map((p) => (
+          <button key={p.chapter} onClick={() => jumpTo(p.chapter)}>
+            <ProjectGlyph name={p.glyph} />
+            <span>
+              <small>
+                {String(p.chapter).padStart(2, "0")} / {p.topic}
+              </small>
+              <strong>{p.name}</strong>
+            </span>
+            <ArrowUpRight size={14} />
+          </button>
+        ))}
+      </div>
+    </nav>
   );
 }
 function PrismChapter() {
@@ -693,41 +753,34 @@ function OmniChapter() {
   );
 }
 function JourneyChapter() {
-  const node = useExperience((s) => s.nodeIndex),
-    tool = useExperience((s) => s.toolIndex);
+  const node = useExperience((s) => s.nodeIndex);
   return (
     <Chapter index={6}>
-      <Choice
-        label="Follow a point on the curve"
-        value={String(node)}
-        options={timeline.map((n, i) => ({
-          value: String(i),
-          label: n.title,
-          description: n.year,
-        }))}
-        onChange={(v) => useExperience.getState().set({ nodeIndex: Number(v) })}
-      />
-      <p className="journey-detail" aria-live="polite">
-        <strong>{timeline[node].year}</strong>
-        {timeline[node].detail}
-      </p>
-      <div className="tool-tabs" role="group" aria-label="Tool constellations">
-        {toolGroups.map((g, i) => (
-          <button
-            key={g.name}
-            aria-pressed={tool === i}
-            onPointerEnter={() =>
-              useExperience.getState().set({ toolIndex: i })
-            }
-            onFocus={() => useExperience.getState().set({ toolIndex: i })}
-            onClick={() => useExperience.getState().set({ toolIndex: i })}
-          >
-            {g.name}
-          </button>
+      <ol className="journey-overview" aria-label={sceneCopy.journey.note}>
+        {timeline.map((item, i) => (
+          <li key={item.title}>
+            <button
+              aria-pressed={node === i}
+              onPointerEnter={() =>
+                useExperience.getState().set({ nodeIndex: i })
+              }
+              onFocus={() => useExperience.getState().set({ nodeIndex: i })}
+              onClick={() => useExperience.getState().set({ nodeIndex: i })}
+            >
+              <span className="milestone-number">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span>
+                <small>{item.year}</small>
+                <strong>{item.shortTitle}</strong>
+                <span>{item.proof}</span>
+              </span>
+            </button>
+          </li>
         ))}
-      </div>
+      </ol>
       <div className="caption-footer">
-        <span>Completed Jul 2026 · IELTS 7.5 / C1</span>
+        <span>{sceneCopy.journey.tools}</span>
         <NotesButton />
       </div>
     </Chapter>
@@ -757,7 +810,9 @@ function PortraitReadout() {
   );
 }
 function ContactChapter() {
-  const reader = useExperience((s) => s.reader);
+  const reader = useExperience((s) => s.reader),
+    finale = useExperience((s) => s.portraitFinale),
+    reduced = useExperience((s) => s.reduced);
   const [copied, setCopied] = useState(false),
     [copyFailed, setCopyFailed] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -778,6 +833,28 @@ function ContactChapter() {
       <p className="closing-line">{profile.closing}</p>
       <PortraitReadout />
       <span className="sequence-note">Illustrative sequence</span>
+      {!reader && (
+        <button
+          className="finale-control"
+          aria-pressed={finale}
+          onClick={() =>
+            useExperience.getState().set({ portraitFinale: !finale })
+          }
+        >
+          {finale ? (
+            <RotateCcw aria-hidden="true" />
+          ) : (
+            <Sparkles aria-hidden="true" />
+          )}
+          {finale ? finaleCopy.resolve : finaleCopy.unfold}
+          <ArrowRight size={15} />
+        </button>
+      )}
+      {finale && !reader && (
+        <p className="finale-hint" role="status">
+          {reduced ? finaleCopy.reducedHint : finaleCopy.hint}
+        </p>
+      )}
       <button
         className="liquid-button"
         onClick={copy}
@@ -819,9 +896,10 @@ function ContactChapter() {
         <button
           className="text-control"
           onClick={() =>
-            useExperience
-              .getState()
-              .set({ portraitRun: useExperience.getState().portraitRun + 1 })
+            useExperience.getState().set({
+              portraitRun: useExperience.getState().portraitRun + 1,
+              portraitFinale: false,
+            })
           }
         >
           Re-train

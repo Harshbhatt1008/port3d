@@ -27,7 +27,7 @@ import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { Training } from "./scenes/Training";
 import Backdrop from "./scenes/Backdrop";
 import { SCENE_GAP, useExperience } from "./state";
-import { CHAPTER_SCALE } from "./sceneSettings";
+import { CHAPTER_SCALE, SCENE_COLORS } from "./sceneSettings";
 
 const scenes = [
   lazy(() => import("./scenes/Hero").then((m) => ({ default: m.Hero }))),
@@ -206,7 +206,7 @@ function LightRig() {
         intensity={12}
         distance={18}
         decay={2}
-        color="#f1efe7"
+        color="#eef5ff"
       />
       <rectAreaLight
         position={[3.7, 4, 5]}
@@ -214,7 +214,7 @@ function LightRig() {
         width={3.5}
         height={5}
         intensity={3.2}
-        color="#e7e3d7"
+        color="#e7f0ff"
       />
       <rectAreaLight
         position={[-5, -1, 3]}
@@ -222,7 +222,7 @@ function LightRig() {
         width={2}
         height={6}
         intensity={1.3}
-        color="#c5c1b6"
+        color="#bccce0"
       />
     </group>
   );
@@ -251,8 +251,10 @@ function Room({
   // of camera world coordinates after a deep-rail resize.
   const height = 2 * Math.tan((40 * Math.PI) / 360) * 12;
   const width = (height * size.width) / size.height;
+  const fitWidth =
+    mobile && index === 3 ? 5.8 : mobile && index === 4 ? 6.7 : w;
   const fittedScale = Math.min(
-    (width * (mobile ? 0.9 : index === 0 ? 0.84 : 0.74)) / w,
+    (width * (mobile ? 0.9 : index === 0 ? 0.84 : 0.74)) / fitWidth,
     (height * (mobile ? 0.45 : index === 7 ? 0.62 : 0.7)) / h,
   );
   // The portrait has a fixed 4:5 bake and its own half-height framing.
@@ -272,7 +274,9 @@ function Room({
           mobile
             ? index === 7
               ? 1.32
-              : 1.35
+              : index === 6
+                ? 2.25
+                : 1.35
             : index === 7
               ? 0.3
               : index === 5
@@ -357,7 +361,7 @@ export default function World() {
             // Keep shader diagnostics in dev. Querying ANGLE's compiler logs
             // synchronously stalls production startup even for valid programs.
             gl.debug.checkShaderErrors = import.meta.env.DEV;
-            gl.setClearColor("#171612");
+            gl.setClearColor(SCENE_COLORS.ink950);
             gl.toneMapping = ACESFilmicToneMapping;
             gl.toneMappingExposure = 0.78;
             gl.info.autoReset = false;
@@ -372,15 +376,15 @@ export default function World() {
           }}
           fallback={<span>Use Read instead for the full portfolio.</span>}
         >
-          <color attach="background" args={["#171612"]} />
+          <color attach="background" args={[SCENE_COLORS.ink950]} />
           <CameraRail />
           <LoadingStatus />
-          <ambientLight intensity={0.32} color="#d5d0c4" />
+          <ambientLight intensity={0.32} color="#cedcee" />
           <LightRig />
           <Environment resolution={128} frames={1}>
             <Lightformer
               form="rect"
-              color="#e5e2d8"
+              color="#e5efff"
               intensity={4.2}
               scale={[mobile ? 0.3 : 0.8, 9, 1]}
               position={[mobile ? -0.35 : -1.6, 1, 5]}
@@ -388,14 +392,14 @@ export default function World() {
             />
             <Lightformer
               form="rect"
-              color="#c5c1b6"
+              color="#bccce0"
               intensity={mobile ? 0.65 : 0.45}
               scale={[12, 8, 1]}
               position={[0, 0, 9]}
             />
             <Lightformer
               form="rect"
-              color="#ede9df"
+              color="#edf5ff"
               intensity={1.6}
               scale={[10, 1.3, 1]}
               position={[0, 6, 2]}
@@ -403,7 +407,7 @@ export default function World() {
             />
             <Lightformer
               form="rect"
-              color="#d7d2c7"
+              color="#d5e3f5"
               intensity={3.4}
               scale={[mobile ? 0.38 : 1.4, 10, 1]}
               position={[mobile ? 0.45 : 2, 0, 4]}

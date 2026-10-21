@@ -29,10 +29,10 @@ Preview runs at **http://localhost:4173**; `dist/` is deployable static output. 
 | 00 Identity | Reflected Archivo Black name beside a readable biography | Bounded pointer lean |
 | 01 PRISM | Idle LLM, dispersive glass, three risk beams, difficulty/domain grid and model destinations | Six stored dataset rows; no inference |
 | 02 CommerceAI | Affinity loom, ordered purchase tower, dot-product meeting and Redis shelf | Three histories reweave the match |
-| 03 InstaGuard | Comment sieve and one reused ALBERT parameter block | Three illustrative comment routes |
-| 04 Code Reviewer | Files become vectors; retrieved chunks thread into a report | Four repository-context choices |
+| 03 InstaGuard | Perforated optical sieve and one reused ALBERT parameter block | Three illustrative comment routes |
+| 04 Code Reviewer | Volumetric repository; lifted chunks thread into a layered report | Four repository-context choices |
 | 05 OmniVision | Room, rover, ultrasonic cones, IMU heading and weighted fusion | Plain-English destinations, BFS and two-tier learning |
-| 06 Journey | Descending curve and three tool constellations | Eight milestones and tool-group selection |
+| 06 Journey | Folded ribbon and eight optical lenses | All eight milestones visible together |
 | 07 Contact | Exact loader HB positions morph into an offline-matted particle bust | Re-train, copy email, draft, links and downloads |
 
 All metrics are **reported results**. PRISM and OmniVision retain **manuscript in preparation**; OmniVision is **research in progress**. Histories, routes, retrieval, sensor exchange and epoch/loss are explicitly illustrative. The website performs no model inference, training or remote code review.
@@ -86,3 +86,9 @@ At runtime one portrait Points object morphs/parallaxes in its vertex shader. No
 See **[the portrait/model repair report](docs/refinement/REPORT.md)** for the current before/after images of every chapter, frame rates, draw calls and browser checks. **[TESTING.md](TESTING.md)** retains the earlier verification history. GPU measurements on an RTX 3070 do not certify an integrated laptop or physical phone. First-time engine initialization and shader compilation remain more expensive than settled animation.
 
 **[PRODUCT.md](PRODUCT.md)** records the brief; **[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)** records sources and licences. Impeccable and Taste Skill were used. No Magic key was connected, so the owner-permitted handmade controls ship. Only ThreeUI Community techniques were studied, with attribution; no Pro or Envato assets are included. Source pushes target the authorised `Harshbhatt1008/port3d` repository, not the old site's deployment.
+
+## Project catalogue and finale
+
+The opening project picker jumps directly to each of the five projects by pointer, touch or keyboard. Journey keeps all eight milestone summaries visible at once; Research notes supplies the complete CV detail. InstaGuard uses a layered, perforated sieve and instanced comment bubbles. Code Reviewer lifts retrieved chunks from a 3D repository into evidence threads. Contact's **Unfold the signal** button folds the same portrait points into a reversible light sculpture, with a static reduced-motion alternative.
+
+The ink/ice palette is normative in `src/styles.css`, `src/sceneSettings.ts` and `DESIGN.md`. Review the current [screenshots, checks and FPS](docs/catalogue/REPORT.md). The earlier [portrait/model repair](docs/refinement/REPORT.md) includes each chapter before and after, plus the offline portrait debug evidence. Run `node scripts/check-catalogue.cjs` against the dev server to exercise the new interactions and 1x/4x CPU measurements; the Playwright module can be supplied using `PLAYWRIGHT_MODULE`.

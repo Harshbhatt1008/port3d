@@ -2,18 +2,23 @@
 name: LATENT - Harsh Bhatt
 description: Noise becomes structure, then a person, in one continuous research world.
 colors:
-  obsidian: "oklch(17% 0.008 85)"
-  deep: "oklch(13% 0.006 85)"
-  bone: "oklch(92% 0.016 85)"
-  muted: "oklch(78% 0.015 85)"
-  metal: "oklch(82% 0.009 85)"
-  rule: "oklch(39% 0.012 85)"
-  hover: "oklch(24% 0.008 85)"
-  option-active: "oklch(27% 0.008 85)"
-  chrome-type: "#b9b9b3"
-  low: "oklch(82% 0.1 145)"
-  medium: "oklch(84% 0.12 85)"
-  high: "oklch(76% 0.14 30)"
+  ink-950: "oklch(0.13 0.025 265)"
+  ink-900: "oklch(0.17 0.03 265)"
+  ice-50: "oklch(0.97 0.01 240)"
+  ice-300: "oklch(0.78 0.02 250)"
+  signal: "oklch(0.72 0.19 40)"
+  obsidian: "oklch(0.17 0.03 265)"
+  deep: "oklch(0.13 0.025 265)"
+  bone: "oklch(0.97 0.01 240)"
+  muted: "oklch(0.78 0.02 250)"
+  metal: "oklch(0.82 0.02 250)"
+  rule: "oklch(0.37 0.025 265)"
+  hover: "oklch(0.24 0.03 265)"
+  option-active: "oklch(0.27 0.03 265)"
+  chrome-type: "#c9d3e0"
+  low: "oklch(0.8 0.15 165)"
+  medium: "oklch(0.82 0.15 85)"
+  high: "oklch(0.72 0.19 40)"
 typography:
   display:
     fontFamily: '"Archivo Black", system-ui, sans-serif'
@@ -134,7 +139,7 @@ components:
     rounded: "{rounded.control}"
     width: "min(560px, calc(100vw - 32px))"
   scene-label:
-    backgroundColor: "oklch(17% 0.008 85 / 0.9)"
+    backgroundColor: "oklch(0.17 0.03 265 / 0.92)"
     textColor: "{colors.bone}"
     rounded: "{rounded.compact}"
     padding: "4px 6px"
@@ -146,13 +151,13 @@ components:
 
 **Creative North Star: "Noise → structure → a person"**
 
-LATENT makes Harsh's language, learning and robotics research tangible inside one continuous spatial world. Warm obsidian, bone, chrome and dark glass connect the scenes. Physical geometry supplies imagery; real HTML supplies readable facts and usable controls. The owner's pinned world is the visual authority, and no earlier portfolio theme is inherited.
+LATENT makes Harsh's language, learning and robotics research tangible inside one continuous spatial world. Dark ink, ice text, chrome and optical glass connect the scenes. Physical geometry supplies imagery; real HTML supplies readable facts and usable controls. The owner's pinned world is the visual authority, and no earlier portfolio theme is inherited.
 
 The revised experience places a compact floating caption over each full-bleed scene. Eight chapters share a persistent inference console and deliberate Research notes expansion. The approved revision in `.impeccable/surface-brief.md` supersedes the old split copy column and seven-room layout. The direction record `.impeccable/latent-seed.txt` and FORM reference `seed:0165dcf1c61f4b13` remain provenance; their open-field assignments do not override the owner-pinned LATENT world.
 
 **Key Characteristics:**
 
-- Warm monochrome materials; colour has a specific research meaning.
+- Ink and ice materials; colour has a specific research meaning.
 - Heavy display geometry paired with monospaced facts and controls.
 - Full-bleed scenes, floating captions and deliberate Research notes drawers.
 - Illustrative interactions kept distinct from reported research results.
@@ -160,25 +165,25 @@ The revised experience places a compact floating caption over each full-bleed sc
 
 ## Colors
 
-Warm, low-chroma CSS colours form the normative interface palette above. Three.js uses sRGB material and lighting colours rather than literal CSS OKLCH strings. Sidecar tonal strips are synthesized panel previews, not additional runtime colours.
+Ink and ice CSS colours form the normative interface palette above. Three.js uses sRGB material and lighting colours rather than literal CSS OKLCH strings. Sidecar tonal strips are synthesized panel previews, not additional runtime colours.
 
 ### Primary
 
-- **Bone:** primary text, focus outlines, selected controls and neutral feedback.
+- **Ice 50 (legacy alias Bone):** primary text, selected controls and neutral feedback. **Signal:** focus outlines and interactive emphasis only, also HIGH risk.
 - **Metal:** instrument edges and primary-action hover.
 - **Type chrome:** intentionally neutral sRGB material for Training Run HB and extruded name. Its slight channel variation belongs to reflected metal, not an accent palette or accidental gray drift.
 
 ### Neutral
 
-- **Warm Obsidian:** page ground, opaque captions, drawer and console backing.
+- **Ink 950:** page/Canvas ground. **Ink 900 (legacy alias Obsidian):** opaque captions, drawer and console backing.
 - **Deep:** recessed inputs, options and intro skip control.
 - **Muted:** secondary prose, source qualifications and telemetry; revised source raises its lightness from the former system.
 - **Rule:** thin structural edges and control outlines.
 - **Hover / Option active:** restrained neutral lift for pointer and combobox keyboard state.
 
-Risk-only accents are **Low**, **Medium** and **High**, always accompanied by text. PRISM's scene beams use `#81bd92`, `#e1bd62` and `#e68c76`; they belong to its optical illustration rather than a second interface palette.
+Risk-only accents are **Low**, **Medium** and **High**, always accompanied by text. PRISM's scene beams use `#41dca5`, `#f0bb3b` and `#ff723a`; they belong to its optical illustration rather than a second interface palette.
 
-**The Colour Means Something Rule.** Colour is reserved for PRISM's refracted spectrum and LOW/MEDIUM/HIGH labels. Ordinary selection, focus, status and contact feedback use warm neutrals.
+**The Colour Means Something Rule.** Colour is reserved for PRISM's refracted spectrum, LOW/MEDIUM/HIGH labels and signal focus/interaction states. Ordinary surfaces use ink/ice neutrals; signal is the single interactive accent. `src/sceneSettings.ts` stores the normative OKLCH tokens and sRGB/linear conversions for Three.js.
 
 ## Typography
 
@@ -192,7 +197,7 @@ Dense Archivo geometry gives the identity physical mass. IBM Plex Mono carries s
 - **Display:** the frontmatter display role is the visible reader h1; mobile reader size is 42px. The spatial name is extruded geometry, not a CSS display-size token.
 - **Headline:** chapter h2 uses the headline role. Floating mobile captions use 27px, with Contact at 25px; short desktop uses 28px. Drawer headings are 32px desktop and 28px mobile.
 - **Title:** monospaced research h3 uses the title role.
-- **Body:** root text is the body role. Drawer/inline research paragraphs use 15px at 1.75, becoming 14px mobile. Paragraphs allow up to 65ch. Journey detail intentionally uses 13px at 1.55 (1.5 mobile) as a short active-item readout.
+- **Body:** root text is the body role. Drawer/inline research paragraphs use 15px at 1.75, becoming 14px mobile. Paragraphs allow up to 65ch. Journey exposes all eight milestones in a compact overview; full details remain 15px/14px in Research notes and reader mode.
 - **Deck:** caption introductions use the deck role, becoming 13px at 1.5 mobile and 15px on wide desktops. Identity's tagline is 20px at 1.5, becoming 19px mobile and 18px on short desktops.
 - **Control and label:** primary actions use 13px/500; combobox triggers use 13px/400. Standard entry text is 14px; mobile command input and composer textarea are 16px. Field labels and metric captions are 12px, with mobile metric captions at 11px.
 - **Telemetry and annotations:** desktop chapter navigation and console data are 10px. Supporting results, portrait readout and compact tabs are 11px. Projected labels use 11px at 1.35 with 9px subordinate labels; mobile uses 10px labels and 9px comments/subordinates. These are intentional compact instrument exceptions, not the sustained-prose scale.
@@ -208,7 +213,7 @@ The portrait/model recovery keeps the full-viewport Canvas and restores persiste
 
 One fixed Canvas fills the viewport behind real HTML. Eight chapters run 00 Identity, 01 PRISM, 02 CommerceAI, 03 InstaGuard, 04 Code Reviewer, 05 OmniVision, 06 Journey and 07 Contact. A native 1100svh scroll rail drives the camera spline. Chapter buttons, next/back navigation and Alt+0 through Alt+7 provide equivalent jumps. Inactive chapters are invisible and inert.
 
-Each chapter owns a full-viewport overlay with a bottom-left floating caption. Base captions use the frontmatter width/padding, shared gutter and 32px bottom inset, with visible overflow and no internal scrollbar. Scene envelopes fit both axes at rest: ordinary desktop objects occupy up to 74% width and 70% height; Identity uses up to 84% width and Contact 62% height. Mobile fits up to 90% width and 45% height with objects lifted above captions. OmniVision uses its own lower framing offset to retain the complete apparatus.
+Each chapter owns a full-viewport overlay with a left-centred desktop caption and a bottom mobile caption. Base captions use the frontmatter width/padding, shared gutter and 32px bottom inset, with visible overflow and no internal scrollbar. Scene envelopes fit both axes at rest: ordinary desktop objects occupy up to 74% width and 70% height; Identity uses up to 84% width and Contact 62% height. Mobile fits up to 90% width and 45% height with objects lifted above captions. OmniVision uses its own lower framing offset to retain the complete apparatus.
 
 Console top is 18px desktop with shared gutter and opaque backing. At 701-1199px, captions become 350px wide, inset 24px left/bottom with 20px padding, and chapter names hide. At desktop heights up to 760px, captions use a 20px bottom inset, 350px width and 18px 20px padding; Journey's deck hides. At widths at least 1600px, captions widen to 430px with 26px padding.
 
@@ -224,7 +229,7 @@ Most DOM surfaces use opaque tonal separation and one-pixel rules. The hand-buil
 
 Shared chrome is sRGB `#c9c6bd`, metalness 1 and roughness 0.2; dark instruments use `#252520`, metalness 0.7 and roughness 0.28. HB/name use the frontmatter type-chrome colour. Name roughness is 0.13 with clearcoat 0.65 and environment intensity 1.7. Mobile-specific narrow environment strips preserve bright/dark reflected bands at neutral rest. The one-shot neutral environment capture uses resolution 128.
 
-PRISM's bevelled physical prism uses transmission 1, thickness 1.25, IOR 1.5, dispersion 1.1 and roughness 0.035, with real calibration bars behind it. Desktop bloom is bounded to intensity 0.075/threshold 2.4 at DPR above 1.2; mobile and Contact omit it. Quiet atmosphere is four-octave warm procedural FBM plus 4,200 desktop/1,050 mobile dust points. Dust is toggleable, reduces strongly at Contact and respects pause/reduced motion; performance fallback can disable haze independently.
+PRISM's bevelled physical prism uses transmission 1, thickness 1.25, IOR 1.5, dispersion 1.1 and roughness 0.035, with real calibration bars behind it. Desktop bloom is bounded to intensity 0.075/threshold 2.4 at DPR above 1.2; mobile and Contact omit it. Quiet atmosphere is four-octave ink-tinted procedural FBM plus 4,200 desktop/1,050 mobile dust points. Dust is toggleable, reduces strongly at Contact and respects pause/reduced motion; performance fallback can disable haze independently.
 
 **The Geometry Carries Depth Rule.** Material thickness, reflected light, silhouette and occlusion establish the world's depth. The floating option menu alone uses a diffuse DOM shadow to separate it from the scene.
 
@@ -232,7 +237,7 @@ PRISM's bevelled physical prism uses transmission 1, thickness 1.25, IOR 1.5, di
 
 Rectangular controls, captions, fields, menus and drawer share small corners. Compact option rows and projected labels intentionally use the compact radius (2px), an exception to the general 4px control radius. One-pixel rules establish boundaries. Circles occur as particles, joints, dials and the single Training Run shockwave, rather than as a generic container system.
 
-Contact copy echoes liquid metal with a neutral gradient and travelling sheen. Neutral gradients and warm procedural haze belong to this physical world. Inline SVG icons serve labelled controls; decorative text-symbol icons do not define a separate language.
+Contact copy echoes liquid metal with a neutral gradient and travelling sheen. Neutral gradients and ink-tinted procedural haze belong to this physical world. Inline SVG icons serve labelled controls; decorative text-symbol icons do not define a separate language.
 
 ## Components
 
@@ -278,7 +283,7 @@ CV.md is factual authority and src/content.ts centralizes copy. PRISM shows a pr
 
 ### Do:
 
-- **Do** use warm neutral interface tokens and corresponding physical materials; reserve colour for PRISM and named risk categories.
+- **Do** use ink/ice interface tokens and corresponding physical materials; reserve colour for PRISM and named risk categories.
 - **Do** preserve all eight chapters, real HTML facts and controls, and the complete reader/no-WebGL alternative.
 - **Do** keep floating captions free of internal scrolling; put expanded prose in Research notes or inline reader content.
 - **Do** preserve the offline portrait matte, exact HB sample correspondence, bounded rendering and visitor motion controls.
@@ -292,3 +297,18 @@ CV.md is factual authority and src/content.ts centralizes copy. PRISM shows a pr
 - **Don't** generalize one GPU's frame measurements into universal 60fps or physical-device compatibility claims.
 
 This source-derived refresh is not a new visual or detector audit. `.impeccable/review/v2/finish-verdict-2.md` gives a ship disposition for three scored fixes only: mobile chrome/reflections, OmniVision framing and removed drawer eyebrows. The revision matrix reuses the v2 production capture paths. Later font-preload and asset-readout-width edits were outside that captured build and need separate measurement. No new audit, universal frame-rate result or physical-device validation is asserted here. No craft-floor defect becomes a future rule: heading kickers remain excluded, and obsolete drawer-kind CSS is not a component pattern.
+
+
+## Catalogue and optical instruments (current revision)
+
+The opening now exposes five keyboard/touch project destinations in a single ruled catalogue. At 1440px it sits below the name, beside the caption. At 390px the compact two-column catalogue sits beneath the raised identity caption. Its geometry icons describe each instrument; there are no decorative card containers or blur surfaces. All labels, project destinations, timeline summaries and finale instructions live in `src/content.ts`.
+
+InstaGuard is a suspended, perforated three-layer optical sieve with bevelled apertures, engraved rim ticks and a shared ALBERT core. One sieve geometry is reused for its three layers. Instanced speech bubbles with fine printed lines travel through depth; rejected examples peel away from the membrane. Counts are capped at 28 desktop, 16 low-core and 12 mobile. The outer gimbal moves slowly and pointer tilt stays bounded.
+
+Code Reviewer is a volumetric 48-chunk repository (32 mobile), with chamfered reflective shells, a query ray, lifted nearest chunks and curved evidence threads into a three-leaf report. Report rulings merge into one draw. A detached flag has no evidence tether. Choosing a repository file rebuilds its illustrative retrieval links; bright pulses travel along them. No live model or repository request is made.
+
+Journey replaces the floor, support posts and topology diagrams with one folded descending ribbon and eight optical lens nodes. All eight factual milestones and their short proofs remain visible together: two columns on desktop, eight compact rows on mobile. Hover/focus/click on an entry highlights its matching lens. Full qualifications, places, course names and experience detail remain in Research notes/reader mode. No missing years are invented for internships or awards. The original per-chapter scale multipliers remain; the narrower new sieve/repository use mobile fit widths 5.8/6.7, and Journey sits at y=2.25 to clear the HUD.
+
+Contact retains its default, correctly oriented half-height portrait. An explicit **Unfold the signal** action folds the same 45K/12K points into a rotating, pointer-shaped light sculpture; **Return to the person** reverses it. A continuous, immutable ordinal attribute avoids float-hash collisions and tone gives the fold a personal surface. All positions remain GPU-derived from uniforms; no attributes change per frame. Reduced motion shows a still resolved sculpture. Returning to the face restores demand-mode idle. Re-train also restores the portrait.
+
+The new shells use reflection-only physical materials, clearcoat, restrained opacity and the existing HDR strip environment. They add no transmission render passes. This is not a claim that the separate GlassHeavy/GlassLite library run or the future camera-rail redesign is complete. See `docs/catalogue/REPORT.md` for current screenshots, measurements and limits; earlier audit records above describe their original builds.

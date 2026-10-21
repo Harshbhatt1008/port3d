@@ -6,8 +6,9 @@ import { CHROME, DARK, useExperience, type SceneProps } from "../state";
 import { datasetSamples } from "../content";
 import { Rod } from "./researchGeometry";
 import { SceneLabel } from "./SceneLabel";
+import { SCENE_COLORS } from "../sceneSettings";
 const risks = ["LOW", "MEDIUM", "HIGH"];
-const spectrum = ["#81bd92", "#e1bd62", "#e68c76"];
+const spectrum = [SCENE_COLORS.low, SCENE_COLORS.medium, SCENE_COLORS.signal];
 export default function Prism({ active, reduced, mobile }: SceneProps) {
   const index = useExperience((s) => s.sampleIndex),
     selected = risks.indexOf(datasetSamples[index].risk),

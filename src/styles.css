@@ -5,22 +5,27 @@
 @import "lenis/dist/lenis.css";
 
 :root {
-  --obsidian: oklch(17% 0.008 85);
-  --deep: oklch(13% 0.006 85);
-  --bone: oklch(92% 0.016 85);
-  --muted: oklch(78% 0.015 85);
-  --metal: oklch(82% 0.009 85);
-  --rule: oklch(39% 0.012 85);
-  --low: oklch(82% 0.1 145);
-  --medium: oklch(84% 0.12 85);
-  --high: oklch(76% 0.14 30);
+  --ink-950: oklch(0.13 0.025 265);
+  --ink-900: oklch(0.17 0.03 265);
+  --ice-50: oklch(0.97 0.01 240);
+  --ice-300: oklch(0.78 0.02 250);
+  --signal: oklch(0.72 0.19 40);
+  --obsidian: var(--ink-900);
+  --deep: var(--ink-950);
+  --bone: var(--ice-50);
+  --muted: var(--ice-300);
+  --metal: oklch(0.82 0.02 250);
+  --rule: oklch(0.37 0.025 265);
+  --low: oklch(0.8 0.15 165);
+  --medium: oklch(0.82 0.15 85);
+  --high: var(--signal);
   --display: "Archivo Black", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
   --gutter: clamp(24px, 3.2vw, 52px);
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   font-family: var(--mono);
   color: var(--bone);
-  background: var(--obsidian);
+  background: var(--deep);
   font-synthesis: none;
   color-scheme: dark;
   font-size: 15px;
@@ -82,7 +87,7 @@ button {
     border-color 160ms;
 }
 button:hover {
-  background: oklch(24% 0.008 85);
+  background: oklch(0.24 0.03 265);
   border-color: var(--metal);
 }
 button[aria-pressed="true"] {
@@ -95,7 +100,7 @@ button:disabled {
   opacity: 0.5;
 }
 :focus-visible {
-  outline: 2px solid var(--bone);
+  outline: 2px solid var(--signal);
   outline-offset: 4px;
 }
 a {
@@ -385,7 +390,7 @@ button svg {
   margin-top: 4px;
 }
 .choice-popover li[data-active="true"] {
-  background: oklch(27% 0.008 85);
+  background: oklch(0.27 0.03 265);
 }
 .choice-popover li[aria-selected="true"] {
   outline: 1px solid var(--rule);
@@ -541,9 +546,9 @@ textarea::placeholder {
   padding: 12px;
   background: linear-gradient(
     115deg,
-    oklch(28% 0.012 85),
+    oklch(0.28 0.03 265),
     var(--obsidian) 40%,
-    oklch(35% 0.01 85)
+    oklch(0.35 0.03 265)
   );
   border-color: var(--metal);
   font-size: 12px;
@@ -564,7 +569,7 @@ textarea::placeholder {
   background: linear-gradient(
     90deg,
     transparent,
-    oklch(88% 0.01 85 / 0.12),
+    oklch(0.88 0.01 240 / 0.12),
     transparent
   );
   transform: skew(-25deg);
@@ -839,8 +844,8 @@ textarea::placeholder {
   text-transform: uppercase;
   color: var(--bone);
   padding: 4px 6px;
-  background: oklch(17% 0.008 85 / 0.9);
-  border: 1px solid oklch(39% 0.012 85 / 0.7);
+  background: oklch(0.17 0.03 265 / 0.92);
+  border: 1px solid oklch(0.39 0.025 265 / 0.7);
   border-radius: 2px;
   text-align: center;
 }
@@ -1418,5 +1423,314 @@ textarea::placeholder {
   .probe,
   .liquid-button::before {
     display: none;
+  }
+}
+
+/* A navigable catalogue gives the opening an immediate purpose. */
+.hero-project-picker {
+  position: absolute;
+  left: calc(var(--gutter) + 440px);
+  right: var(--gutter);
+  bottom: 48px;
+  pointer-events: auto;
+}
+.picker-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.picker-heading > span:first-child {
+  color: var(--bone);
+}
+.picker-items {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-block: 1px solid var(--rule);
+}
+.picker-items button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  position: relative;
+  padding: 18px 12px 16px;
+  border: 0;
+  border-right: 1px solid var(--rule);
+  border-radius: 0;
+  background: var(--deep);
+  text-align: left;
+}
+.picker-items button:last-child {
+  border-right: 0;
+}
+.picker-items button > svg:first-child {
+  width: 38px;
+  height: 38px;
+  color: var(--metal);
+  transition: transform 250ms var(--ease);
+}
+.picker-items button:hover > svg:first-child {
+  transform: translateY(-4px) rotate(-5deg);
+}
+.picker-items button > svg:last-child {
+  position: absolute;
+  right: 9px;
+  top: 14px;
+  width: 12px;
+  color: var(--muted);
+}
+.picker-items small {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.picker-items strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+.picker-items button:hover,
+.picker-items button:focus-visible {
+  background: var(--ink-900);
+}
+.picker-items button:hover strong {
+  color: var(--signal);
+}
+
+.chapter-6 .caption-card {
+  width: min(610px, 45vw);
+}
+.chapter-6 .chapter-deck {
+  max-width: 49ch;
+}
+.journey-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 8px;
+}
+.journey-overview li {
+  min-width: 0;
+  border-top: 1px solid var(--rule);
+}
+.journey-overview button {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  padding: 11px 0;
+  text-align: left;
+  background: transparent;
+}
+.journey-overview button[aria-pressed="true"] {
+  color: var(--bone);
+  background: transparent;
+}
+.milestone-number {
+  color: var(--muted);
+  font-size: 10px;
+  padding-top: 2px;
+}
+.journey-overview small {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+}
+.journey-overview strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.journey-overview button > span:last-child > span {
+  display: block;
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.journey-overview button:hover .milestone-number,
+.journey-overview button[aria-pressed="true"] .milestone-number {
+  color: var(--signal);
+}
+.finale-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border-color: var(--metal);
+}
+.finale-control > span {
+  font-size: 24px;
+  line-height: 1;
+}
+.finale-control > svg {
+  margin-left: auto;
+}
+.finale-control[aria-pressed="true"] {
+  background: transparent;
+  color: var(--bone);
+  border-color: var(--signal);
+}
+.finale-hint {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+  margin: -4px 0 12px;
+}
+[data-reader="true"] .hero-project-picker {
+  position: static;
+  width: min(100%, 850px);
+  margin: 20px auto 0;
+}
+[data-reader="true"] .chapter-6 .caption-card {
+  width: min(100%, 850px);
+}
+
+@media (max-width: 1199px) and (min-width: 701px) {
+  .hero-project-picker {
+    left: 400px;
+    bottom: 24px;
+  }
+  .picker-items {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .picker-items button {
+    padding: 10px;
+    gap: 8px;
+  }
+  .picker-heading > span:last-child {
+    display: none;
+  }
+  .chapter-6 .caption-card {
+    width: 530px;
+  }
+}
+@media (max-width: 700px) {
+  .hero-project-picker {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+  .picker-heading {
+    font-size: 10px;
+    padding-bottom: 8px;
+  }
+  .picker-heading > span:last-child {
+    display: none;
+  }
+  .picker-items {
+    grid-template-columns: 1fr 1fr;
+  }
+  .picker-items button {
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    padding: 8px;
+    border-bottom: 1px solid var(--rule);
+    min-height: 50px;
+  }
+  .picker-items button > svg:first-child {
+    width: 26px;
+    height: 26px;
+  }
+  .picker-items button > svg:last-child {
+    display: none;
+  }
+  .picker-items small {
+    font-size: 8px;
+  }
+  .picker-items strong {
+    font-size: 11px;
+    margin-top: 1px;
+  }
+  .picker-items button:nth-child(even) {
+    border-right: 0;
+  }
+  .picker-items button:last-child {
+    grid-column: 1/-1;
+    border-bottom: 0;
+  }
+  .chapter-0 .caption-card {
+    bottom: 218px;
+  }
+  .chapter-0 .caption-actions {
+    margin-top: 5px;
+  }
+  .chapter-0 .primary,
+  .chapter-0 .scene-hint {
+    display: none;
+  }
+  .chapter-0 .hero-tagline {
+    margin: 10px 0 4px;
+  }
+  .chapter-6 .caption-card {
+    width: auto;
+    padding: 14px 16px 8px;
+  }
+  .journey-overview {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-top: 12px;
+  }
+  .journey-overview button {
+    padding: 5px 0;
+    gap: 10px;
+  }
+  .journey-overview button > span:last-child {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    width: 100%;
+  }
+  .journey-overview small {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    font-size: 8px;
+    padding-left: 5px;
+  }
+  .journey-overview strong {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 10px;
+  }
+  .journey-overview button > span:last-child > span {
+    grid-column: 1/-1;
+    font-size: 9px;
+  }
+  .chapter-6 .caption-footer > span {
+    max-width: 20ch;
+    font-size: 10px;
+  }
+  .finale-control {
+    margin-bottom: 8px;
+    min-height: 44px;
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+  .finale-hint {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  [data-reader="true"] .chapter-0 .caption-card {
+    bottom: auto;
+  }
+  [data-reader="true"] .hero-project-picker {
+    padding: 0;
   }
 }

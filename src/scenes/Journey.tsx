@@ -1,253 +1,95 @@
-import { InstrumentDetails, Chamfer, Turned } from "./instrumentGeometry";
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Line } from "@react-three/drei";
 import {
-  BufferAttribute,
   BufferGeometry,
   DoubleSide,
+  Float32BufferAttribute,
   Group,
+  Mesh,
   Vector3,
 } from "three";
-import { CHROME, DARK, probe, useExperience } from "../state";
-import type { SceneProps } from "../state";
-import { timeline } from "../content";
-import {
-  JOURNEY_ANCHORS as ANCHORS,
-  JOURNEY_CURVE as CURVE,
-} from "./journeyGeometry";
+import { CHROME, useExperience, type SceneProps } from "../state";
+import { JOURNEY_CURVE, JOURNEY_ANCHORS } from "./journeyGeometry";
+import { OpticalGlass, FineLines, curveSegments } from "./optics";
+import { SceneLabel } from "./SceneLabel";
 
-// Supplied journey landmarks; the rail is illustrative, not measured loss.
-// Dates belong to the source timeline: the internships and awards have no invented years.
-
-function makeRibbon() {
-  const positions: number[] = [];
-  const indices: number[] = [];
+function ribbonGeometry() {
+  const vertices: number[] = [],
+    indices: number[] = [],
+    edges = [[], []] as Vector3[][];
   for (let i = 0; i <= 160; i++) {
-    const point = CURVE.getPoint(i / 160);
-    positions.push(
-      point.x,
-      point.y,
-      point.z - 0.143,
-      point.x,
-      point.y,
-      point.z + 0.143,
-    );
+    const t = i / 160,
+      p = JOURNEY_CURVE.getPoint(t);
+    const normal = new Vector3(p.x, 0, p.z).normalize().multiplyScalar(0.23);
+    const a = p.clone().sub(normal),
+      b = p.clone().add(normal);
+    vertices.push(...a.toArray(), ...b.toArray());
+    edges[0].push(a);
+    edges[1].push(b);
     if (i < 160) {
-      const a = i * 2;
-      indices.push(a, a + 1, a + 2, a + 1, a + 3, a + 2);
+      const n = i * 2;
+      indices.push(n, n + 1, n + 2, n + 1, n + 3, n + 2);
     }
   }
-  const geometry = new BufferGeometry();
-  geometry.setAttribute(
-    "position",
-    new BufferAttribute(new Float32Array(positions), 3),
-  );
-  geometry.setIndex(indices);
-  geometry.computeVertexNormals();
-  return geometry;
+  const g = new BufferGeometry();
+  g.setAttribute("position", new Float32BufferAttribute(vertices, 3));
+  g.setIndex(indices);
+  g.computeVertexNormals();
+  return { geometry: g, edges: edges.flatMap(curveSegments) };
 }
-
-function toolNetwork(mode: number) {
-  const nodes = Array.from({ length: 12 }, (_, i) => {
-    if (mode === 0) {
-      const angle = (i / 12) * Math.PI * 2;
-      return new Vector3(
-        Math.cos(angle) * 1.37,
-        Math.sin(angle) * 0.68,
-        Math.sin(angle * 2) * 0.3,
-      );
-    }
-    if (mode === 1)
-      return new Vector3(
-        (Math.floor(i / 4) - 1) * 1.18,
-        ((i % 4) - 1.5) * 0.42,
-        (Math.floor(i / 4) % 2) * 0.3,
-      );
-    const a = (Math.floor(i / 4) / 3) * Math.PI * 2;
-    const b = ((i % 4) / 4) * Math.PI * 2;
-    return new Vector3(
-      Math.cos(a) * 1.12 + Math.cos(b) * 0.38,
-      Math.sin(a) * 0.54 + Math.sin(b) * 0.3,
-      Math.cos(b) * 0.26,
+export default function Journey({ active, reduced, mobile }: SceneProps) {
+  const index = useExperience((s) => s.nodeIndex);
+  const root = useRef<Group>(null),
+    pulse = useRef<Mesh>(null),
+    clock = useRef(0);
+  const { geometry, edges } = useMemo(ribbonGeometry, []);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  useFrame(({ pointer }, delta) => {
+    if (!active || reduced || useExperience.getState().paused) return;
+    clock.current += Math.min(delta, 0.05);
+    if (root.current) root.current.rotation.y = -0.24 + pointer.x * 0.065;
+    pulse.current?.position.copy(
+      JOURNEY_CURVE.getPoint((clock.current * 0.075) % 1),
     );
   });
-  const edges: [number, number][] = [];
-  if (mode === 0) {
-    for (let i = 0; i < 12; i++) {
-      edges.push([i, (i + 1) % 12]);
-      if (i % 2 === 0) edges.push([i, (i + 6) % 12]);
-    }
-  } else if (mode === 1) {
-    for (let i = 0; i < 8; i++)
-      for (let j = 0; j < 4; j++)
-        if ((i + j) % 2 === 0) edges.push([i, Math.floor(i / 4) * 4 + 4 + j]);
-  } else {
-    for (let i = 0; i < 12; i++) {
-      edges.push([i, Math.floor(i / 4) * 4 + ((i + 1) % 4)]);
-      if (i % 4 === 0) edges.push([i, (i + 4) % 12]);
-    }
-  }
-  return { nodes, edges };
-}
-
-export default function Journey({ active, reduced }: SceneProps) {
-  const nodeIndex = useExperience((s) => s.nodeIndex);
-  const toolIndex = useExperience((s) => s.toolIndex);
-  const focus = useRef<Group>(null);
-  const network = useRef<Group>(null);
-  const ribbon = useMemo(makeRibbon, []);
-  const topology = useMemo(() => toolNetwork(toolIndex), [toolIndex]);
-  const selected =
-    ANCHORS[Math.max(0, Math.min(ANCHORS.length - 1, nodeIndex))];
-  useEffect(() => () => ribbon.dispose(), [ribbon]);
-  useEffect(() => {
-    if (focus.current && reduced) focus.current.position.copy(selected);
-  }, [selected, reduced]);
-  useFrame((_, delta) => {
-    if (!active || useExperience.getState().paused || reduced) return;
-    focus.current?.position.lerp(selected, 1 - Math.exp(-delta * 7));
-    // The network settles on a topology change; it does not spin while being read.
-    if (network.current)
-      network.current.rotation.y +=
-        (0.06 - network.current.rotation.y) * (1 - Math.exp(-delta * 6));
-  });
-  const rail = useMemo(() => CURVE.getPoints(100), []);
   return (
-    <group position={[0, 0, 0]} rotation={[0.06, -0.14, 0]}>
-      <InstrumentDetails index={6} />
-      <mesh
-        geometry={ribbon}
-        {...probe(
-          "Illustrative descending loss curve · journey from 2020 to 2026",
-        )}
-      >
-        <meshStandardMaterial {...CHROME} side={DoubleSide} roughness={0.29} />
-      </mesh>
-      {[-0.15, 0.15].map((offset) => (
-        <Line
-          key={offset}
-          points={rail.map(
-            (p) => [p.x, p.y + 0.045, p.z + offset] as [number, number, number],
-          )}
-          color="#e2ddcf"
-          lineWidth={1.1}
+    <group ref={root} rotation={[0.06, -0.24, -0.16]}>
+      <mesh geometry={geometry}>
+        <meshPhysicalMaterial
+          color="#bac9dc"
+          metalness={0.65}
+          roughness={0.16}
+          clearcoat={1}
+          envMapIntensity={1.7}
+          side={DoubleSide}
         />
-      ))}
-      {ANCHORS.map((p, i) => (
-        <group
-          key={i}
-          position={p}
-          {...probe(`${timeline[i].year} · ${timeline[i].title}`)}
-        >
-          <mesh position={[0, (-2.05 - p.y) / 2, 0]}>
-            <Turned args={[0.025, 0.05, p.y + 2.05, 10]} />
-            <meshStandardMaterial
-              color="#626459"
-              metalness={0.8}
-              roughness={0.33}
-            />
+      </mesh>
+      <FineLines segments={edges} opacity={0.75} />
+      {JOURNEY_ANCHORS.map((p, i) => (
+        <group key={i} position={p}>
+          <mesh scale={[0.23, 0.23, 0.12]}>
+            <icosahedronGeometry args={[1, 2]} />
+            <OpticalGlass opacity={i === index ? 0.85 : 0.45} />
           </mesh>
-          <mesh position={[0, -2.05 - p.y, 0]}>
-            <Turned args={[0.2, 0.24, 0.09, 20]} />
-            <meshStandardMaterial {...DARK} />
+          <mesh rotation={[0, 0, Math.PI / 2]} scale={i === index ? 1.15 : 1}>
+            <torusGeometry args={[0.28, 0.016, 6, 32]} />
+            <meshStandardMaterial {...CHROME} />
           </mesh>
-          <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <torusGeometry args={[0.16, 0.035, 8, 28]} />
-            <meshStandardMaterial
-              color={nodeIndex === i ? "#e6e1d3" : "#9b9b8d"}
-              metalness={1}
-              roughness={0.21}
-            />
-          </mesh>
-          <mesh>
-            <sphereGeometry args={[0.085, 14, 12]} />
-            <meshStandardMaterial
-              color={nodeIndex === i ? "#eee8da" : "#4b4d43"}
-              metalness={0.7}
-              roughness={0.3}
-            />
-          </mesh>
-          <Line
-            points={[
-              [0, 0, 0],
-              [0, 0.31, 0],
-              [0.2, 0.43, 0],
-            ]}
-            color="#8b8d7c"
-            lineWidth={1}
-          />
-          {[0, 1, 2].map((n) => (
-            <mesh key={n} position={[0.24 + n * 0.1, 0.43, 0]}>
-              <Chamfer args={[0.045, 0.05 + n * 0.03, 0.06]} />
-              <meshStandardMaterial {...CHROME} />
-            </mesh>
-          ))}
+          {!mobile && (
+            <SceneLabel
+              active={active}
+              position={[0, 0.44, 0.1]}
+              className="no-surface"
+            >
+              {String(i + 1).padStart(2, "0")}
+            </SceneLabel>
+          )}
         </group>
       ))}
-      <group ref={focus} position={selected}>
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.26, 0.014, 6, 44]} />
-          <meshBasicMaterial color="#eee7d7" />
-        </mesh>
-        <mesh position={[0, 0.32, 0]} rotation={[0, 0, Math.PI / 4]}>
-          <octahedronGeometry args={[0.095]} />
-          <meshStandardMaterial {...CHROME} />
-        </mesh>
-      </group>
-      <Line
-        points={[
-          [-3.35, -2.06, 0.5],
-          [3.35, -2.06, 0.5],
-        ]}
-        color="#626456"
-        lineWidth={0.8}
-      />
-      <group
-        ref={network}
-        position={[0.85, 1.44, -0.38]}
-        {...probe(
-          "Tool constellation · topology follows the selected tool group",
-        )}
-      >
-        {topology.edges.map(([a, b], i) => (
-          <Line
-            key={`${toolIndex}-${i}`}
-            points={[topology.nodes[a], topology.nodes[b]]}
-            color="#a9aa9a"
-            transparent
-            opacity={0.43}
-            lineWidth={0.85}
-          />
-        ))}
-        {topology.nodes.map((p, i) => (
-          <group key={i} position={p}>
-            <mesh rotation={[i * 0.21, i * 0.37, 0]}>
-              {i % 3 === 0 ? (
-                <octahedronGeometry args={[0.11]} />
-              ) : i % 3 === 1 ? (
-                <Chamfer args={[0.13, 0.13, 0.13]} />
-              ) : (
-                <sphereGeometry args={[0.085, 12, 10]} />
-              )}
-              <meshStandardMaterial
-                {...CHROME}
-                roughness={i % 3 === 1 ? 0.42 : 0.19}
-              />
-            </mesh>
-            {i % 4 === 0 && (
-              <mesh rotation={[Math.PI / 2, 0, 0]}>
-                <torusGeometry args={[0.2, 0.009, 6, 24]} />
-                <meshStandardMaterial
-                  color="#7f8372"
-                  metalness={0.8}
-                  roughness={0.3}
-                />
-              </mesh>
-            )}
-          </group>
-        ))}
-      </group>
+      <mesh ref={pulse} position={JOURNEY_ANCHORS[0]}>
+        <sphereGeometry args={[0.055, 10, 10]} />
+        <meshBasicMaterial color="#f2f7ff" />
+      </mesh>
     </group>
   );
 }
