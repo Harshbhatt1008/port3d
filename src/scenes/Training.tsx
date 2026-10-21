@@ -268,11 +268,13 @@ export function Training({
       }
     }
     const now = useExperience.getState();
-    // Compile the chrome permutation while the one-point/noise phase is visible.
-    // All three area lights exist from the beginning, so it stays the same shader.
+    // Warm only the persistent HB against the live lighting/environment. Async
+    // whole-world compilation polls materials after navigated rooms dispose them
+    // (Three r182 then throws in checkMaterialsReady). compile queues the shader
+    // without retaining a readiness timer across navigation/reader unmounts.
     if (!warmed.current && frame.scene.environment && chrome.current) {
       warmed.current = true;
-      void frame.gl.compileAsync(frame.scene, frame.camera);
+      frame.gl.compile(chrome.current, frame.camera, frame.scene);
     }
     const time = now.introTime;
     const running = now.introRunning;

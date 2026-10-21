@@ -1,0 +1,2056 @@
+{
+  "phase": "final",
+  "at": "2026-10-21T13:53:07.760Z",
+  "viewports": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "positions": [
+        {
+          "filename": "1440-0-75.png",
+          "sample": {
+            "progress": 0.7497777777777778,
+            "chapter": 1,
+            "renderedProgress": 0.74978,
+            "renderChapter": 1,
+            "camera": [
+              3.477871908831166,
+              -0.8107132289106171,
+              -27.113677289033745
+            ],
+            "rotation": [
+              -0.02499479361892016,
+              0,
+              -0.017999982454039474,
+              "XYZ"
+            ],
+            "fov": 40,
+            "frameloop": "always",
+            "paused": false,
+            "reduced": false,
+            "reader": false,
+            "contextLost": false,
+            "canvasCount": 1,
+            "sameCanvas": true,
+            "cssSize": [
+              1425,
+              900
+            ],
+            "bufferSize": [
+              2137,
+              1350
+            ],
+            "scrollY": 964,
+            "rooms": [
+              {
+                "name": "chapter-0",
+                "z": -22,
+                "visible": true,
+                "ndc": [
+                  1.1798351754501784,
+                  -0.3318750927386074,
+                  1.0197086961484378
+                ]
+              },
+              {
+                "name": "chapter-1",
+                "z": -44,
+                "visible": true,
+                "ndc": [
+                  0.03302722615770761,
+                  0.006287463622855329,
+                  0.9943011983848368
+                ]
+              },
+              {
+                "name": "chapter-2",
+                "z": -66,
+                "visible": false,
+                "ndc": [
+                  -0.2918827386637959,
+                  0.20273946318386207,
+                  0.997646229315023
+                ]
+              }
+            ],
+            "perf": {
+              "fps": 165,
+              "frames": 165,
+              "dpr": 1.5,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 114,
+              "triangles": 23457,
+              "points": 4200
+            },
+            "renders": 5332,
+            "overflow": false
+          },
+          "fps": {
+            "wallSeconds": 2.2022999999940405,
+            "browserRafFPS": 165.281750897237,
+            "r3fFPS": 165.281750897237,
+            "renderCallsPerSecond": 2975.071516150266,
+            "r3f": {
+              "fps": 165,
+              "frames": 166,
+              "dpr": 1.5,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 114,
+              "triangles": 23457,
+              "points": 4200
+            }
+          }
+        },
+        {
+          "filename": "1440-1.png",
+          "sample": {
+            "progress": 1.0002222222222223,
+            "chapter": 1,
+            "renderedProgress": 1.00022,
+            "renderChapter": 1,
+            "camera": [
+              3.799765785564828,
+              -0.89990637337679,
+              -32.00342319985515
+            ],
+            "rotation": [
+              -0.024994793618920166,
+              0,
+              0.000025132733062466987,
+              "XYZ"
+            ],
+            "fov": 40,
+            "frameloop": "always",
+            "paused": false,
+            "reduced": false,
+            "reader": false,
+            "contextLost": false,
+            "canvasCount": 1,
+            "sameCanvas": true,
+            "cssSize": [
+              1425,
+              900
+            ],
+            "bufferSize": [
+              2137,
+              1350
+            ],
+            "scrollY": 1286,
+            "rooms": [
+              {
+                "name": "chapter-0",
+                "z": -22,
+                "visible": false,
+                "ndc": [
+                  0.6578519117015412,
+                  -0.1781013876900138,
+                  1.010200618214248
+                ]
+              },
+              {
+                "name": "chapter-1",
+                "z": -44,
+                "visible": true,
+                "ndc": [
+                  0.000033866780310245,
+                  -0.00004101791672176082,
+                  0.9918882164785805
+                ]
+              },
+              {
+                "name": "chapter-2",
+                "z": -66,
+                "visible": false,
+                "ndc": [
+                  -0.347714370976068,
+                  0.23877612547964847,
+                  0.9972749770693032
+                ]
+              }
+            ],
+            "perf": {
+              "fps": 165,
+              "frames": 166,
+              "dpr": 1.5,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 110,
+              "triangles": 3881,
+              "points": 4200
+            },
+            "renders": 19897,
+            "overflow": false
+          },
+          "fps": {
+            "wallSeconds": 2.2948999999999997,
+            "browserRafFPS": 63.61932981829275,
+            "r3fFPS": 63.61932981829275,
+            "renderCallsPerSecond": 1141.2261972199226,
+            "r3f": {
+              "fps": 5,
+              "frames": 7,
+              "dpr": 1,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 110,
+              "triangles": 2652,
+              "points": 4200
+            }
+          }
+        },
+        {
+          "filename": "1440-1-25.png",
+          "sample": {
+            "progress": 1.2498888888888888,
+            "chapter": 1,
+            "renderedProgress": 1.24989,
+            "renderChapter": 1,
+            "camera": [
+              2.612027843054397,
+              -0.48591912999456816,
+              -36.87871401112922
+            ],
+            "rotation": [
+              -0.024994793618920156,
+              2.710505431213761e-20,
+              0.01799999561350933,
+              "XYZ"
+            ],
+            "fov": 40,
+            "frameloop": "always",
+            "paused": false,
+            "reduced": false,
+            "reader": false,
+            "contextLost": false,
+            "canvasCount": 1,
+            "sameCanvas": true,
+            "cssSize": [
+              1425,
+              900
+            ],
+            "bufferSize": [
+              1425,
+              900
+            ],
+            "scrollY": 1607,
+            "rooms": [
+              {
+                "name": "chapter-0",
+                "z": -22,
+                "visible": false,
+                "ndc": [
+                  0.3041893164502945,
+                  -0.02969861506877595,
+                  1.0069406196343005
+                ]
+              },
+              {
+                "name": "chapter-1",
+                "z": -44,
+                "visible": true,
+                "ndc": [
+                  0.28644846555614945,
+                  -0.2144949456695188,
+                  0.9862090199990461
+                ]
+              },
+              {
+                "name": "chapter-2",
+                "z": -66,
+                "visible": true,
+                "ndc": [
+                  -0.33234600622529126,
+                  0.23758663153807932,
+                  0.9967818986879806
+                ]
+              }
+            ],
+            "perf": {
+              "fps": 165,
+              "frames": 166,
+              "dpr": 1,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 149,
+              "triangles": 50192,
+              "points": 4200
+            },
+            "renders": 22918,
+            "overflow": false
+          },
+          "fps": {
+            "wallSeconds": 2.2027000000000005,
+            "browserRafFPS": 165.25173650519812,
+            "r3fFPS": 165.25173650519812,
+            "renderCallsPerSecond": 165.25173650519812,
+            "r3f": {
+              "fps": 165,
+              "frames": 165,
+              "dpr": 1,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 149,
+              "triangles": 50192,
+              "points": 4200
+            }
+          }
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "positions": [
+        {
+          "filename": "390-0-75.png",
+          "sample": {
+            "progress": 0.7497630331753554,
+            "chapter": 1,
+            "renderedProgress": 0.74976,
+            "renderChapter": 1,
+            "camera": [
+              3.477823991988018,
+              -0.8106983409778079,
+              -27.1133406764857
+            ],
+            "rotation": [
+              -0.02499479361892016,
+              -2.710505431213761e-20,
+              -0.017999980048421373,
+              "XYZ"
+            ],
+            "fov": 40,
+            "frameloop": "always",
+            "paused": false,
+            "reduced": false,
+            "reader": false,
+            "contextLost": false,
+            "canvasCount": 1,
+            "sameCanvas": true,
+            "cssSize": [
+              375,
+              844
+            ],
+            "bufferSize": [
+              468,
+              1055
+            ],
+            "scrollY": 904,
+            "rooms": [
+              {
+                "name": "chapter-0",
+                "z": -22,
+                "visible": true,
+                "ndc": [
+                  4.204626314770765,
+                  -0.3318938806430323,
+                  1.0197099752947967
+                ]
+              },
+              {
+                "name": "chapter-1",
+                "z": -44,
+                "visible": true,
+                "ndc": [
+                  0.1177095896123325,
+                  0.006286426059262945,
+                  0.9943013164753175
+                ]
+              },
+              {
+                "name": "chapter-2",
+                "z": -66,
+                "visible": false,
+                "ndc": [
+                  -1.0401236793320205,
+                  0.20273730832078724,
+                  0.997646251667219
+                ]
+              }
+            ],
+            "perf": {
+              "fps": 165,
+              "frames": 166,
+              "dpr": 1.25,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 93,
+              "triangles": 3864,
+              "points": 1050
+            },
+            "renders": 877,
+            "overflow": false
+          },
+          "fps": {
+            "wallSeconds": 2.2025000000029795,
+            "browserRafFPS": 165.26674233802842,
+            "r3fFPS": 165.26674233802842,
+            "renderCallsPerSecond": 165.26674233802842,
+            "r3f": {
+              "fps": 165,
+              "frames": 165,
+              "dpr": 1.25,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 93,
+              "triangles": 3864,
+              "points": 1050
+            }
+          }
+        },
+        {
+          "filename": "390-1.png",
+          "sample": {
+            "progress": 1.0002369668246445,
+            "chapter": 1,
+            "renderedProgress": 1.00024,
+            "renderChapter": 1,
+            "camera": [
+              3.799750182939855,
+              -0.8999001404358835,
+              -32.003650400758744
+            ],
+            "rotation": [
+              -0.024994793618920163,
+              0,
+              0.00002680030657409238,
+              "XYZ"
+            ],
+            "fov": 40,
+            "frameloop": "always",
+            "paused": false,
+            "reduced": false,
+            "reader": false,
+            "contextLost": false,
+            "canvasCount": 1,
+            "sameCanvas": true,
+            "cssSize": [
+              375,
+              844
+            ],
+            "bufferSize": [
+              468,
+              1055
+            ],
+            "scrollY": 1206,
+            "rooms": [
+              {
+                "name": "chapter-0",
+                "z": -22,
+                "visible": false,
+                "ndc": [
+                  2.344228453292199,
+                  -0.17809582679618588,
+                  1.0102003922510834
+                ]
+              },
+              {
+                "name": "chapter-1",
+                "z": -44,
+                "visible": true,
+                "ndc": [
+                  0.00012872815388641803,
+                  -0.00004374555227362472,
+                  0.9918880588457979
+                ]
+              },
+              {
+                "name": "chapter-2",
+                "z": -66,
+                "visible": false,
+                "ndc": [
+                  -1.2391040272005929,
+                  0.23877767640930958,
+                  0.9972749573554796
+                ]
+              }
+            ],
+            "perf": {
+              "fps": 165,
+              "frames": 165,
+              "dpr": 1.25,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 93,
+              "triangles": 3864,
+              "points": 1050
+            },
+            "renders": 1751,
+            "overflow": false
+          },
+          "fps": {
+            "wallSeconds": 2.2036000000000002,
+            "browserRafFPS": 165.18424396442182,
+            "r3fFPS": 165.18424396442182,
+            "renderCallsPerSecond": 176.52931566527496,
+            "r3f": {
+              "fps": 165,
+              "frames": 166,
+              "dpr": 1,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 91,
+              "triangles": 2424,
+              "points": 1050
+            }
+          }
+        },
+        {
+          "filename": "390-1-25.png",
+          "sample": {
+            "progress": 1.2498815165876778,
+            "chapter": 1,
+            "renderedProgress": 1.24988,
+            "renderChapter": 1,
+            "camera": [
+              2.6120846294770574,
+              -0.485938643133729,
+              -36.878545755115056
+            ],
+            "rotation": [
+              -0.02499479361892016,
+              2.710505431213761e-20,
+              0.01799999501210465,
+              "XYZ"
+            ],
+            "fov": 40,
+            "frameloop": "always",
+            "paused": false,
+            "reduced": false,
+            "reader": false,
+            "contextLost": false,
+            "canvasCount": 1,
+            "sameCanvas": true,
+            "cssSize": [
+              375,
+              844
+            ],
+            "bufferSize": [
+              375,
+              844
+            ],
+            "scrollY": 1507,
+            "rooms": [
+              {
+                "name": "chapter-0",
+                "z": -22,
+                "visible": false,
+                "ndc": [
+                  1.0840311495551016,
+                  -0.029703513805197958,
+                  1.0069406953278297
+                ]
+              },
+              {
+                "name": "chapter-1",
+                "z": -44,
+                "visible": true,
+                "ndc": [
+                  1.0207022109283383,
+                  -0.21448038475911857,
+                  0.9862093492990828
+                ]
+              },
+              {
+                "name": "chapter-2",
+                "z": -66,
+                "visible": true,
+                "ndc": [
+                  -1.1843386109080558,
+                  0.23758759781753866,
+                  0.9967819185364936
+                ]
+              }
+            ],
+            "perf": {
+              "fps": 165,
+              "frames": 166,
+              "dpr": 1,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 95,
+              "triangles": 27368,
+              "points": 1050
+            },
+            "renders": 2631,
+            "overflow": false
+          },
+          "fps": {
+            "wallSeconds": 2.2029000000000014,
+            "browserRafFPS": 165.23673339688582,
+            "r3fFPS": 165.23673339688582,
+            "renderCallsPerSecond": 165.23673339688582,
+            "r3f": {
+              "fps": 165,
+              "frames": 166,
+              "dpr": 1,
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "drawCalls": 95,
+              "triangles": 27368,
+              "points": 1050
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "warnings": [
+    "THREE.WebGLProgram: Program Info Log: (221,81-129): warning X4122: sum of 0.996094 and -2.98545e-017 cannot be represented accurately in double precision\n(220,37-61): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(221,82-106): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(220,37-61): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision\n(221,82-106): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision\n(207,10-67): warning X4008: floating point division by zero\n(207,10-67): warning X4008: floating point division by zero\n(207,10-67): warning X4008: floating point division by zero"
+  ],
+  "transitions": [
+    {
+      "progress": 5.000333333333334,
+      "chapter": 5,
+      "renderedProgress": 0.58314,
+      "renderChapter": 1,
+      "camera": [
+        2.7879179333210464,
+        -0.5929291868082702,
+        -23.095847870144
+      ],
+      "rotation": [
+        -0.02499479361892016,
+        0,
+        -0.008981024853759071,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 6429,
+      "rooms": [
+        {
+          "name": "chapter-0",
+          "z": -22,
+          "visible": true,
+          "ndc": [
+            4.364803617853449,
+            -1.3369516491715079,
+            1.0902960418978715
+          ]
+        },
+        {
+          "name": "chapter-1",
+          "z": -44,
+          "visible": true,
+          "ndc": [
+            0.08403751969927994,
+            -0.009899031044749675,
+            0.9954399538793947
+          ]
+        },
+        {
+          "name": "chapter-2",
+          "z": -66,
+          "visible": false,
+          "ndc": [
+            -0.23544157491864023,
+            0.18035301417518884,
+            0.9978880442233797
+          ]
+        },
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": false,
+          "ndc": [
+            -0.11224853022550824,
+            0.10484603546541314,
+            0.999070671275935
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": false,
+          "ndc": [
+            -0.06866603415146874,
+            0.057437633674501345,
+            0.9993037051418229
+          ]
+        },
+        {
+          "name": "chapter-6",
+          "z": -154,
+          "visible": false,
+          "ndc": [
+            0.0025893110600021738,
+            0.039182557490181166,
+            0.9994582109175384
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 3,
+        "triangles": 9788,
+        "points": 4200
+      },
+      "renders": 23629,
+      "overflow": false
+    },
+    {
+      "progress": 5.000333333333334,
+      "chapter": 5,
+      "renderedProgress": 1.50893,
+      "renderChapter": 2,
+      "camera": [
+        0.23795935991607076,
+        0.33026017427678417,
+        -43.22584715376769
+      ],
+      "rotation": [
+        -0.02499479361892016,
+        1.6940658945086007e-21,
+        -0.0010091059800477371,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 6429,
+      "rooms": [
+        {
+          "name": "chapter-1",
+          "z": -44,
+          "visible": true,
+          "ndc": [
+            7.613896712159176,
+            -5.097553523336117,
+            0.8770794484440584
+          ]
+        },
+        {
+          "name": "chapter-2",
+          "z": -66,
+          "visible": true,
+          "ndc": [
+            -0.2471359380523976,
+            0.17338362689136702,
+            0.9958252461681811
+          ]
+        },
+        {
+          "name": "chapter-3",
+          "z": -88,
+          "visible": false,
+          "ndc": [
+            0.0876470532649023,
+            0.04855230795271077,
+            0.9979882813394969
+          ]
+        },
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": false,
+          "ndc": [
+            -0.07903040668109515,
+            0.0796674303839181,
+            0.9987238757512653
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": false,
+          "ndc": [
+            -0.03398691260753034,
+            0.02745202796442662,
+            0.9990957377470084
+          ]
+        },
+        {
+          "name": "chapter-6",
+          "z": -154,
+          "visible": false,
+          "ndc": [
+            0.043250473483608165,
+            0.010954010748390502,
+            0.9993196015482158
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 3,
+        "triangles": 9788,
+        "points": 4200
+      },
+      "renders": 23655,
+      "overflow": false
+    },
+    {
+      "progress": 5.000333333333334,
+      "chapter": 5,
+      "renderedProgress": 4.24824,
+      "renderChapter": 4,
+      "camera": [
+        -2.8898916109166093,
+        0.6462144352943624,
+        -102.84111857393367
+      ],
+      "rotation": [
+        -0.024994793618920153,
+        0,
+        0.01799889995578854,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 6429,
+      "rooms": [
+        {
+          "name": "chapter-3",
+          "z": -88,
+          "visible": false,
+          "ndc": [
+            -0.6288340044343007,
+            0.20647641915920892,
+            1.006970483623483
+          ]
+        },
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": true,
+          "ndc": [
+            0.022367750985033616,
+            0.05031300945458325,
+            0.986249921925068
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": true,
+          "ndc": [
+            0.08162744469194333,
+            -0.08864525382643142,
+            0.996796142981369
+          ]
+        },
+        {
+          "name": "chapter-6",
+          "z": -154,
+          "visible": false,
+          "ndc": [
+            0.19871659977317038,
+            -0.07900821719452206,
+            0.9982692495694859
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 3,
+        "triangles": 9788,
+        "points": 4200
+      },
+      "renders": 23671,
+      "overflow": false
+    },
+    {
+      "progress": 5.000333333333334,
+      "chapter": 5,
+      "renderedProgress": 4.65197,
+      "renderChapter": 5,
+      "camera": [
+        -2.273660732641715,
+        -0.146505313652663,
+        -112.79839483974703
+      ],
+      "rotation": [
+        -0.02499479361892016,
+        0,
+        -0.014691831118792645,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 6429,
+      "rooms": [
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": true,
+          "ndc": [
+            0.3304027804896012,
+            -0.6522198891365824,
+            1.0357353175263722
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": true,
+          "ndc": [
+            0.07034765697926054,
+            -0.0517459494370853,
+            0.9950179260484894
+          ]
+        },
+        {
+          "name": "chapter-6",
+          "z": -154,
+          "visible": false,
+          "ndc": [
+            0.22241055283367836,
+            -0.049681168088913416,
+            0.9977968565863673
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 3,
+        "triangles": 9788,
+        "points": 4200
+      },
+      "renders": 23706,
+      "overflow": false
+    },
+    {
+      "progress": 5.000333333333334,
+      "chapter": 5,
+      "renderedProgress": 4.99719,
+      "renderChapter": 5,
+      "camera": [
+        -1.5057241464414746,
+        -0.6974175914495353,
+        -119.95649304703954
+      ],
+      "rotation": [
+        -0.024994793618920163,
+        -8.470329472543003e-22,
+        -0.00031834764522114785,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 6429,
+      "rooms": [
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": false,
+          "ndc": [
+            0.2249662287906338,
+            -0.28828036985522587,
+            1.0102375714897793
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": true,
+          "ndc": [
+            0.0008245530293821552,
+            -0.00034036321919653976,
+            0.9919207144901634
+          ]
+        },
+        {
+          "name": "chapter-6",
+          "z": -154,
+          "visible": false,
+          "ndc": [
+            0.22952307695174676,
+            -0.03628732112060086,
+            0.9972863932074267
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 76,
+        "frames": 103,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 83,
+        "triangles": 3844,
+        "points": 4200
+      },
+      "renders": 23716,
+      "overflow": false
+    },
+    {
+      "progress": 5.000333333333334,
+      "chapter": 5,
+      "renderedProgress": 4.99839,
+      "renderChapter": 5,
+      "camera": [
+        -1.5032654043622462,
+        -0.6985308460742146,
+        -119.97520112000151
+      ],
+      "rotation": [
+        -0.024994793618920163,
+        0,
+        -0.000181744346724125,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 6429,
+      "rooms": [
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": false,
+          "ndc": [
+            0.22494670961488555,
+            -0.28796633362301877,
+            1.010218821244399
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": true,
+          "ndc": [
+            0.00047109120403671686,
+            -0.00019376762350500621,
+            0.9919077879294054
+          ]
+        },
+        {
+          "name": "chapter-6",
+          "z": -154,
+          "visible": false,
+          "ndc": [
+            0.22952088948872928,
+            -0.036304911938511805,
+            0.9972847781112008
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 76,
+        "frames": 103,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 83,
+        "triangles": 3844,
+        "points": 4200
+      },
+      "renders": 23726,
+      "overflow": false
+    },
+    {
+      "progress": 5.000333333333334,
+      "chapter": 5,
+      "renderedProgress": 4.9992,
+      "renderChapter": 5,
+      "camera": [
+        -1.5016342463343162,
+        -0.6992660644333415,
+        -119.98759553910207
+      ],
+      "rotation": [
+        -0.024994793618920156,
+        0,
+        -0.0000910036620930075,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 6429,
+      "rooms": [
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": false,
+          "ndc": [
+            0.22493413778552074,
+            -0.28775847173008523,
+            1.0102064375600166
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": true,
+          "ndc": [
+            0.00023600626774926146,
+            -0.00009684240621401233,
+            0.9918992017084713
+          ]
+        },
+        {
+          "name": "chapter-6",
+          "z": -154,
+          "visible": false,
+          "ndc": [
+            0.22951932353289925,
+            -0.03631682145321411,
+            0.9972837071082882
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 76,
+        "frames": 103,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 83,
+        "triangles": 3844,
+        "points": 4200
+      },
+      "renders": 23737,
+      "overflow": false
+    },
+    {
+      "progress": 5.000333333333334,
+      "chapter": 5,
+      "renderedProgress": 4.99963,
+      "renderChapter": 5,
+      "camera": [
+        -1.5007472531932367,
+        -0.6996647435611427,
+        -119.99432977493854
+      ],
+      "rotation": [
+        -0.024994793618920156,
+        1.0587911840678754e-22,
+        -0.00004162230870307404,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 6429,
+      "rooms": [
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": false,
+          "ndc": [
+            0.22492742781057184,
+            -0.2876455968836529,
+            1.0101997220313366
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": true,
+          "ndc": [
+            0.00010797220636701727,
+            -0.000044247542602839624,
+            0.9918945291478815
+          ]
+        },
+        {
+          "name": "chapter-6",
+          "z": -154,
+          "visible": false,
+          "ndc": [
+            0.22951843343540157,
+            -0.03632337797012672,
+            0.9972831248765337
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 76,
+        "frames": 103,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 83,
+        "triangles": 3844,
+        "points": 4200
+      },
+      "renders": 23747,
+      "overflow": false
+    },
+    {
+      "progress": 5.000333333333334,
+      "chapter": 5,
+      "renderedProgress": 4.99986,
+      "renderChapter": 5,
+      "camera": [
+        -1.5002884768992906,
+        -0.6998706408937045,
+        -119.99781134470649
+      ],
+      "rotation": [
+        -0.024994793618920166,
+        -2.6469779601696886e-23,
+        -0.000016070509062864464,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 6429,
+      "rooms": [
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": false,
+          "ndc": [
+            0.22492399215872164,
+            -0.28758725798347956,
+            1.0101962536798434
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": true,
+          "ndc": [
+            0.00004169446758464447,
+            -0.00001707508063153099,
+            0.9918921114008603
+          ]
+        },
+        {
+          "name": "chapter-6",
+          "z": -154,
+          "visible": false,
+          "ndc": [
+            0.22951796237214872,
+            -0.03632679140655363,
+            0.9972828237753102
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 76,
+        "frames": 103,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 83,
+        "triangles": 3844,
+        "points": 4200
+      },
+      "renders": 23755,
+      "overflow": false
+    }
+  ],
+  "modes": {
+    "paused": {
+      "sample": {
+        "progress": 5.000333333333334,
+        "chapter": 5,
+        "renderedProgress": 5.00033,
+        "renderChapter": 5,
+        "camera": [
+          -1.4993223430164806,
+          -0.7003035032800005,
+          -120.00513553284446
+        ],
+        "rotation": [
+          -0.02499479361892016,
+          0,
+          0,
+          "XYZ"
+        ],
+        "fov": 40,
+        "frameloop": "demand",
+        "paused": true,
+        "reduced": false,
+        "reader": false,
+        "contextLost": false,
+        "canvasCount": 1,
+        "sameCanvas": true,
+        "cssSize": [
+          1425,
+          900
+        ],
+        "bufferSize": [
+          1425,
+          900
+        ],
+        "scrollY": 6429,
+        "rooms": [
+          {
+            "name": "chapter-4",
+            "z": -110,
+            "visible": false,
+            "ndc": [
+              0.22492378380626435,
+              -0.287451185522934,
+              1.0101889651724265
+            ]
+          },
+          {
+            "name": "chapter-5",
+            "z": -132,
+            "visible": true,
+            "ndc": [
+              -0.00009800333027192692,
+              0.000040085826490932306,
+              0.9918870205986619
+            ]
+          },
+          {
+            "name": "chapter-6",
+            "z": -154,
+            "visible": false,
+            "ndc": [
+              0.22951778486744306,
+              -0.036320297187147035,
+              0.9972821901469824
+            ]
+          }
+        ],
+        "perf": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 62,
+          "triangles": 3576,
+          "points": 4200
+        },
+        "renders": 24214,
+        "overflow": false
+      },
+      "fps": {
+        "wallSeconds": 1.2040999999985107,
+        "browserRafFPS": 165.2686653934442,
+        "r3fFPS": 0,
+        "renderCallsPerSecond": 0,
+        "r3f": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 62,
+          "triangles": 3576,
+          "points": 4200
+        }
+      }
+    },
+    "pausedNavigation": {
+      "progress": 4.000111111111111,
+      "chapter": 4,
+      "renderedProgress": 4.00011,
+      "renderChapter": 4,
+      "camera": [
+        -2.8001554979039365,
+        0.8999610717310562,
+        -98.00171135553745
+      ],
+      "rotation": [
+        -0.024994793618920153,
+        0,
+        0,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "demand",
+      "paused": true,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 5143,
+      "rooms": [
+        {
+          "name": "chapter-3",
+          "z": -88,
+          "visible": false,
+          "ndc": [
+            -0.9219127038587772,
+            0.31661914001963337,
+            1.010247322808179
+          ]
+        },
+        {
+          "name": "chapter-4",
+          "z": -110,
+          "visible": true,
+          "ndc": [
+            0.000022481813067823874,
+            -8.823433983477943e-7,
+            0.9918894024852905
+          ]
+        },
+        {
+          "name": "chapter-5",
+          "z": -132,
+          "visible": false,
+          "ndc": [
+            0.06628715228631518,
+            -0.08473476694124137,
+            0.9972837817557408
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 40,
+        "frames": 129,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 81,
+        "triangles": 3804,
+        "points": 4200
+      },
+      "renders": 24241,
+      "overflow": false
+    },
+    "reduced": {
+      "sample": {
+        "progress": 1.9996666666666667,
+        "chapter": 2,
+        "renderedProgress": 1.99967,
+        "renderChapter": 2,
+        "camera": [
+          -2.9998462848924063,
+          1.499859340146666,
+          -53.99486446715555
+        ],
+        "rotation": [
+          -0.02499479361892016,
+          0,
+          0,
+          "XYZ"
+        ],
+        "fov": 40,
+        "frameloop": "demand",
+        "paused": false,
+        "reduced": true,
+        "reader": false,
+        "contextLost": false,
+        "canvasCount": 1,
+        "sameCanvas": true,
+        "cssSize": [
+          1425,
+          900
+        ],
+        "bufferSize": [
+          1425,
+          900
+        ],
+        "scrollY": 2571,
+        "rooms": [
+          {
+            "name": "chapter-1",
+            "z": -44,
+            "visible": false,
+            "ndc": [
+              -1.1889468111021082,
+              0.8163613151998673,
+              1.0102996774196902
+            ]
+          },
+          {
+            "name": "chapter-2",
+            "z": -66,
+            "visible": true,
+            "ndc": [
+              -0.000022211394789156547,
+              0.00006153553884177847,
+              0.9918941502260694
+            ]
+          },
+          {
+            "name": "chapter-3",
+            "z": -88,
+            "visible": false,
+            "ndc": [
+              0.2804302588007188,
+              -0.0524378114478402,
+              0.9972835093684
+            ]
+          }
+        ],
+        "perf": {
+          "fps": 40,
+          "frames": 129,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 81,
+          "triangles": 3804,
+          "points": 4200
+        },
+        "renders": 24321,
+        "overflow": false
+      },
+      "fps": {
+        "wallSeconds": 1.2050999999940395,
+        "browserRafFPS": 165.13152435564209,
+        "r3fFPS": 0,
+        "renderCallsPerSecond": 0,
+        "r3f": {
+          "fps": 40,
+          "frames": 129,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 81,
+          "triangles": 3804,
+          "points": 4200
+        }
+      }
+    },
+    "reader": {
+      "canvasCount": 0,
+      "headings": [
+        "PRISM",
+        "CommerceAI",
+        "InstaGuard",
+        "Code Reviewer",
+        "OmniVision",
+        "Still learning.",
+        "A person, after all.",
+        "Harsh Bhatt"
+      ],
+      "reader": "true"
+    },
+    "returnFromReader": {
+      "canvasCount": 1,
+      "coords": "0.00 / 0.30 / -10.00",
+      "reader": "false"
+    },
+    "contactIdle": {
+      "sample": {
+        "progress": 7,
+        "chapter": 7,
+        "renderedProgress": 7,
+        "renderChapter": 7,
+        "camera": [
+          0,
+          0.3,
+          -164
+        ],
+        "rotation": [
+          -0.024994793618920156,
+          4.81482486096809e-35,
+          -3.08610993385133e-17,
+          "XYZ"
+        ],
+        "fov": 40,
+        "frameloop": "demand",
+        "paused": false,
+        "reduced": false,
+        "reader": false,
+        "contextLost": false,
+        "canvasCount": 1,
+        "sameCanvas": true,
+        "cssSize": [
+          1425,
+          900
+        ],
+        "bufferSize": [
+          1781,
+          1125
+        ],
+        "scrollY": 9000,
+        "rooms": [
+          {
+            "name": "chapter-7",
+            "z": -176,
+            "visible": true,
+            "ndc": [
+              -3.5636521974188e-33,
+              0,
+              0.99189059079002
+            ]
+          }
+        ],
+        "perf": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1.25,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 3,
+          "triangles": 720,
+          "points": 32200
+        },
+        "renders": 2885,
+        "overflow": false
+      },
+      "fps": {
+        "wallSeconds": 1.2016000000029798,
+        "browserRafFPS": 165.61251664406333,
+        "r3fFPS": 0,
+        "renderCallsPerSecond": 0,
+        "r3f": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1.25,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 3,
+          "triangles": 720,
+          "points": 32200
+        }
+      }
+    },
+    "contactRetrain": {
+      "sample": {
+        "progress": 7,
+        "chapter": 7,
+        "renderedProgress": 7,
+        "renderChapter": 7,
+        "camera": [
+          0,
+          0.3,
+          -164
+        ],
+        "rotation": [
+          -0.024994793618920156,
+          4.81482486096809e-35,
+          -3.08610993385133e-17,
+          "XYZ"
+        ],
+        "fov": 40,
+        "frameloop": "always",
+        "paused": false,
+        "reduced": false,
+        "reader": false,
+        "contextLost": false,
+        "canvasCount": 1,
+        "sameCanvas": true,
+        "cssSize": [
+          1425,
+          900
+        ],
+        "bufferSize": [
+          1781,
+          1125
+        ],
+        "scrollY": 9000,
+        "rooms": [
+          {
+            "name": "chapter-7",
+            "z": -176,
+            "visible": true,
+            "ndc": [
+              -3.5636521974188e-33,
+              0,
+              0.99189059079002
+            ]
+          }
+        ],
+        "perf": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1.25,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 3,
+          "triangles": 720,
+          "points": 32200
+        },
+        "renders": 2951,
+        "overflow": false
+      },
+      "fps": {
+        "wallSeconds": 1.2050000000029795,
+        "browserRafFPS": 165.14522821535928,
+        "r3fFPS": 165.14522821535928,
+        "renderCallsPerSecond": 170.12448132738018,
+        "r3f": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 2,
+          "triangles": 0,
+          "points": 32200
+        }
+      }
+    },
+    "leaveContact": {
+      "progress": 1.0002222222222223,
+      "chapter": 1,
+      "renderedProgress": 1.00022,
+      "renderChapter": 1,
+      "camera": [
+        3.799765785564828,
+        -0.89990637337679,
+        -32.00342319985515
+      ],
+      "rotation": [
+        -0.024994793618920166,
+        0,
+        0.000025132733062466987,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 1286,
+      "rooms": [
+        {
+          "name": "chapter-0",
+          "z": -22,
+          "visible": false,
+          "ndc": [
+            0.6578519117015412,
+            -0.1781013876900138,
+            1.010200618214248
+          ]
+        },
+        {
+          "name": "chapter-1",
+          "z": -44,
+          "visible": true,
+          "ndc": [
+            0.000033866780310245,
+            -0.00004101791672176082,
+            0.9918882164785805
+          ]
+        },
+        {
+          "name": "chapter-2",
+          "z": -66,
+          "visible": false,
+          "ndc": [
+            -0.347714370976068,
+            0.23877612547964847,
+            0.9972749770693032
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 91,
+        "triangles": 2424,
+        "points": 4200
+      },
+      "renders": 3569,
+      "overflow": false
+    },
+    "hidden": {
+      "sample": {
+        "progress": 1.0002222222222223,
+        "chapter": 1,
+        "renderedProgress": 1.00022,
+        "renderChapter": 1,
+        "camera": [
+          3.799765785564828,
+          -0.89990637337679,
+          -32.00342319985515
+        ],
+        "rotation": [
+          -0.024994793618920166,
+          0,
+          0.000025132733062466987,
+          "XYZ"
+        ],
+        "fov": 40,
+        "frameloop": "never",
+        "paused": false,
+        "reduced": false,
+        "reader": false,
+        "contextLost": false,
+        "canvasCount": 1,
+        "sameCanvas": true,
+        "cssSize": [
+          1425,
+          900
+        ],
+        "bufferSize": [
+          1425,
+          900
+        ],
+        "scrollY": 1286,
+        "rooms": [
+          {
+            "name": "chapter-0",
+            "z": -22,
+            "visible": false,
+            "ndc": [
+              0.6578519117015412,
+              -0.1781013876900138,
+              1.010200618214248
+            ]
+          },
+          {
+            "name": "chapter-1",
+            "z": -44,
+            "visible": true,
+            "ndc": [
+              0.000033866780310245,
+              -0.00004101791672176082,
+              0.9918882164785805
+            ]
+          },
+          {
+            "name": "chapter-2",
+            "z": -66,
+            "visible": false,
+            "ndc": [
+              -0.347714370976068,
+              0.23877612547964847,
+              0.9972749770693032
+            ]
+          }
+        ],
+        "perf": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 91,
+          "triangles": 2424,
+          "points": 4200
+        },
+        "renders": 3576,
+        "overflow": false
+      },
+      "fps": {
+        "wallSeconds": 1.2024000000029809,
+        "browserRafFPS": 165.50232867557105,
+        "r3fFPS": 0,
+        "renderCallsPerSecond": 0,
+        "r3f": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 91,
+          "triangles": 2424,
+          "points": 4200
+        }
+      }
+    },
+    "visibleAgain": {
+      "progress": 1.0002222222222223,
+      "chapter": 1,
+      "renderedProgress": 1.00022,
+      "renderChapter": 1,
+      "camera": [
+        3.799765785564828,
+        -0.89990637337679,
+        -32.00342319985515
+      ],
+      "rotation": [
+        -0.024994793618920166,
+        0,
+        0.000025132733062466987,
+        "XYZ"
+      ],
+      "fov": 40,
+      "frameloop": "always",
+      "paused": false,
+      "reduced": false,
+      "reader": false,
+      "contextLost": false,
+      "canvasCount": 1,
+      "sameCanvas": true,
+      "cssSize": [
+        1425,
+        900
+      ],
+      "bufferSize": [
+        1425,
+        900
+      ],
+      "scrollY": 1286,
+      "rooms": [
+        {
+          "name": "chapter-0",
+          "z": -22,
+          "visible": false,
+          "ndc": [
+            0.6578519117015412,
+            -0.1781013876900138,
+            1.010200618214248
+          ]
+        },
+        {
+          "name": "chapter-1",
+          "z": -44,
+          "visible": true,
+          "ndc": [
+            0.000033866780310245,
+            -0.00004101791672176082,
+            0.9918882164785805
+          ]
+        },
+        {
+          "name": "chapter-2",
+          "z": -66,
+          "visible": false,
+          "ndc": [
+            -0.347714370976068,
+            0.23877612547964847,
+            0.9972749770693032
+          ]
+        }
+      ],
+      "perf": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 91,
+        "triangles": 2424,
+        "points": 4200
+      },
+      "renders": 3702,
+      "overflow": false
+    },
+    "wheel": {
+      "before": [
+        3.799765785564828,
+        -0.89990637337679,
+        -32.00342319985515
+      ],
+      "after": [
+        1.7630389071574215,
+        -0.19444097871012356,
+        -39.254974515410694
+      ]
+    }
+  },
+  "passed": true
+}

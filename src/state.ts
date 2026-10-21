@@ -2,6 +2,7 @@ import { create } from "zustand";
 export type ExperienceState = {
   progress: number;
   chapter: number;
+  renderChapter: number;
   flying: boolean;
   introRunning: boolean;
   introTime: number;
@@ -38,6 +39,7 @@ export type ExperienceState = {
 export const useExperience = create<ExperienceState>()((set) => ({
   progress: 0,
   chapter: 0,
+  renderChapter: 0,
   flying: false,
   introRunning: true,
   introTime: 0,

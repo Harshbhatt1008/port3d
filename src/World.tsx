@@ -54,6 +54,9 @@ const originCurve = new CatmullRomCurve3(
   "catmullrom",
   0.35,
 );
+// Scroll is the destination. Culling follows the camera's actual rail position.
+// Keep the per-frame value outside React; only chapter crossings update the store.
+const renderedRail = { progress: 0 };
 // Authored object envelopes. Fit both axes, rather than clipping tall portraits.
 const envelopes = [
   [6.7, 2.8],
@@ -99,7 +102,7 @@ function LoadingStatus() {
   return null;
 }
 function CameraRail() {
-  const { camera, gl, invalidate } = useThree();
+  const { camera, gl, invalidate, frameloop } = useThree();
   const target = useMemo(() => new Vector3(), []),
     aim = useMemo(() => new Vector3(), []),
     timer = useRef({ time: 0, frames: 0 }),
@@ -114,6 +117,12 @@ function CameraRail() {
       : "WebGL";
   }, [gl]);
   useEffect(() => useExperience.subscribe(() => invalidate()), [invalidate]);
+  useEffect(() => {
+    renderedRail.progress = useExperience.getState().progress;
+    useExperience.getState().set({
+      renderChapter: Math.round(renderedRail.progress),
+    });
+  }, []);
   useFrame((_, delta) => {
     const s = useExperience.getState();
     if (s.introRunning && !s.reduced) {
@@ -128,17 +137,27 @@ function CameraRail() {
       camera.position.y += Math.cos(t * 190) * stamp * 0.045;
       camera.lookAt(camera.position.x * 0.4, camera.position.y * 0.4, z - 14);
     } else {
-      originCurve.getPoint(MathUtils.clamp(s.progress / 7, 0, 1), aim);
+      // Smooth one rail coordinate, rather than easing position while instantly
+      // aiming/culling at the destination. Pause still permits direct navigation.
+      const direct = s.reduced || s.paused || wasIntro.current;
+      renderedRail.progress = direct
+        ? s.progress
+        : MathUtils.damp(renderedRail.progress, s.progress, 8, delta);
+      const moving = Math.abs(renderedRail.progress - s.progress) > 0.00001;
+      if (!moving) renderedRail.progress = s.progress;
+      originCurve.getPoint(
+        MathUtils.clamp(renderedRail.progress / 7, 0, 1),
+        aim,
+      );
       target.copy(aim);
       target.y += 0.3;
       target.z += 12;
-      const blend = s.reduced ? 1 : 1 - Math.exp(-delta * 8);
-      if (wasIntro.current) camera.position.copy(target);
-      else camera.position.lerp(target, blend);
+      camera.position.copy(target);
       camera.lookAt(aim);
-      if (!s.reduced)
-        camera.rotateZ(Math.sin(s.progress * Math.PI * 2) * 0.018);
-      const moving = camera.position.distanceToSquared(target) > 0.00001;
+      if (!s.reduced && !s.paused)
+        camera.rotateZ(Math.sin(renderedRail.progress * Math.PI * 2) * 0.018);
+      const renderChapter = Math.round(renderedRail.progress);
+      if (s.renderChapter !== renderChapter) s.set({ renderChapter });
       if (s.cameraMoving !== moving) s.set({ cameraMoving: moving });
       if (moving) invalidate();
     }
@@ -150,10 +169,8 @@ function CameraRail() {
     gl.domElement.dataset.chapter = String(s.chapter);
     gl.domElement.dataset.dpr = gl.getPixelRatio().toFixed(2);
     gl.domElement.dataset.dust = String(s.dustEnabled);
-    gl.domElement.dataset.frameMode =
-      s.chapter === 7 && !s.portraitBusy && !s.cameraMoving
-        ? "demand"
-        : "continuous";
+    gl.domElement.dataset.frameMode = frameloop;
+    gl.domElement.dataset.railProgress = renderedRail.progress.toFixed(5);
     timer.current.time += delta;
     timer.current.frames++;
     if (timer.current.time >= 1) {
@@ -213,14 +230,12 @@ function Room({
 }) {
   const ref = useRef<Group>(null),
     { size } = useThree();
-  const chapter = useExperience((s) => s.chapter);
   useFrame(() => {
     const s = useExperience.getState();
     if (ref.current)
       ref.current.visible =
         (!s.introRunning || s.introTime > 5.9) &&
-        Math.abs(s.progress - index) < 0.8 &&
-        (s.chapter !== 7 || index === 7);
+        Math.abs(renderedRail.progress - index) < 0.8;
   });
   const [x, y] = origins[index],
     [w, h] = envelopes[index];
@@ -235,6 +250,7 @@ function Room({
   return (
     <group
       ref={ref}
+      name={`chapter-${index}`}
       visible={false}
       position={[x, y, -SCENE_GAP * (index + 1)]}
     >
@@ -245,7 +261,6 @@ function Room({
           mobile ? 1.35 : index === 5 ? -0.8 : index === 0 ? 0.2 : -0.1,
           0,
         ]}
-        visible={chapter !== 7 || index === 7}
       >
         {children}
       </group>
@@ -269,6 +284,7 @@ class GraphicsBoundary extends Component<
 }
 export default function World() {
   const chapter = useExperience((s) => s.chapter),
+    renderChapter = useExperience((s) => s.renderChapter),
     mobile = useExperience((s) => s.mobile),
     reduced = useExperience((s) => s.reduced),
     reader = useExperience((s) => s.reader),
@@ -297,7 +313,13 @@ export default function World() {
   }, []);
   if (reader) return null;
   const contactIdle =
-    chapter === 7 && !portraitBusy && !cameraMoving && !flying;
+    chapter === 7 &&
+    renderChapter === 7 &&
+    !portraitBusy &&
+    !cameraMoving &&
+    !flying;
+  const contactSettled =
+    chapter === 7 && renderChapter === 7 && !cameraMoving && !flying;
   return (
     <div className="world" aria-hidden="true" data-testid="world">
       <GraphicsBoundary>
@@ -400,11 +422,14 @@ export default function World() {
           {preloading &&
             scenes.map(
               (Scene, i) =>
-                (chapter === 7 ? i === 7 : Math.abs(chapter - i) <= 1) && (
+                (contactSettled
+                  ? i === 7
+                  : Math.abs(renderChapter - i) <= 1 ||
+                    Math.abs(chapter - i) <= 1) && (
                   <Room index={i} mobile={mobile} key={i}>
                     <Suspense fallback={null}>
                       <Scene
-                        active={chapter === i}
+                        active={renderChapter === i}
                         mobile={mobile}
                         reduced={reduced}
                       />

@@ -427,7 +427,7 @@ function NotesButton() {
 function Chapter({ index, children }: { index: number; children: ReactNode }) {
   const active = useExperience((s) => s.chapter === index),
     intro = useExperience((s) => s.introRunning),
-    flying = useExperience((s) => s.flying),
+    flying = useExperience((s) => s.flying || s.cameraMoving),
     reader = useExperience((s) => s.reader);
   return (
     <section

@@ -41,7 +41,8 @@ export function SceneLabel({
   useFrame(({ camera, size }) => {
     if (!element.current || !anchor.current) return;
     const state = useExperience.getState();
-    const visible = active && !state.introRunning && !state.flying;
+    const visible =
+      active && !state.introRunning && !state.flying && !state.cameraMoving;
     element.current.style.opacity = visible ? "1" : "0";
     if (!visible) return;
     anchor.current.getWorldPosition(projected);
