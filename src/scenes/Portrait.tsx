@@ -32,10 +32,10 @@ export function preloadPortrait(mobile: boolean) {
   }
   return cache.get(mobile)!;
 }
-const vertex = `attribute vec3 aHB;attribute float aTone;uniform float uMorph;uniform float uNoise;uniform float uTime;uniform float uDpr;uniform vec2 uPointer;varying float vTone;
+const vertex = `attribute vec3 aHB;attribute float aTone;uniform float uMorph;uniform float uNoise;uniform float uTime;uniform float uDpr;uniform float uPointScale;uniform vec2 uPointer;varying float vTone;
 float hash(float n){return fract(sin(n*127.1+311.7)*43758.5453);}
-void main(){float seed=hash(aHB.x*17.+aHB.y*83.+aHB.z*251.);vec3 p=mix(aHB,position,uMorph);vec3 spread=vec3(hash(seed*137.)-.5,hash(seed*293.)-.5,hash(seed*613.)-.5)*vec3(8.,6.,3.5);spread+=sin(spread*1.4+uTime*.6)*.1;p=mix(p,spread,uNoise);float angle=uPointer.x*.14;float c=cos(angle),s=sin(angle);p.xz=mat2(c,-s,s,c)*p.xz;p.x+=uPointer.x*(position.z+.3)*.28*uMorph;p.y+=uPointer.y*(position.z+.3)*.21*uMorph;vTone=mix(.72,aTone,uMorph);vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp(1.7*uDpr*12./max(2.,-mv.z),.8,2.8);}`;
-const fragment = `varying float vTone;void main(){float d=length(gl_PointCoord-.5);if(d>.5)discard;float a=(1.-smoothstep(.25,.5,d))*(.18+pow(clamp(vTone,0.,1.),.8)*.8);gl_FragColor=vec4(.87,.855,.81,a);}`;
+void main(){float seed=hash(aHB.x*17.+aHB.y*83.+aHB.z*251.);vec3 p=mix(aHB,position,uMorph);vec3 spread=vec3(hash(seed*137.)-.5,hash(seed*293.)-.5,hash(seed*613.)-.5)*vec3(8.,6.,3.5);spread+=sin(spread*1.4+uTime*.6)*.1;p=mix(p,spread,uNoise);float angle=uPointer.x*.035;float c=cos(angle),s=sin(angle);p.xz=mat2(c,-s,s,c)*p.xz;p.x+=uPointer.x*position.z*.12*uMorph;p.y+=uPointer.y*position.z*.09*uMorph;vTone=mix(.72,aTone,uMorph);vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp((.55+2.05*pow(clamp(vTone,0.,1.),.7))*uPointScale*uDpr*12./max(2.,-mv.z),.45,4.5);}`;
+const fragment = `varying float vTone;void main(){float d=length(gl_PointCoord-.5)*2.;if(d>1.)discard;float t=clamp(vTone,0.,1.);float a=(1.-d*d)*(.015+.96*pow(t,1.15));vec3 light=vec3(.137+.824*pow(t,.65));gl_FragColor=vec4(light,a);}`;
 const ease = (a: number, b: number, t: number) => {
   const x = Math.max(0, Math.min(1, (t - a) / (b - a)));
   return x * x * (3 - 2 * x);
@@ -62,6 +62,7 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
           uNoise: { value: 0 },
           uTime: { value: 0 },
           uDpr: { value: 1 },
+          uPointScale: { value: mobile ? 1.2 : 1 },
           uPointer: { value: new Vector2() },
         },
         transparent: true,
@@ -195,6 +196,7 @@ export default function Portrait({ active, mobile, reduced }: SceneProps) {
   // The store's ready transition causes one React render, never a frame-by-frame update.
   return ready && geometry.current ? (
     <points
+      name="portrait-points"
       geometry={geometry.current}
       material={material}
       frustumCulled={false}

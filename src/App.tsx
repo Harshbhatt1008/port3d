@@ -427,14 +427,13 @@ function NotesButton() {
 function Chapter({ index, children }: { index: number; children: ReactNode }) {
   const active = useExperience((s) => s.chapter === index),
     intro = useExperience((s) => s.introRunning),
-    flying = useExperience((s) => s.flying || s.cameraMoving),
     reader = useExperience((s) => s.reader);
   return (
     <section
       id={chapters[index].id}
       className={`chapter chapter-${index}`}
-      data-active={(active && !intro && !flying) || reader}
-      inert={!reader && (!active || intro || flying)}
+      data-active={(active && !intro) || reader}
+      inert={!reader && (!active || intro)}
       aria-labelledby={`title-${index}`}
     >
       <div className="caption-card">

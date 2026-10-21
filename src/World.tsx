@@ -243,10 +243,12 @@ function Room({
   // of camera world coordinates after a deep-rail resize.
   const height = 2 * Math.tan((40 * Math.PI) / 360) * 12;
   const width = (height * size.width) / size.height;
-  const scale = Math.min(
+  const fittedScale = Math.min(
     (width * (mobile ? 0.9 : index === 0 ? 0.84 : 0.74)) / w,
     (height * (mobile ? 0.45 : index === 7 ? 0.62 : 0.7)) / h,
   );
+  // The portrait has a fixed 4:5 bake and its own half-height framing.
+  const scale = index === 7 ? (height * 0.5) / 5.3 : fittedScale;
   return (
     <group
       ref={ref}
@@ -257,8 +259,18 @@ function Room({
       <group
         scale={scale}
         position={[
-          0,
-          mobile ? 1.35 : index === 5 ? -0.8 : index === 0 ? 0.2 : -0.1,
+          index === 7 && !mobile ? width * 0.21 : 0,
+          mobile
+            ? index === 7
+              ? 1.32
+              : 1.35
+            : index === 7
+              ? 0.3
+              : index === 5
+                ? -0.8
+                : index === 0
+                  ? 0.2
+                  : -0.1,
           0,
         ]}
       >

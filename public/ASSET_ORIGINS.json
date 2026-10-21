@@ -14,15 +14,15 @@
     },
     {
       "file": "images/portrait-mask.png",
-      "origin": "images/harsh-hero-906.webp",
-      "process": "Offline rembg u2net_human_seg CPU alpha matte; original subject.",
-      "sha256": "b16ab60436a106641fcfec9ca01243cb24cef5041c1cafeff705089cc0204488"
+      "origin": "images/harsh-hero-906.avif",
+      "process": "Offline u2net_human_seg plus alpha matting; fine hair, glasses and beard edges; no generated retouch.",
+      "sha256": "69744de0729b1834e59df5c5857cad0d5d79144de3cbe69f1965531f905e4b25"
     },
     {
       "file": "images/portrait-cutout.png",
-      "origin": "images/harsh-hero-906.webp",
-      "process": "Original photograph with offline matte applied; no generated retouch.",
-      "sha256": "0d01af6860aafd924cecebf0f9dfa352948f4106d9bed61d07b6460477208d12"
+      "origin": "images/harsh-hero-906.avif",
+      "process": "Offline u2net_human_seg plus alpha matting; fine hair, glasses and beard edges; no generated retouch.",
+      "sha256": "81f05968fb779aff0b50b714fa099725123658f0171e36b9c4a9b0e3423bcac4"
     },
     {
       "file": "Harsh-Bhatt-CV.pdf",
@@ -45,32 +45,32 @@
     {
       "file": "portrait-points.bin",
       "origin": "scripts/bake-portrait.mjs",
-      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
-      "sha256": "e26e4438c853ad77f4f9e66f8bff2f80c0b376e77eb4d837f24323421df08fd2"
+      "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
+      "sha256": "3d4c6646084274ca1d14ae42f18b11b9de41ca72b7ea1f3ab98053a6e33522ac"
     },
     {
       "file": "portrait-points-mobile.bin",
       "origin": "scripts/bake-portrait.mjs",
-      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
-      "sha256": "c3840b90713ab63f95ad57e894062dbda7fc864fed8eb2f9f94f53b097fafd40"
+      "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
+      "sha256": "e2f1fafd071c5555d0784f257c606366235e0ebc024e3c9637f9bff0424cda54"
     },
     {
       "file": "hb-points.bin",
       "origin": "scripts/bake-portrait.mjs",
-      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
-      "sha256": "e625721bd06afff850fa6a2cb1f21f0ab551f6408d6ab8ec6d827e2622bfc9c0"
+      "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
+      "sha256": "42ab55294a5f3382258694eee7394f7a50fb315ec2a30010a6d22dd493dfa823"
     },
     {
       "file": "hb-points-mobile.bin",
       "origin": "scripts/bake-portrait.mjs",
-      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
-      "sha256": "d8a2d651b89a9da8eb4cdb0eaac80f409b333a0f3a255141fd664ef6c2bf4266"
+      "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
+      "sha256": "b4155a5ecb083c350577a1d198ceb439a7ce5a174cd9d8839d36745cf1cb24d0"
     },
     {
       "file": "portrait-meta.json",
       "origin": "scripts/bake-portrait.mjs",
-      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
-      "sha256": "0af1e12d759a2f6ec641be9133f77f3fa530da6603ea1fdaf51ee7d6dcae5fd7"
+      "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
+      "sha256": "12f948a59347456c6c5d67e0275612c8eb26c6024ac79f14ebd67a3f30a527d5"
     }
   ]
 }

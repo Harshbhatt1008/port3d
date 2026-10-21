@@ -1,0 +1,214 @@
+{
+  "phase": "portrait",
+  "at": "2026-10-21T14:23:48.248Z",
+  "errors": [],
+  "warnings": [
+    "THREE.WebGLProgram: Program Info Log: (221,81-129): warning X4122: sum of 0.996094 and -2.98545e-017 cannot be represented accurately in double precision\n(220,37-61): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(221,82-106): warning X4122: sum of 1 and -1.49272e-017 cannot be represented accurately in double precision\n(220,37-61): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision\n(221,82-106): warning X4122: sum of 1 and -1.66644e-018 cannot be represented accurately in double precision\n(207,10-67): warning X4008: floating point division by zero\n(207,10-67): warning X4008: floating point division by zero\n(207,10-67): warning X4008: floating point division by zero"
+  ],
+  "views": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "chapter": 7,
+      "name": "1440-chapter-7.png",
+      "sample": {
+        "chapter": 7,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 46.078125,
+          "y": 294.8165588378906,
+          "width": 400,
+          "height": 369.4843444824219
+        },
+        "description": "Noise starts to mean something.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.8240835492819676,
+          0.8240835492819676,
+          0.8240835492819676
+        ],
+        "objectPosition": [
+          2.904482469444295,
+          0.3,
+          0
+        ],
+        "camera": [
+          0,
+          0.3,
+          -164
+        ],
+        "portraitCount": 45000,
+        "portraitBounds": {
+          "left": 831.213402949463,
+          "right": 1175.5533407549833,
+          "top": 221.96867385647414,
+          "bottom": 642.8240696216523
+        },
+        "overflow": false
+      },
+      "fps": {
+        "fps": 94.2114321951995,
+        "seconds": 1.10389999999702,
+        "telemetry": {
+          "fps": 165,
+          "frames": 166,
+          "dpr": 1.25,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 3,
+          "triangles": 720,
+          "points": 49200
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "portraitAnimation": [
+        {
+          "rate": 1,
+          "fps": 165.5187736058654,
+          "seconds": 1.8003999999999996,
+          "telemetry": {
+            "fps": 165,
+            "frames": 165,
+            "dpr": 1.25,
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "drawCalls": 3,
+            "triangles": 720,
+            "points": 49200
+          }
+        },
+        {
+          "rate": 4,
+          "fps": 164.1071131564255,
+          "seconds": 1.803699999998509,
+          "telemetry": {
+            "fps": 165,
+            "frames": 166,
+            "dpr": 1.25,
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "drawCalls": 3,
+            "triangles": 720,
+            "points": 49200
+          }
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "transitCaptionVisible": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "chapter": 7,
+      "name": "390-chapter-7.png",
+      "sample": {
+        "chapter": 7,
+        "captionVisible": true,
+        "captionRect": {
+          "x": 16,
+          "y": 579.125,
+          "width": 343,
+          "height": 248.875
+        },
+        "description": "Noise starts to mean something.",
+        "canvasSame": true,
+        "canvasCount": 1,
+        "contextLost": false,
+        "frameloop": "always",
+        "objectScale": [
+          0.8240835492819676,
+          0.8240835492819676,
+          0.8240835492819676
+        ],
+        "objectPosition": [
+          0,
+          1.32,
+          0
+        ],
+        "camera": [
+          0,
+          0.3,
+          -164
+        ],
+        "portraitCount": 12000,
+        "portraitBounds": {
+          "left": 19.754551629553607,
+          "right": 342.6026293771694,
+          "top": 111.5672742556165,
+          "bottom": 503.48268295799426
+        },
+        "overflow": false
+      },
+      "fps": {
+        "fps": 99.01889534883719,
+        "seconds": 1.1008000000000002,
+        "telemetry": {
+          "fps": 165,
+          "frames": 165,
+          "dpr": 1.25,
+          "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "drawCalls": 3,
+          "triangles": 720,
+          "points": 13050
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "portraitAnimation": [
+        {
+          "rate": 1,
+          "fps": 165.58675305975515,
+          "seconds": 1.8057000000000007,
+          "telemetry": {
+            "fps": 165,
+            "frames": 166,
+            "dpr": 1.25,
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "drawCalls": 3,
+            "triangles": 720,
+            "points": 13050
+          }
+        },
+        {
+          "rate": 4,
+          "fps": 165.21594500180393,
+          "seconds": 1.8037000000014904,
+          "telemetry": {
+            "fps": 165,
+            "frames": 165,
+            "dpr": 1,
+            "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+            "drawCalls": 2,
+            "triangles": 0,
+            "points": 13050
+          }
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "transitCaptionVisible": true
+    }
+  ]
+}

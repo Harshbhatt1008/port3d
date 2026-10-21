@@ -1,33 +1,46 @@
 {
-  "source": "images/harsh-hero-906.webp",
+  "source": "images/harsh-hero-906.avif",
   "mask": "images/portrait-mask.png",
   "cutout": "images/portrait-cutout.png",
-  "model": "rembg u2net_human_seg, CPU, offline",
+  "model": "rembg u2net_human_seg + alpha matting, CPU, offline",
   "sourceWidth": 906,
   "sourceHeight": 805,
+  "crop": {
+    "left": 138,
+    "top": 60,
+    "width": 596,
+    "height": 745
+  },
+  "aspect": "4:5",
+  "orientation": "source left-to-right, image y inverted only for world up; not mirrored",
+  "toneRange": {
+    "black": 0.08270901960784313,
+    "white": 0.8924478431372548
+  },
+  "worldHeight": 5.3,
   "bounds": {
     "minX": 0,
-    "maxX": 765,
-    "minY": 106,
-    "maxY": 804
+    "maxX": 596,
+    "minY": 0,
+    "maxY": 745
   },
   "format": "LE Float32, portrait stride4 (xyz,tone), HB stride3 (xyz), no headers",
   "sets": [
     {
-      "count": 28000,
+      "count": 45000,
       "portrait": "portrait-points.bin",
       "hb": "hb-points.bin",
-      "portraitBytes": 448000,
-      "hbBytes": 336000,
-      "sha256": "e26e4438c853ad77f4f9e66f8bff2f80c0b376e77eb4d837f24323421df08fd2"
+      "portraitBytes": 720000,
+      "hbBytes": 540000,
+      "sha256": "3d4c6646084274ca1d14ae42f18b11b9de41ca72b7ea1f3ab98053a6e33522ac"
     },
     {
-      "count": 11200,
+      "count": 12000,
       "portrait": "portrait-points-mobile.bin",
       "hb": "hb-points-mobile.bin",
-      "portraitBytes": 179200,
-      "hbBytes": 134400,
-      "sha256": "c3840b90713ab63f95ad57e894062dbda7fc864fed8eb2f9f94f53b097fafd40"
+      "portraitBytes": 192000,
+      "hbBytes": 144000,
+      "sha256": "e2f1fafd071c5555d0784f257c606366235e0ebc024e3c9637f9bff0424cda54"
     }
   ]
 }

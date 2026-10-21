@@ -190,7 +190,9 @@ button svg {
 .caption-card {
   position: absolute;
   left: var(--gutter);
-  bottom: 32px;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-42%);
   width: min(400px, 31vw);
   padding: 22px 24px 18px;
   background: var(--obsidian);
@@ -1007,6 +1009,8 @@ textarea::placeholder {
   padding-top: 150px;
 }
 [data-reader="true"] .caption-card {
+  top: auto;
+  transform: none;
   position: static;
   width: min(100%, 850px);
   margin: auto;
@@ -1178,6 +1182,8 @@ textarea::placeholder {
     min-height: 40px;
   }
   .caption-card {
+    top: auto;
+    transform: none;
     left: 16px;
     right: 16px;
     bottom: 16px;
@@ -1259,6 +1265,21 @@ textarea::placeholder {
   }
   .chapter-7 .caption-card h2 {
     font-size: 25px;
+  }
+  .chapter-7 .caption-card {
+    padding-top: 12px;
+    padding-bottom: 8px;
+  }
+  .chapter-7 .portrait-readout,
+  .chapter-7 .sequence-note {
+    display: none;
+  }
+  .chapter-7 .closing-line {
+    font-size: 13px;
+    margin: 8px 0;
+  }
+  .chapter-7 .copy-status:empty {
+    display: none;
   }
   .liquid-button {
     font-size: 12px;

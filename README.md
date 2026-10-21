@@ -72,12 +72,12 @@ The shipped binaries require no Python or image decoding at runtime. To regenera
 ```powershell
 python -m venv .qa/bake-venv
 .qa/bake-venv/Scripts/python.exe -m pip install -r scripts/portrait-requirements.txt
-npm run bake:portrait -- --remask
+npm run bake:portrait -- --remask --debug
 ```
 
 On another platform set `BAKE_PYTHON` to the Python executable. The first matte run downloads the `u2net_human_seg` model into ignored `.qa/models`; it runs locally on CPU. Existing mask/cutout files are reused without `--remask`.
 
-The source is the owner's 906×805 portrait. Keep the face/shoulders crop, export a high-quality WebP or PNG without resizing the face, then replace `public/images/harsh-hero-906.webp`. Re-run the bake after any image/monogram change. Alpha removal, edge/luminance importance sampling, depth and vignette are baked offline. Desktop: **28,000 points**, mobile: **11,200**. Portrait stride is four little-endian Float32 values (`x,y,z,tone`); HB stride is three. The deterministic shared surface stream makes each HB set an exact prefix of loader positions, then spatial sorting pairs it with the face. `portrait-meta.json` records sizes and hashes.
+The source is the owner's original 906×805 AVIF. A fixed 596×745 (4:5) face-centred crop preserves the original orientation. Alpha matting retains hair, glasses and beard edges. Re-run the bake after any image/monogram change. Edge/luminance importance sampling, percentile-normalised tone and gentle depth are baked offline. Desktop: **45,000 points**, mobile: **12,000**. `--debug` writes **portrait-debug.png** at the project root: source crop | alpha mask | flat rendering of the exact baked points, without WebGL. Portrait stride is four little-endian Float32 values (`x,y,z,tone`); HB stride is three. The deterministic shared surface stream makes each HB set an exact prefix of loader positions, then spatial sorting pairs it with the face. `portrait-meta.json` records crop, orientation, tone range, sizes and hashes.
 
 At runtime one portrait Points object morphs/parallaxes in its vertex shader. No per-frame CPU buffer writes, image sampling or Canvas2D readback occurs. Contact disables bloom, caps DPR at 1.25, removes other chapter scenes and uses demand rendering once settled.
 
