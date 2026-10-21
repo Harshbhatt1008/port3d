@@ -31,9 +31,9 @@ Preview runs at **http://localhost:4173**; `dist/` is deployable static output. 
 | 02 CommerceAI | Affinity loom, ordered purchase tower, dot-product meeting and Redis shelf | Three histories reweave the match |
 | 03 InstaGuard | Perforated optical sieve and one reused ALBERT parameter block | Three illustrative comment routes |
 | 04 Code Reviewer | Volumetric repository; lifted chunks thread into a layered report | Four repository-context choices |
-| 05 OmniVision | Room, rover, ultrasonic cones, IMU heading and weighted fusion | Plain-English destinations, BFS and two-tier learning |
-| 06 Journey | Folded ribbon and eight optical lenses | All eight milestones visible together |
-| 07 Contact | Exact loader HB positions morph into an offline-matted particle bust | Re-train, copy email, draft, links and downloads |
+| 05 OmniVision | Cutaway perception globe, mechanical fusion iris and curved occupancy map | Plain-English destinations, BFS and a fleet model-update mode |
+| 06 Journey | Eight pierced, folded glass archive folios | All eight milestones visible; selecting one opens its folio |
+| 07 Contact | Exact loader HB positions morph into an offline-matted relief bust | Pointer turn, Re-train, light sculpture, contact links and downloads |
 
 All metrics are **reported results**. PRISM and OmniVision retain **manuscript in preparation**; OmniVision is **research in progress**. Histories, routes, retrieval, sensor exchange and epoch/loss are explicitly illustrative. The website performs no model inference, training or remote code review.
 
@@ -77,7 +77,9 @@ npm run bake:portrait -- --remask --debug
 
 On another platform set `BAKE_PYTHON` to the Python executable. The first matte run downloads the `u2net_human_seg` model into ignored `.qa/models`; it runs locally on CPU. Existing mask/cutout files are reused without `--remask`.
 
-The source is the owner's original 906×805 AVIF. A fixed 596×745 (4:5) face-centred crop preserves the original orientation. Alpha matting retains hair, glasses and beard edges. Re-run the bake after any image/monogram change. Edge/luminance importance sampling, percentile-normalised tone and gentle depth are baked offline. Desktop: **45,000 points**, mobile: **12,000**. `--debug` writes **portrait-debug.png** at the project root: source crop | alpha mask | flat rendering of the exact baked points, without WebGL. Portrait stride is four little-endian Float32 values (`x,y,z,tone`); HB stride is three. The deterministic shared surface stream makes each HB set an exact prefix of loader positions, then spatial sorting pairs it with the face. `portrait-meta.json` records crop, orientation, tone range, sizes and hashes.
+The source is the owner's original 906×805 AVIF. A fixed 596×745 (4:5) face-centred crop preserves the original orientation. Alpha matting retains hair, glasses and beard edges. Re-run the bake after any image/monogram change. Edge/luminance importance sampling and percentile-normalised tone are baked offline. Desktop: **45,000 points**, mobile: **12,000**. A source-aligned 2.5D facial relief adds convex head/cheek/nose depth, bounded below 0.8 world units; it is an illustrative relief, not a scan of unseen surfaces. Surface normals supply restrained key/rim lighting during pointer turns, capped at 0.135 radians. The original sampled x/y/tone values remain unchanged.
+
+`--debug` writes **portrait-debug.png**: source crop | alpha mask | flat rendering of the exact baked points. **portrait-depth-debug.png** adds three offline angles of the baked relief. Both work without WebGL. Portrait stride is four little-endian Float32 values (`x,y,z,tone`); HB and normal strides are three. The deterministic shared surface stream makes each HB set an exact prefix of loader positions, then spatial sorting pairs it with the face. `portrait-meta.json` records crop, orientation, tone, relief limits, sizes and hashes.
 
 At runtime one portrait Points object morphs/parallaxes in its vertex shader. No per-frame CPU buffer writes, image sampling or Canvas2D readback occurs. Contact disables bloom, caps DPR at 1.25, removes other chapter scenes and uses demand rendering once settled.
 
@@ -92,3 +94,9 @@ See **[the portrait/model repair report](docs/refinement/REPORT.md)** for the cu
 The opening project picker jumps directly to each of the five projects by pointer, touch or keyboard. Journey keeps all eight milestone summaries visible at once; Research notes supplies the complete CV detail. InstaGuard uses a layered, perforated sieve and instanced comment bubbles. Code Reviewer lifts retrieved chunks from a 3D repository into evidence threads. Contact's **Unfold the signal** button folds the same portrait points into a reversible light sculpture, with a static reduced-motion alternative.
 
 The ink/ice palette is normative in `src/styles.css`, `src/sceneSettings.ts` and `DESIGN.md`. Review the current [screenshots, checks and FPS](docs/catalogue/REPORT.md). The earlier [portrait/model repair](docs/refinement/REPORT.md) includes each chapter before and after, plus the offline portrait debug evidence. Run `node scripts/check-catalogue.cjs` against the dev server to exercise the new interactions and 1x/4x CPU measurements; the Playwright module can be supplied using `PLAYWRIGHT_MODULE`.
+
+## Perception globe, memory archive and laboratory background
+
+The latest revision replaces OmniVision's room with a perception globe and Journey's ribbon with an eight-leaf kinetic archive. Layered contour fields, moving light sweeps and ink haze give the unchanged chapter framing a visible depth context. The background uses one extra draw call, depth-tests behind solid objects, respects pause/reduced motion and can be disabled with `?dust=off`. The chapter scales, camera, FOV, responsive envelopes and caption sizes remain unchanged.
+
+Current evidence: [depth-world screenshots and FPS](docs/depth-world/REPORT.md). `scripts/check-depth-world.cjs` checks the new navigation/federation, folio selection, background motion, immutable portrait normals and exact scale/camera preservation at both requested viewports.

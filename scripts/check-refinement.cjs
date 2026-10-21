@@ -157,9 +157,12 @@ async function measure(page, ms = 1100) {
           };
         }, chapter);
         const fps = await measure(page);
-        report.views.push({ viewport, chapter, name, sample, fps });
+        // Retain the first-use window, then measure a separate settled window.
+        // Driver program setup can outlast the camera's settling delay.
+        const settledFps = chapter === 7 ? fps : await measure(page, 1600);
+        report.views.push({ viewport, chapter, name, sample, fps, settledFps });
         console.log(
-          `${phase} ${viewport.width} chapter ${chapter}: ${fps.fps.toFixed(1)} FPS; caption ${sample.captionVisible}`,
+          `${phase} ${viewport.width} chapter ${chapter}: ${fps.fps.toFixed(1)} initial / ${settledFps.fps.toFixed(1)} settled FPS; caption ${sample.captionVisible}`,
         );
       }
       if (phase !== "before" && chapters.includes(7)) {

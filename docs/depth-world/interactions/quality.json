@@ -1,0 +1,19 @@
+{
+  "elapsed": 14.56080000000465,
+  "hazeVisible": true,
+  "contourVisible": true,
+  "dpr": 1,
+  "nativeDpr": 1,
+  "telemetry": {
+    "fps": 161,
+    "frames": 161,
+    "dpr": 1,
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "drawCalls": 5,
+    "triangles": 10508,
+    "points": 4200
+  },
+  "contextLost": false,
+  "errors": [],
+  "passed": true
+}

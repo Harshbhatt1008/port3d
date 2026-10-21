@@ -1,0 +1,18 @@
+{
+  "errors": [],
+  "checks": [
+    "Reduced-motion mobile portrait resolves directly with 12,000 points.",
+    "Responsive resize installs the 45,000-point desktop geometry.",
+    "Resize preserves the Contact camera position.",
+    "Morph advances through shader uniforms without writing position/HB buffers.",
+    "Reader removes Canvas and exposes all eight research notes plus the authentic portrait.",
+    "BFS reaches all three destinations and federation/navigation toggles work.",
+    "Research notes opens and closes with Escape."
+  ],
+  "routes": [
+    "Plant reached. Route: 7 grid steps.",
+    "Desk reached. Route: 7 grid steps.",
+    "Door reached. Route: 4 grid steps."
+  ],
+  "passed": true
+}

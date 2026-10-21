@@ -1,0 +1,474 @@
+{
+  "errors": [],
+  "checks": [
+    "1440: background advances by uniforms, respects depth occlusion and pauses without buffer writes.",
+    "1440: new probe traverses the original BFS occupancy, pauses and reaches its goal.",
+    "1440: federation uses local modules and moving model-update orbs; raw-data jars remain fixed.",
+    "1440: all eight milestones remain visible; keyboard selection opens the corresponding folio.",
+    "1440: facial relief and normal lighting respond to pointer; 45K/12K buffers remain immutable through GPU turns and morph.",
+    "1440: reduced-motion navigation, federation, folio selection and face resolve without replacing Canvas.",
+    "390: background advances by uniforms, respects depth occlusion and pauses without buffer writes.",
+    "390: new probe traverses the original BFS occupancy, pauses and reaches its goal.",
+    "390: federation uses local modules and moving model-update orbs; raw-data jars remain fixed.",
+    "390: all eight milestones remain visible; keyboard selection opens the corresponding folio.",
+    "390: facial relief and normal lighting respond to pointer; 45K/12K buffers remain immutable through GPU turns and morph.",
+    "390: reduced-motion navigation, federation, folio selection and face resolve without replacing Canvas."
+  ],
+  "samples": [
+    {
+      "width": 1440,
+      "chapter": "OmniVision navigation",
+      "rate": 1,
+      "fps": 164.33391652025773,
+      "seconds": 1.6004000000059604,
+      "telemetry": {
+        "fps": 162,
+        "frames": 163,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 42,
+        "triangles": 14018,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": "OmniVision navigation",
+      "rate": 4,
+      "fps": 114.9066383560147,
+      "seconds": 1.6013000000044704,
+      "telemetry": {
+        "fps": 94,
+        "frames": 94,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 42,
+        "triangles": 14018,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": "OmniVision federation",
+      "rate": 1,
+      "fps": 161.3908275169981,
+      "seconds": 1.6048000000044704,
+      "telemetry": {
+        "fps": 161,
+        "frames": 162,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 60,
+        "triangles": 13734,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": "OmniVision federation",
+      "rate": 4,
+      "fps": 89.73639932689376,
+      "seconds": 1.6047000000014886,
+      "telemetry": {
+        "fps": 125,
+        "frames": 127,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 60,
+        "triangles": 13734,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": "Journey archive",
+      "rate": 1,
+      "fps": 165.36661466443266,
+      "seconds": 1.6025000000014915,
+      "telemetry": {
+        "fps": 165,
+        "frames": 166,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 35,
+        "triangles": 10544,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": "Journey archive",
+      "rate": 4,
+      "fps": 106.11072966721296,
+      "seconds": 1.6021000000014902,
+      "telemetry": {
+        "fps": 104,
+        "frames": 104,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 35,
+        "triangles": 10544,
+        "points": 4200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": "Portrait relief morph",
+      "rate": 1,
+      "fps": 165.6042994621044,
+      "seconds": 1.6002000000044718,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 4,
+        "triangles": 720,
+        "points": 49200
+      }
+    },
+    {
+      "width": 1440,
+      "chapter": "Portrait relief morph",
+      "rate": 4,
+      "fps": 150.94810379213456,
+      "seconds": 1.6032000000029802,
+      "telemetry": {
+        "fps": 152,
+        "frames": 152,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 4,
+        "triangles": 720,
+        "points": 49200
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "OmniVision navigation",
+      "rate": 1,
+      "fps": 163.36201521325998,
+      "seconds": 1.60380000000596,
+      "telemetry": {
+        "fps": 137,
+        "frames": 137,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 42,
+        "triangles": 12198,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "OmniVision navigation",
+      "rate": 4,
+      "fps": 124.60282848374383,
+      "seconds": 1.6051000000059612,
+      "telemetry": {
+        "fps": 133,
+        "frames": 133,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 42,
+        "triangles": 12198,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "OmniVision federation",
+      "rate": 1,
+      "fps": 160.7376487443279,
+      "seconds": 1.6051000000029816,
+      "telemetry": {
+        "fps": 157,
+        "frames": 157,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 60,
+        "triangles": 12954,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "OmniVision federation",
+      "rate": 4,
+      "fps": 109.95154677579356,
+      "seconds": 1.6098000000029788,
+      "telemetry": {
+        "fps": 113,
+        "frames": 114,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 60,
+        "triangles": 12954,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "Journey archive",
+      "rate": 1,
+      "fps": 164.3749999993878,
+      "seconds": 1.600000000005959,
+      "telemetry": {
+        "fps": 163,
+        "frames": 163,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 35,
+        "triangles": 10544,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "Journey archive",
+      "rate": 4,
+      "fps": 126.84328917758724,
+      "seconds": 1.600400000001493,
+      "telemetry": {
+        "fps": 106,
+        "frames": 106,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 35,
+        "triangles": 10544,
+        "points": 1050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "Portrait relief morph",
+      "rate": 1,
+      "fps": 162.3072601281445,
+      "seconds": 1.601900000004469,
+      "telemetry": {
+        "fps": 165,
+        "frames": 165,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 4,
+        "triangles": 720,
+        "points": 13050
+      }
+    },
+    {
+      "width": 390,
+      "chapter": "Portrait relief morph",
+      "rate": 4,
+      "fps": 136.1904166926972,
+      "seconds": 1.6006999999999971,
+      "telemetry": {
+        "fps": 135,
+        "frames": 136,
+        "dpr": 1,
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3070 (0x00002484) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "drawCalls": 4,
+        "triangles": 720,
+        "points": 13050
+      }
+    }
+  ],
+  "sizes": [
+    {
+      "width": 1440,
+      "chapter": 0,
+      "scale": [
+        1.38721550779429,
+        1.38721550779429,
+        1.38721550779429
+      ],
+      "camera": [
+        0,
+        0.3,
+        -10
+      ]
+    },
+    {
+      "width": 1440,
+      "chapter": 5,
+      "scale": [
+        0.7373608745957652,
+        0.7373608745957652,
+        0.7373608745957652
+      ],
+      "camera": [
+        -1.4993223430164806,
+        -0.7003035032800005,
+        -120.00513553284446
+      ]
+    },
+    {
+      "width": 1440,
+      "chapter": 6,
+      "scale": [
+        1.0445945723440007,
+        1.0445945723440007,
+        1.0445945723440007
+      ],
+      "camera": [
+        2.99988281883616,
+        -1.7000776400158022,
+        -141.99657680014488
+      ]
+    },
+    {
+      "width": 1440,
+      "chapter": 7,
+      "scale": [
+        0.8244131827016804,
+        0.8244131827016804,
+        0.8244131827016804
+      ],
+      "camera": [
+        0,
+        0.3,
+        -164
+      ]
+    },
+    {
+      "width": 1440,
+      "chapter": 5,
+      "scale": [
+        0.7373608745957652,
+        0.7373608745957652,
+        0.7373608745957652
+      ],
+      "camera": [
+        -1.4993223430164806,
+        -0.7003035032800005,
+        -120.00513553284446
+      ]
+    },
+    {
+      "width": 1440,
+      "chapter": 6,
+      "scale": [
+        1.0445945723440007,
+        1.0445945723440007,
+        1.0445945723440007
+      ],
+      "camera": [
+        2.99988281883616,
+        -1.7000776400158022,
+        -141.99657680014488
+      ]
+    },
+    {
+      "width": 1440,
+      "chapter": 7,
+      "scale": [
+        0.8244131827016804,
+        0.8244131827016804,
+        0.8244131827016804
+      ],
+      "camera": [
+        0,
+        0.3,
+        -164
+      ]
+    },
+    {
+      "width": 390,
+      "chapter": 0,
+      "scale": [
+        0.4170840910456588,
+        0.4170840910456588,
+        0.4170840910456588
+      ],
+      "camera": [
+        0,
+        0.3,
+        -10
+      ]
+    },
+    {
+      "width": 390,
+      "chapter": 5,
+      "scale": [
+        0.3536203697846989,
+        0.3536203697846989,
+        0.3536203697846989
+      ],
+      "camera": [
+        -1.4992773099438734,
+        -0.7003236529586228,
+        -120.00547643468494
+      ]
+    },
+    {
+      "width": 390,
+      "chapter": 6,
+      "scale": [
+        0.3672211532379566,
+        0.3672211532379566,
+        0.3672211532379566
+      ],
+      "camera": [
+        2.9998750073856852,
+        -1.7000827817401472,
+        -141.99634959924126
+      ]
+    },
+    {
+      "width": 390,
+      "chapter": 7,
+      "scale": [
+        0.8244131827016804,
+        0.8244131827016804,
+        0.8244131827016804
+      ],
+      "camera": [
+        0,
+        0.3,
+        -164
+      ]
+    },
+    {
+      "width": 390,
+      "chapter": 5,
+      "scale": [
+        0.3536203697846989,
+        0.3536203697846989,
+        0.3536203697846989
+      ],
+      "camera": [
+        -1.4992773099438734,
+        -0.7003236529586228,
+        -120.00547643468494
+      ]
+    },
+    {
+      "width": 390,
+      "chapter": 6,
+      "scale": [
+        0.3672211532379566,
+        0.3672211532379566,
+        0.3672211532379566
+      ],
+      "camera": [
+        2.9998750073856852,
+        -1.7000827817401472,
+        -141.99634959924126
+      ]
+    },
+    {
+      "width": 390,
+      "chapter": 7,
+      "scale": [
+        0.8244131827016804,
+        0.8244131827016804,
+        0.8244131827016804
+      ],
+      "camera": [
+        0,
+        0.3,
+        -164
+      ]
+    }
+  ],
+  "passed": true
+}

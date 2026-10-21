@@ -45,14 +45,14 @@
     {
       "file": "portrait-points.bin",
       "origin": "scripts/bake-portrait.mjs",
-      "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
-      "sha256": "3d4c6646084274ca1d14ae42f18b11b9de41ca72b7ea1f3ab98053a6e33522ac"
+      "process": "Offline original-photo fixed 4:5 crop and alpha matte; unchanged x/y/tone importance samples, source-aligned 2.5D facial relief and baked surface normals; 45K/12K GPU-only morph/lighting. Not a 3D scan.",
+      "sha256": "74f427ec6d7b128fc53b76f69e199e0eef27134cdcd7229904674a2576a40925"
     },
     {
       "file": "portrait-points-mobile.bin",
       "origin": "scripts/bake-portrait.mjs",
-      "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
-      "sha256": "e2f1fafd071c5555d0784f257c606366235e0ebc024e3c9637f9bff0424cda54"
+      "process": "Offline original-photo fixed 4:5 crop and alpha matte; unchanged x/y/tone importance samples, source-aligned 2.5D facial relief and baked surface normals; 45K/12K GPU-only morph/lighting. Not a 3D scan.",
+      "sha256": "d8ce4db9f9f2f2746fa99ebb81588450ad78a82f46bb7c81514df06b85379411"
     },
     {
       "file": "hb-points.bin",
@@ -71,6 +71,18 @@
       "origin": "scripts/bake-portrait.mjs",
       "process": "Offline original-photo fixed 4:5 crop, alpha matte, luminance/edge importance sampling, 45K/12K GPU-ready portrait and spatial HB pairing.",
       "sha256": "12f948a59347456c6c5d67e0275612c8eb26c6024ac79f14ebd67a3f30a527d5"
+    },
+    {
+      "file": "portrait-normals.bin",
+      "origin": "scripts/bake-portrait.mjs",
+      "process": "Offline original-photo fixed 4:5 crop and alpha matte; unchanged x/y/tone importance samples, source-aligned 2.5D facial relief and baked surface normals; 45K/12K GPU-only morph/lighting. Not a 3D scan.",
+      "sha256": "7ab84ee68ee0e2b780c3ce0202c614e3661f7df5f67d2747e48d4bbe0644e8aa"
+    },
+    {
+      "file": "portrait-normals-mobile.bin",
+      "origin": "scripts/bake-portrait.mjs",
+      "process": "Offline original-photo fixed 4:5 crop and alpha matte; unchanged x/y/tone importance samples, source-aligned 2.5D facial relief and baked surface normals; 45K/12K GPU-only morph/lighting. Not a 3D scan.",
+      "sha256": "169e0a25a0551cfb98b9379ba7cdea1133d0da467bf3a663be8430e63c0f4e3d"
     }
   ]
 }

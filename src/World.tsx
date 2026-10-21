@@ -416,7 +416,6 @@ export default function World() {
           </Environment>
           <PerformanceMonitor
             bounds={() => [50, 58]}
-            flipflops={3}
             onDecline={() => {
               setDpr(1);
               if (
@@ -425,11 +424,12 @@ export default function World() {
               )
                 useExperience.getState().set({ hazeDisabled: true });
             }}
-            onIncline={() => setDpr(mobile ? 1.25 : 1.5)}
-            onFallback={() => {
-              setDpr(1);
-              useExperience.getState().set({ hazeDisabled: true });
-            }}
+            // Drei counts every incline notification toward `flipflops`, even
+            // repeated healthy samples. A finite limit hid haze after ~10s.
+            // Degrade only on a real decline; never supersample a 1x display.
+            onIncline={() =>
+              setDpr(Math.min(devicePixelRatio, mobile ? 1.25 : 1.5))
+            }
           />
           <Backdrop mobile={mobile} reduced={reduced} />
           {preloading && (

@@ -46,3 +46,6 @@ WCAG AA text contrast, meaningful portrait alternative, visible focus, keyboard 
 
 ## Catalogue recovery
 Five hero project links provide immediate destinations. InstaGuard and Code Reviewer use distinct volumetric optical instruments with illustrative selection responses. Journey shows all eight milestones together rather than hiding facts behind a selector. Contact can reversibly fold the authentic portrait points into an interactive light sculpture. The default face, reader, reduced motion, pause and single persistent Canvas remain. Current evidence is in `docs/catalogue/REPORT.md`; earlier model/portrait recovery is in `docs/refinement/REPORT.md`.
+
+## Perception and depth revision
+The owner asks for completely new OmniVision/Journey instruments, a fuller background and a more dimensional portrait, with sizes preserved. OmniVision uses a cutaway perception globe, fusion iris and curved map; BFS, destinations and two-tier federation remain illustrative and functional. Journey becomes an eight-folio memory archive with the complete milestone overview retained. A five-layer contour field supplies visible spatial context. The photo gains bounded source-aligned 2.5D relief and normal lighting. Chapter scales, camera framing, FOV, caption dimensions, factual claims and access alternatives remain unchanged. Evidence is in `docs/depth-world/REPORT.md`.

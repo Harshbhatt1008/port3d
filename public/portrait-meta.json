@@ -18,29 +18,40 @@
     "white": 0.8924478431372548
   },
   "worldHeight": 5.3,
+  "relief": {
+    "method": "Source-aligned analytic skull, cheek, nose and neck relief with smoothed photographic microdepth; 2.5D, not a 3D scan",
+    "maxDepthSpan": 0.8,
+    "maxPointerYaw": 0.135
+  },
   "bounds": {
     "minX": 0,
     "maxX": 596,
     "minY": 0,
     "maxY": 745
   },
-  "format": "LE Float32, portrait stride4 (xyz,tone), HB stride3 (xyz), no headers",
+  "format": "LE Float32, portrait stride4 (xyz,tone), HB stride3 (xyz), normals stride3 (xyz), no headers",
   "sets": [
     {
       "count": 45000,
       "portrait": "portrait-points.bin",
       "hb": "hb-points.bin",
+      "normals": "portrait-normals.bin",
+      "normalBytes": 540000,
+      "normalSha256": "7ab84ee68ee0e2b780c3ce0202c614e3661f7df5f67d2747e48d4bbe0644e8aa",
       "portraitBytes": 720000,
       "hbBytes": 540000,
-      "sha256": "3d4c6646084274ca1d14ae42f18b11b9de41ca72b7ea1f3ab98053a6e33522ac"
+      "sha256": "74f427ec6d7b128fc53b76f69e199e0eef27134cdcd7229904674a2576a40925"
     },
     {
       "count": 12000,
       "portrait": "portrait-points-mobile.bin",
       "hb": "hb-points-mobile.bin",
+      "normals": "portrait-normals-mobile.bin",
+      "normalBytes": 144000,
+      "normalSha256": "169e0a25a0551cfb98b9379ba7cdea1133d0da467bf3a663be8430e63c0f4e3d",
       "portraitBytes": 192000,
       "hbBytes": 144000,
-      "sha256": "e2f1fafd071c5555d0784f257c606366235e0ebc024e3c9637f9bff0424cda54"
+      "sha256": "d8ce4db9f9f2f2746fa99ebb81588450ad78a82f46bb7c81514df06b85379411"
     }
   ]
 }

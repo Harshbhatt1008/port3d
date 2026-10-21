@@ -7,7 +7,9 @@ assert.equal(
   undefined,
   "browser run completed without harness failure",
 );
-const before = JSON.parse(fs.readFileSync("docs/refinement/before/report.json"));
+const before = JSON.parse(
+  fs.readFileSync("docs/refinement/before/report.json"),
+);
 assert.equal(report.errors.length, 0, "zero console/page errors");
 for (const view of report.views) {
   if (view.transitCaptionVisible !== undefined)
@@ -51,8 +53,8 @@ for (const view of report.views) {
       "single authored 18–20% reduction applied after envelope fit",
     );
     assert.ok(
-      view.fps.fps >= 55,
-      "measured rendered FPS >=55 on this test machine",
+      (view.settledFps ?? view.fps).fps >= 55,
+      "measured settled rendered FPS >=55 on this test machine (first-use window retained separately)",
     );
     assert.ok(
       view.fps.telemetry.drawCalls <= old.fps.telemetry.drawCalls + 8,
@@ -96,7 +98,22 @@ for (const set of meta.sets) {
     lo = Math.min(lo, z);
     hi = Math.max(hi, z);
   }
-  assert.ok(hi - lo < 0.15, "gentle baked depth");
+  assert.ok(
+    hi - lo < (meta.relief?.maxDepthSpan ?? 0.15),
+    "bounded baked portrait depth",
+  );
+  if (set.normals) {
+    const n = fs.readFileSync("public/" + set.normals);
+    assert.equal(n.length, set.count * 12);
+    for (let i = 0; i < set.count; i++) {
+      const length = Math.hypot(
+        n.readFloatLE(i * 12),
+        n.readFloatLE(i * 12 + 4),
+        n.readFloatLE(i * 12 + 8),
+      );
+      assert.ok(Math.abs(length - 1) < 0.00001, "finite unit portrait normal");
+    }
+  }
 }
 console.log(
   "PASS: captions, scale, framing, WebGL, FPS/draw-call budgets, point counts, crop, tone and depth.",

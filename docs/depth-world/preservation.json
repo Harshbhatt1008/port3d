@@ -1,0 +1,103 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "chapter": 0,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 1440,
+      "chapter": 1,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 1440,
+      "chapter": 2,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 1440,
+      "chapter": 3,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 1440,
+      "chapter": 4,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 1440,
+      "chapter": 5,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 1440,
+      "chapter": 6,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 1440,
+      "chapter": 7,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 390,
+      "chapter": 0,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 390,
+      "chapter": 1,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 390,
+      "chapter": 2,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 390,
+      "chapter": 3,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 390,
+      "chapter": 4,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 390,
+      "chapter": 5,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 390,
+      "chapter": 6,
+      "scaleCameraAndPositionUnchanged": true
+    },
+    {
+      "width": 390,
+      "chapter": 7,
+      "scaleCameraAndPositionUnchanged": true
+    }
+  ],
+  "sampling": [
+    {
+      "file": "portrait-points.bin",
+      "points": 45000,
+      "xyAndToneIdenticalTo": "7665daf",
+      "minZ": -0.2871131896972656,
+      "maxZ": 0.47054219245910645,
+      "depthSpan": 0.7576553821563721
+    },
+    {
+      "file": "portrait-points-mobile.bin",
+      "points": 12000,
+      "xyAndToneIdenticalTo": "7665daf",
+      "minZ": -0.28535202145576477,
+      "maxZ": 0.4705403745174408,
+      "depthSpan": 0.7558923959732056
+    }
+  ],
+  "passed": true
+}

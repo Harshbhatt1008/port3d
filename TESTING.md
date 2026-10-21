@@ -85,3 +85,10 @@ Local raw reports, scripts and captures are kept under gitignored `.qa/` and `.i
 ## Catalogue revision
 
 Current browser evidence lives in `docs/catalogue/REPORT.md`. `scripts/check-catalogue.cjs` checks all five hero links by keyboard, all eight visible Journey rows, comment animation/pause/selection, repository selection, reversible GPU finale buffers, reduced-motion static output and demand idle after return. It records 1x/4x CPU samples of the three rebuilt chapters and the finale at 1440x900 and 390x844. `scripts/check-refinement.cjs catalogue-final` captures all eight resting chapters, and `scripts/validate-refinement.cjs .qa/refinement/catalogue-final` verifies bounds, counts, actual rendered FPS and draw-call budgets. The mobile fit corrections for the new sieve/repository are explicit in validation.
+
+
+## Perception / archive / portrait relief revision
+
+See `docs/depth-world/REPORT.md` for the latest screenshots and measurements. `scripts/check-depth-world.cjs` compares chapter scales and camera poses against the preceding committed capture, checks background uniform motion/depth testing/pause, real BFS movement and pause, federation data seals, all eight Journey rows and keyboard folio selection, immutable 45K/12K portrait/normal buffers, reduced motion and persistent Canvas. It measures navigation, federation, archive and portrait morph at 1x/4x CPU throttle in both requested viewports. Existing catalogue, recovery and production checks still apply. Portrait validation reads the explicit relief bound from its manifest and checks every normal is finite and unit length.
+
+`scripts/check-quality.cjs` adds a real-browser regression for the timed quality bug: after more than 13 seconds of normal rendering, haze must remain visible and DPR must not exceed the display's native ratio. First-use and subsequent frame windows are recorded separately in the capture harness; initial low samples are retained rather than discarded.

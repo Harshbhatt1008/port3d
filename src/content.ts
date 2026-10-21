@@ -251,6 +251,20 @@ export const projectPicker = {
   ],
 };
 export const sceneCopy = {
+  omni: {
+    sensors: ["Camera", "Ultrasonic", "IMU"],
+    map: "Perception map / illustrative BFS",
+    robot: "Robot",
+    local: "Raw data stays sealed",
+    fleet: "Tier 2 / shared model updates",
+    modules: "Tier 1 / sensor-module learning",
+    planning: "Planning a shortest route through the perception map…",
+    blocked: "Destination blocked. Choose another destination.",
+    moving: (goal: string, steps: number) =>
+      `Moving to the ${goal} along ${steps} grid steps.`,
+    arrived: (goal: string, steps: number) =>
+      `${goal[0].toUpperCase() + goal.slice(1)} reached. Route: ${steps} grid steps.`,
+  },
   guard: {
     core: "ALBERT / shared weights",
     incoming: "Comment stream",
@@ -265,6 +279,7 @@ export const sceneCopy = {
   journey: {
     note: "Every milestone, together.",
     tools: "Explore the full timeline and tools",
+    archive: "Memory archive / illustrative",
   },
 };
 export const finaleCopy = {
