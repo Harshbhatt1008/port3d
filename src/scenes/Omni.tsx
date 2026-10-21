@@ -1,15 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Instance, Instances, Line } from "@react-three/drei";
-import {
-  BufferAttribute,
-  BufferGeometry,
-  Group,
-  Mesh,
-  ShaderMaterial,
-  Vector3,
-} from "three";
+import { Group, Mesh, Vector3 } from "three";
 import { CHROME, DARK, probe, useExperience } from "../state";
+import { Rod } from "./researchGeometry";
+import { SceneLabel } from "./SceneLabel";
 import type { SceneProps } from "../state";
 
 type Cell = [number, number];
@@ -355,181 +350,285 @@ function Room() {
   );
 }
 
-function Federation({
+function Ultrasonic({
   active,
   reduced,
 }: {
   active: boolean;
   reduced: boolean;
 }) {
-  const exchanges = useRef<Group>(null);
-  const enabled = useExperience((s) => s.fedAvg);
-  useFrame(({ clock }, delta) => {
+  const pulses = useRef<Group>(null),
+    time = useRef(0);
+  useFrame((_, delta) => {
     if (
       !active ||
-      !enabled ||
       reduced ||
       useExperience.getState().paused ||
-      !exchanges.current
+      !pulses.current
     )
       return;
-    exchanges.current.children.forEach((orb, i) => {
-      const t = (clock.elapsedTime * 0.24 + i / 6) % 1;
-      const angle = (Math.floor(i / 2) * Math.PI * 2) / 3;
-      const distance = i % 2 ? t : 1 - t;
-      orb.position.set(
-        Math.cos(angle) * distance * 1.3,
-        0.5 + Math.sin(t * Math.PI) * 0.45,
-        Math.sin(angle) * distance * 0.65,
-      );
-      orb.rotation.y += Math.min(delta, 0.05);
+    time.current += Math.min(delta, 0.05);
+    pulses.current.children.forEach((pulse, i) => {
+      const t = (time.current * 0.45 + i / 3) % 1;
+      pulse.scale.setScalar(0.2 + t * 1.1);
+      ((pulse as Mesh).material as import("three").MeshBasicMaterial).opacity =
+        (1 - t) * 0.18;
     });
   });
   return (
-    <group
-      visible={enabled}
-      position={[0.2, 0.7, 0.6]}
-      {...probe("Illustrative FedAvg · weights move; raw data stays local")}
-    >
-      <mesh position={[0, 0.45, 0]}>
-        <octahedronGeometry args={[0.2]} />
-        <meshStandardMaterial {...CHROME} />
-      </mesh>
-      {[0, 1, 2].map((i) => {
-        const a = (i * Math.PI * 2) / 3;
-        const p: [number, number, number] = [
-          Math.cos(a) * 1.3,
-          0,
-          Math.sin(a) * 0.65,
-        ];
-        return (
-          <group key={i} position={p}>
-            <Rover small />
-            <Line
-              points={[
-                [0, 0.45, 0],
-                [-p[0], 0.45, -p[2]],
-              ]}
-              color="#e4dfd2"
-              transparent
-              opacity={0.3}
-              lineWidth={1}
-            />
-          </group>
-        );
-      })}
-      <group ref={exchanges}>
-        {Array.from({ length: 6 }, (_, i) => (
-          <mesh key={i} position={[Math.cos(i) * 0.7, 0.6, Math.sin(i) * 0.3]}>
-            <sphereGeometry args={[0.055, 10, 10]} />
-            <meshBasicMaterial color="#e8e4d8" />
-          </mesh>
-        ))}
-      </group>
-      {[-1, 1].map((side) => (
-        <group key={side} position={[side * 1.4, -0.02, 0.6]}>
-          <mesh position={[0, 0.22, 0]}>
-            <cylinderGeometry args={[0.19, 0.19, 0.44, 16]} />
-            <meshPhysicalMaterial
-              color="#c8c4b8"
-              transmission={0.72}
-              thickness={0.07}
-              roughness={0.12}
-              transparent
-              opacity={0.65}
-              depthWrite={false}
-            />
-          </mesh>
-          <mesh position={[0, 0.45, 0]}>
-            <cylinderGeometry args={[0.2, 0.2, 0.04, 16]} />
-            <meshStandardMaterial {...CHROME} />
-          </mesh>
-          {[0, 1, 2].map((n) => (
-            <mesh key={n} position={[(n - 1) * 0.07, 0.12 + n * 0.08, 0]}>
-              <boxGeometry args={[0.075, 0.12, 0.1]} />
-              <meshStandardMaterial color="#4f5047" roughness={0.65} />
-            </mesh>
-          ))}
-        </group>
+    <group ref={pulses} position={[0, 0.15, -0.65]}>
+      {[0, 1, 2].map((i) => (
+        <mesh
+          key={i}
+          rotation={[-Math.PI / 2, 0, 0]}
+          position={[0, 0, -0.4 - i * 0.12]}
+          scale={reduced ? 0.4 + i * 0.25 : 1}
+        >
+          <coneGeometry args={[0.65, 1.6, 24, 1, true]} />
+          <meshBasicMaterial
+            color="#c9c3b3"
+            wireframe
+            transparent
+            opacity={0.12}
+            depthWrite={false}
+          />
+        </mesh>
       ))}
     </group>
   );
 }
-
-export default function Omni({ active, mobile, reduced }: SceneProps) {
-  const robotRun = useExperience((s) => s.robotRun);
-  const robot = useRef<Group>(null);
-  const sweep = useRef<Mesh>(null);
-  const depth = useRef<ShaderMaterial>(null);
-  const routeGoal = useRef<Goal>("plant");
-  const currentCell = useRef<Cell>([4, 6]);
-  const segment = useRef(0);
-  const progress = useRef(0);
-  const pending = useRef(false);
-  const [route, setRoute] = useState<Cell[]>([]);
-  const routePoints = useMemo(() => route.map(world), [route]);
-  const depthGeometry = useMemo(() => {
-    const points: number[] = [];
-    for (let i = 0; i < (mobile ? 280 : 900); i++) {
-      const a = i * 2.39996;
-      const r = Math.sqrt((i + 0.5) / (mobile ? 280 : 900));
-      points.push(
-        Math.cos(a) * r * 3.12,
-        FLOOR + 0.03 + ((i * 19) % 13) * 0.004,
-        Math.sin(a) * r * 2.3,
+function Heading() {
+  return (
+    <group position={[0, 0.85, 0]}>
+      <Rod from={[0, 0, 0]} to={[0, 0, -0.75]} radius={0.025} color="#ddd6c7" />
+      <mesh position={[0, 0, -0.82]} rotation={[-Math.PI / 2, 0, 0]}>
+        <coneGeometry args={[0.12, 0.25, 16]} />
+        <meshStandardMaterial {...CHROME} />
+      </mesh>
+    </group>
+  );
+}
+function Fusion({ active, reduced }: { active: boolean; reduced: boolean }) {
+  const pulses = useRef<Group>(null),
+    time = useRef(0);
+  const sources: [
+    [number, number, number],
+    [number, number, number],
+    [number, number, number],
+  ] = [
+    [-1.5, 0.6, 0],
+    [0, 0.6, 0],
+    [1.5, 0.6, 0],
+  ];
+  useFrame((_, delta) => {
+    if (
+      !active ||
+      reduced ||
+      useExperience.getState().paused ||
+      !pulses.current
+    )
+      return;
+    time.current += Math.min(delta, 0.05);
+    pulses.current.children.forEach((p, i) => {
+      const t = (time.current * (0.5 - i * 0.1) + i * 0.3) % 1;
+      p.position.set(sources[i][0] * (1 - t), 0.6 * (1 - t) - 0.4 * t, 0);
+    });
+  });
+  return (
+    <group position={[0, 2.6, -0.3]}>
+      {sources.map((p, i) => (
+        <group key={i}>
+          <mesh position={p}>
+            <boxGeometry args={[0.55, 0.22, 0.3]} />
+            <meshStandardMaterial {...CHROME} />
+          </mesh>
+          <Rod from={p} to={[0, -0.4, 0]} radius={0.018 + i * 0.004} />
+          <SceneLabel active={active} position={[p[0], p[1] + 0.42, p[2]]}>
+            {["Camera", "Ultrasonic", "IMU"][i]}
+          </SceneLabel>
+        </group>
+      ))}
+      <mesh position={[0, -0.4, 0]}>
+        <octahedronGeometry args={[0.23]} />
+        <meshStandardMaterial {...CHROME} />
+      </mesh>
+      <group ref={pulses}>
+        {sources.map((p, i) => (
+          <mesh key={i} position={p}>
+            <sphereGeometry args={[0.055, 10, 8]} />
+            <meshBasicMaterial color="#e8e1d1" />
+          </mesh>
+        ))}
+      </group>
+      <SceneLabel active={active} position={[0, -0.94, 0.1]}>
+        Weighted fusion<small>illustrative stream balance</small>
+      </SceneLabel>
+    </group>
+  );
+}
+function Fleet({ active, reduced }: { active: boolean; reduced: boolean }) {
+  const ref = useRef<Group>(null),
+    time = useRef(0);
+  const centers: [number, number, number][] = [
+    [-2.35, -0.2, 0.1],
+    [0, 0.6, -0.6],
+    [2.35, -0.2, 0.1],
+  ];
+  useFrame((_, delta) => {
+    if (!active || reduced || useExperience.getState().paused || !ref.current)
+      return;
+    time.current += Math.min(delta, 0.05);
+    ref.current.children.forEach((orb, i) => {
+      const from = centers[Math.floor(i / 2) % 3],
+        t = (time.current * 0.22 + i * 0.17) % 1;
+      orb.position.set(
+        from[0] * (1 - t),
+        from[1] + 0.7 + Math.sin(t * Math.PI) * 1.2,
+        from[2] * (1 - t),
       );
-    }
-    const geometry = new BufferGeometry();
-    geometry.setAttribute(
-      "position",
-      new BufferAttribute(new Float32Array(points), 3),
-    );
-    return geometry;
-  }, [mobile]);
-  useEffect(() => () => depthGeometry.dispose(), [depthGeometry]);
+    });
+  });
+  return (
+    <group>
+      {centers.map((p, i) => (
+        <group key={i} position={p}>
+          <Rover />
+          <Heading />
+          {[-0.45, 0, 0.45].map((x, n) => (
+            <group key={n} position={[x, 1.55, 0]}>
+              <mesh>
+                <boxGeometry args={[0.22, 0.22, 0.22]} />
+                <meshStandardMaterial {...CHROME} />
+              </mesh>
+              <Rod from={[0, 0, 0]} to={[-x, -0.45, 0]} radius={0.014} />
+            </group>
+          ))}
+          <mesh position={[0, 1.08, 0]}>
+            <sphereGeometry args={[0.1, 12, 10]} />
+            <meshStandardMaterial {...CHROME} />
+          </mesh>
+          <group position={[0.8, 0.15, 0.35]}>
+            <mesh>
+              <cylinderGeometry args={[0.23, 0.23, 0.52, 20]} />
+              <meshPhysicalMaterial
+                color="#c8c2b3"
+                transmission={0.8}
+                thickness={0.07}
+                roughness={0.15}
+                transparent
+                opacity={0.7}
+                depthWrite={false}
+              />
+            </mesh>
+            <mesh position={[0, 0.29, 0]}>
+              <cylinderGeometry args={[0.24, 0.24, 0.05, 20]} />
+              <meshStandardMaterial {...CHROME} />
+            </mesh>
+            {[0, 1, 2].map((n) => (
+              <mesh key={n} position={[0, -0.13 + n * 0.12, 0]}>
+                <boxGeometry args={[0.12, 0.08, 0.12]} />
+                <meshStandardMaterial {...DARK} />
+              </mesh>
+            ))}
+          </group>
+          <SceneLabel active={active} position={[0, -0.55, 0.3]}>
+            Robot {i + 1}
+            <small>raw data stays local</small>
+          </SceneLabel>
+        </group>
+      ))}
+      <group ref={ref}>
+        {Array.from({ length: 6 }, (_, i) => (
+          <mesh key={i}>
+            <sphereGeometry args={[0.075, 12, 10]} />
+            <meshBasicMaterial color="#e7dfce" />
+          </mesh>
+        ))}
+      </group>
+      <mesh position={[0, 2.3, 0]}>
+        <octahedronGeometry args={[0.35]} />
+        <meshStandardMaterial {...CHROME} />
+      </mesh>
+      {centers.map((p, i) => (
+        <Rod
+          key={i}
+          from={[p[0], p[1] + 0.7, p[2]]}
+          to={[0, 2.3, 0]}
+          radius={0.012}
+          opacity={0.4}
+        />
+      ))}
+      <SceneLabel active={active} position={[0, 3.05, 0]}>
+        Tier2 / fleet FedAvg
+      </SceneLabel>
+      <SceneLabel active={active} position={[-2.35, 2.1, 0.2]}>
+        Tier1 / sensor modules
+      </SceneLabel>
+    </group>
+  );
+}
+export default function Omni({ active, reduced }: SceneProps) {
+  const robotRun = useExperience((s) => s.robotRun),
+    fed = useExperience((s) => s.fedAvg);
+  const robot = useRef<Group>(null),
+    routeGoal = useRef<Goal>("plant"),
+    currentCell = useRef<Cell>([4, 6]),
+    segment = useRef(0),
+    progress = useRef(0),
+    pending = useRef(false);
+  const [route, setRoute] = useState<Cell[]>([]),
+    routePoints = useMemo(() => route.map(world), [route]);
   useEffect(() => {
     if (!robotRun) return;
-    const state = useExperience.getState();
-    routeGoal.current = state.goal;
-    const planned = shortestRoomRoute(
-      currentCell.current,
-      ROOM_GOALS[state.goal],
-    );
-    state.set({
-      robotStatus: "Planning a shortest route through the occupied room…",
-    });
+    const s = useExperience.getState();
+    routeGoal.current = s.goal;
+    const plan = shortestRoomRoute(currentCell.current, ROOM_GOALS[s.goal]);
     segment.current = 0;
     progress.current = 0;
-    setRoute(planned);
     pending.current = true;
-    if (!planned.length) {
-      pending.current = false;
-      state.set({
-        robotStatus:
-          "Destination blocked. Choose another destination and plan again.",
-      });
-    }
+    setRoute(plan);
+    s.set({
+      robotStatus: plan.length
+        ? "Planning a shortest route through the occupied room…"
+        : "Destination blocked. Choose another destination.",
+    });
+    if (!plan.length) pending.current = false;
   }, [robotRun]);
-  useFrame(({ clock }, delta) => {
-    const state = useExperience.getState();
-    if (!active || state.paused) return;
-    if (sweep.current && !reduced)
-      sweep.current.rotation.z = clock.elapsedTime * 0.42;
-    if (depth.current && !reduced)
-      depth.current.uniforms.uScan.value = clock.elapsedTime * 0.42;
-    if (!robot.current || !routePoints.length || !pending.current) return;
-    if (reduced || routePoints.length === 1) {
-      robot.current.position.copy(routePoints[routePoints.length - 1]);
+  useFrame((_, delta) => {
+    if (
+      !active ||
+      fed ||
+      useExperience.getState().paused ||
+      !robot.current ||
+      !routePoints.length ||
+      !pending.current
+    )
+      return;
+    const finish = () => {
+      robot.current!.position.copy(routePoints[routePoints.length - 1]);
       currentCell.current = route[route.length - 1];
       pending.current = false;
-      state.set({
-        robotStatus: `${routeGoal.current[0].toUpperCase() + routeGoal.current.slice(1)} reached. Route: ${route.length - 1} grid steps.`,
+      useExperience.getState().set({
+        robotStatus:
+          routeGoal.current[0].toUpperCase() +
+          routeGoal.current.slice(1) +
+          " reached. Route: " +
+          (route.length - 1) +
+          " grid steps.",
       });
+    };
+    if (reduced || routePoints.length === 1) {
+      finish();
       return;
     }
     if (segment.current === 0 && progress.current === 0)
-      state.set({
-        robotStatus: `Moving to the ${routeGoal.current} along ${route.length - 1} grid steps.`,
+      useExperience.getState().set({
+        robotStatus:
+          "Moving to the " +
+          routeGoal.current +
+          " along " +
+          (route.length - 1) +
+          " grid steps.",
       });
     progress.current += Math.min(delta, 0.06) * 1.5;
     if (progress.current >= 1) {
@@ -537,78 +636,45 @@ export default function Omni({ active, mobile, reduced }: SceneProps) {
       segment.current++;
       currentCell.current = route[segment.current];
       if (segment.current >= routePoints.length - 1) {
-        robot.current.position.copy(routePoints[routePoints.length - 1]);
-        pending.current = false;
-        state.set({
-          robotStatus: `${routeGoal.current[0].toUpperCase() + routeGoal.current.slice(1)} reached. Route: ${route.length - 1} grid steps.`,
-        });
+        finish();
         return;
       }
     }
-    robot.current.position.lerpVectors(
-      routePoints[segment.current],
-      routePoints[segment.current + 1],
-      progress.current,
-    );
-    const next = routePoints[segment.current + 1];
-    const from = routePoints[segment.current];
-    robot.current.rotation.y = Math.atan2(
-      -(next.x - from.x),
-      -(next.z - from.z),
-    );
+    const from = routePoints[segment.current],
+      to = routePoints[segment.current + 1];
+    robot.current.position.lerpVectors(from, to, progress.current);
+    robot.current.rotation.y = Math.atan2(-(to.x - from.x), -(to.z - from.z));
   });
-  const start = world([4, 6]);
   return (
-    <group
-      position={mobile ? [0, 1.05, 0] : [2.2, -0.1, 0]}
-      scale={mobile ? 0.53 : 0.9}
-      rotation={[0.17, -0.23, 0]}
-    >
-      <Room />
-      <points geometry={depthGeometry}>
-        <shaderMaterial
-          ref={depth}
-          transparent
-          depthWrite={false}
-          uniforms={{
-            uScan: { value: 0 },
-            uReduced: { value: reduced ? 1 : 0 },
-          }}
-          vertexShader={`varying float vAngle; void main(){vAngle=atan(position.z,position.x);vec4 p=modelViewMatrix*vec4(position,1.0);gl_Position=projectionMatrix*p;gl_PointSize=clamp(2.2*12.0/max(1.0,-p.z),1.0,4.0);}`}
-          fragmentShader={`uniform float uScan;uniform float uReduced;varying float vAngle;void main(){if(length(gl_PointCoord-0.5)>0.5)discard;float scan=pow(max(0.0,cos(vAngle-uScan)),18.0);gl_FragColor=vec4(0.76,0.75,0.69,mix(0.12+scan*0.65,0.35,uReduced));}`}
-        />
-      </points>
-      {routePoints.length > 1 && (
-        <Line
-          points={routePoints}
-          color="#e9e3d6"
-          lineWidth={2}
-          transparent
-          opacity={0.8}
-        />
-      )}
-      <group
-        ref={robot}
-        position={start}
-        {...probe("Autonomous rover · shortest-path room navigation")}
-      >
-        <Rover />
-        <mesh
-          ref={sweep}
-          position={[0, 0.055, 0]}
-          rotation={[-Math.PI / 2, 0, 0]}
-        >
-          <ringGeometry args={[0.78, 0.8, 48, 1, 0, Math.PI * 1.45]} />
-          <meshBasicMaterial
-            color="#d9d7c9"
+    <group rotation={[0.17, -0.23, 0]}>
+      <group visible={!fed}>
+        <Room />
+        <Fusion active={active && !fed} reduced={reduced} />
+        {routePoints.length > 1 && (
+          <Line
+            points={routePoints}
+            color="#e4ddcd"
+            lineWidth={2}
             transparent
-            opacity={0.32}
-            depthWrite={false}
-            side={2}
+            opacity={0.8}
           />
-        </mesh>
+        )}
+        <group
+          ref={robot}
+          position={world([4, 6])}
+          {...probe("Rover · ultrasonic depth and IMU heading")}
+        >
+          <Rover />
+          <Ultrasonic active={active && !fed} reduced={reduced} />
+          <Heading />
+        </group>
+        <SceneLabel active={active && !fed} position={[-1.2, -0.5, 2.3]}>
+          Ultrasonic cones + IMU heading
+        </SceneLabel>
       </group>
-      <Federation active={active} reduced={reduced} />
+      <group visible={fed}>
+        <Fleet active={active && fed} reduced={reduced} />
+      </group>
     </group>
   );
 }

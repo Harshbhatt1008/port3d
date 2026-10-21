@@ -1,22 +1,32 @@
 import { ExtrudeGeometry, Path, Shape } from "three";
 
-/** Original interlocking block HB. The upper B counter is the camera portal. */
+/** Original separated HB. This exact mesh also supplies the offline portrait bake. */
 export const B_COUNTER = [1.05, 0.65, 0] as const;
+
+/** Isolated deterministic surface stream: Contact reuses a prefix of the exact
+ * loader points, regardless of the separate random/noise sampling around it. */
+export function createMonogramRandom() {
+  let seed = 1234567;
+  return () => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) | 0;
+    return (seed >>> 0) / 4294967296;
+  };
+}
 
 export function createMonogramGeometry() {
   const h = new Shape();
-  h.moveTo(-2.28, -1.4);
-  h.lineTo(-1.64, -1.4);
-  h.lineTo(-1.64, -0.3);
-  h.lineTo(-0.79, -0.3);
-  h.lineTo(-0.79, -1.4);
-  h.lineTo(-0.15, -1.4);
-  h.lineTo(-0.15, 1.4);
-  h.lineTo(-0.79, 1.4);
-  h.lineTo(-0.79, 0.3);
-  h.lineTo(-1.64, 0.3);
-  h.lineTo(-1.64, 1.4);
-  h.lineTo(-2.28, 1.4);
+  h.moveTo(-2.5, -1.4);
+  h.lineTo(-1.86, -1.4);
+  h.lineTo(-1.86, -0.3);
+  h.lineTo(-1.01, -0.3);
+  h.lineTo(-1.01, -1.4);
+  h.lineTo(-0.37, -1.4);
+  h.lineTo(-0.37, 1.4);
+  h.lineTo(-1.01, 1.4);
+  h.lineTo(-1.01, 0.3);
+  h.lineTo(-1.86, 0.3);
+  h.lineTo(-1.86, 1.4);
+  h.lineTo(-2.5, 1.4);
   h.closePath();
 
   const b = new Shape();
@@ -45,9 +55,9 @@ export function createMonogramGeometry() {
   const geometry = new ExtrudeGeometry([h, b], {
     depth: 0.44,
     bevelEnabled: true,
-    bevelSize: 0.045,
-    bevelThickness: 0.04,
-    bevelSegments: 3,
+    bevelSize: 0.06,
+    bevelThickness: 0.055,
+    bevelSegments: 5,
     steps: 1,
     curveSegments: 24,
   });

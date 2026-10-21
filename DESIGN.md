@@ -1,34 +1,37 @@
 ---
-name: LATENT — Harsh Bhatt
+name: LATENT - Harsh Bhatt
 description: Noise becomes structure, then a person, in one continuous research world.
 colors:
   obsidian: "oklch(17% 0.008 85)"
   deep: "oklch(13% 0.006 85)"
   bone: "oklch(92% 0.016 85)"
-  muted: "oklch(73% 0.015 85)"
+  muted: "oklch(78% 0.015 85)"
   metal: "oklch(82% 0.009 85)"
   rule: "oklch(39% 0.012 85)"
+  hover: "oklch(24% 0.008 85)"
+  option-active: "oklch(27% 0.008 85)"
+  chrome-type: "#b9b9b3"
   low: "oklch(82% 0.1 145)"
   medium: "oklch(84% 0.12 85)"
   high: "oklch(76% 0.14 30)"
 typography:
   display:
     fontFamily: '"Archivo Black", system-ui, sans-serif'
-    fontSize: "clamp(60px, 6.4vw, 98px)"
+    fontSize: "64px"
     fontWeight: 400
-    lineHeight: 1.06
-    letterSpacing: "-0.04em"
+    lineHeight: 1.08
+    letterSpacing: "-0.035em"
   headline:
     fontFamily: '"Archivo Black", system-ui, sans-serif'
-    fontSize: "clamp(40px, 4.2vw, 64px)"
+    fontSize: "32px"
     fontWeight: 400
-    lineHeight: 1.06
-    letterSpacing: "-0.04em"
+    lineHeight: 1.08
+    letterSpacing: "-0.035em"
   title:
     fontFamily: '"IBM Plex Mono", ui-monospace, monospace'
     fontSize: "18px"
     fontWeight: 500
-    lineHeight: 1.35
+    lineHeight: 1.4
   body:
     fontFamily: '"IBM Plex Mono", ui-monospace, monospace'
     fontSize: "15px"
@@ -36,9 +39,9 @@ typography:
     lineHeight: 1.65
   deck:
     fontFamily: '"IBM Plex Mono", ui-monospace, monospace'
-    fontSize: "15px"
+    fontSize: "14px"
     fontWeight: 400
-    lineHeight: 1.7
+    lineHeight: 1.6
   control:
     fontFamily: '"IBM Plex Mono", ui-monospace, monospace'
     fontSize: "13px"
@@ -53,15 +56,24 @@ typography:
     fontFamily: '"IBM Plex Mono", ui-monospace, monospace'
     fontSize: "10px"
     fontWeight: 400
-    lineHeight: 1.4
+    lineHeight: 1.65
+  metric:
+    fontFamily: '"IBM Plex Mono", ui-monospace, monospace'
+    fontSize: "26px"
+    fontWeight: 500
+    lineHeight: 1.1
+    letterSpacing: "-0.035em"
 rounded:
   control: "4px"
+  compact: "2px"
 spacing:
-  gutter: "clamp(24px, 4vw, 64px)"
-  control-gap: "6px"
-  field-inset: "11px 12px"
-  primary-inset: "12px 18px"
-  section-gap: "28px"
+  gutter: "clamp(24px, 3.2vw, 52px)"
+  choice-gap: "5px"
+  field-inset: "10px 12px"
+  primary-inset: "11px 15px"
+  caption-inset: "22px 24px 18px"
+  drawer-inset: "24px"
+  mobile-gutter: "16px"
 components:
   button-primary:
     backgroundColor: "{colors.bone}"
@@ -77,7 +89,7 @@ components:
     textColor: "{colors.bone}"
     typography: "{typography.label}"
     rounded: "{rounded.control}"
-    padding: "8px 12px"
+    padding: "8px"
   button-choice-selected:
     backgroundColor: "{colors.bone}"
     textColor: "{colors.deep}"
@@ -91,150 +103,188 @@ components:
     backgroundColor: "transparent"
     textColor: "{colors.bone}"
     rounded: "{rounded.control}"
-    width: "44px"
+    width: "40px"
   chapter-current:
     backgroundColor: "{colors.bone}"
     textColor: "{colors.deep}"
-    typography: "{typography.label}"
+    typography: "{typography.telemetry}"
     rounded: "{rounded.control}"
+    padding: "0 7px"
   text-toggle-pressed:
     backgroundColor: "transparent"
     textColor: "{colors.bone}"
     typography: "{typography.label}"
     rounded: "{rounded.control}"
     padding: "0"
+  combobox:
+    backgroundColor: "{colors.deep}"
+    textColor: "{colors.bone}"
+    rounded: "{rounded.control}"
+    padding: "11px 12px"
+    width: "100%"
+  caption:
+    backgroundColor: "{colors.obsidian}"
+    textColor: "{colors.bone}"
+    rounded: "{rounded.control}"
+    padding: "{spacing.caption-inset}"
+    width: "min(400px, 31vw)"
+  research-drawer:
+    backgroundColor: "{colors.obsidian}"
+    textColor: "{colors.bone}"
+    rounded: "{rounded.control}"
+    width: "min(560px, calc(100vw - 32px))"
+  scene-label:
+    backgroundColor: "oklch(17% 0.008 85 / 0.9)"
+    textColor: "{colors.bone}"
+    rounded: "{rounded.compact}"
+    padding: "4px 6px"
 ---
 
-# Design System: LATENT — Harsh Bhatt
+# Design System: LATENT - Harsh Bhatt
 
 ## Overview
 
 **Creative North Star: "Noise → structure → a person"**
 
-LATENT makes Harsh's language, learning and robotics research tangible inside a continuous spatial world. Warm obsidian, bone, chrome and dark glass connect the scenes. Geometry supplies the imagery; substantial DOM copy and working controls supply the explanation. The owner's pinned world and code-led brief are the visual authority; the earlier portfolios supply no inherited theme.
+LATENT makes Harsh's language, learning and robotics research tangible inside one continuous spatial world. Warm obsidian, bone, chrome and dark glass connect the scenes. Physical geometry supplies imagery; real HTML supplies readable facts and usable controls. The owner's pinned world is the visual authority, and no earlier portfolio theme is inherited.
 
-The experience is dense like a research instrument, with quiet factual prose beside a large physical object. A continuous camera rail connects seven rooms, while a persistent inference console gives visitors chapter navigation, motion and sound controls, and a complete reading alternative. This records the implemented system, refreshing the provisional document that preceded the UI. The direction contract remains in `.impeccable/surface-brief.md`, including the confirmed FORM reference `seed:0165dcf1c61f4b13`; no alternative approved comp is implied.
+The revised experience places a compact floating caption over each full-bleed scene. Eight chapters share a persistent inference console and deliberate Research notes expansion. The approved revision in `.impeccable/surface-brief.md` supersedes the old split copy column and seven-room layout. The direction record `.impeccable/latent-seed.txt` and FORM reference `seed:0165dcf1c61f4b13` remain provenance; their open-field assignments do not override the owner-pinned LATENT world.
 
 **Key Characteristics:**
 
 - Warm monochrome materials; colour has a specific research meaning.
-- Heavy display geometry paired with readable monospaced facts and controls.
-- One continuous world with real HTML content and native scrolling.
-- Illustrative interactions explicitly separated from reported research results.
-- Motion, graphics and sound always have visitor-controlled alternatives.
+- Heavy display geometry paired with monospaced facts and controls.
+- Full-bleed scenes, floating captions and deliberate Research notes drawers.
+- Illustrative interactions kept distinct from reported research results.
+- Motion, graphics and sound have visitor-controlled alternatives.
 
 ## Colors
 
-The CSS palette is warm and low in chroma. Its OKLCH declarations in the frontmatter are normative; Three.js uses corresponding warm-neutral sRGB material and lighting values, rather than literal CSS colour strings. The sidecar's eight-step tonal strips are synthesized panel previews, not additional runtime palette tokens.
+Warm, low-chroma CSS colours form the normative interface palette above. Three.js uses sRGB material and lighting colours rather than literal CSS OKLCH strings. Sidecar tonal strips are synthesized panel previews, not additional runtime colours.
 
 ### Primary
 
-- **Bone:** primary text, selection, focused outlines, active controls and neutral feedback.
-- **Metal:** brighter instrument edges and the primary action's hover treatment.
+- **Bone:** primary text, focus outlines, selected controls and neutral feedback.
+- **Metal:** instrument edges and primary-action hover.
+- **Type chrome:** intentionally neutral sRGB material for Training Run HB and extruded name. Its slight channel variation belongs to reflected metal, not an accent palette or accidental gray drift.
 
 ### Neutral
 
-- **Obsidian:** the page ground and opaque console backing that keeps moving geometry clear of navigation.
-- **Deep:** recessed fields, menus, intro skip control and small informational surfaces.
-- **Muted:** secondary prose, qualification notes, stack lists and telemetry.
-- **Rule:** thin structural edges, dividers and resting control outlines.
+- **Warm Obsidian:** page ground, opaque captions, drawer and console backing.
+- **Deep:** recessed inputs, options and intro skip control.
+- **Muted:** secondary prose, source qualifications and telemetry; revised source raises its lightness from the former system.
+- **Rule:** thin structural edges and control outlines.
+- **Hover / Option active:** restrained neutral lift for pointer and combobox keyboard state.
 
-Risk-only accents are **Low**, **Medium** and **High**. These name the stored dataset categories in text. The three sRGB routes in the PRISM scene are `#6ab77d`, `#dfb64d` and `#d87c65`; they belong to its optical illustration, not a second interface palette.
+Risk-only accents are **Low**, **Medium** and **High**, always accompanied by text. PRISM's scene beams use `#81bd92`, `#e1bd62` and `#e68c76`; they belong to its optical illustration rather than a second interface palette.
 
-**The Colour Means Something Rule.** Colour is reserved for PRISM's refracted spectrum and LOW/MEDIUM/HIGH labels. Other selection, focus, status and contact feedback use warm neutrals.
+**The Colour Means Something Rule.** Colour is reserved for PRISM's refracted spectrum and LOW/MEDIUM/HIGH labels. Ordinary selection, focus, status and contact feedback use warm neutrals.
 
 ## Typography
 
-**Display Font:** self-hosted Archivo Black, with system-ui and sans-serif fallbacks.
-**Body and Label Font:** self-hosted IBM Plex Mono (400 and 500), with ui-monospace and monospace fallbacks.
+**Display Font:** self-hosted Archivo Black (400), with system-ui/sans-serif fallback.
+**Body and Label Font:** self-hosted IBM Plex Mono (400 and 500), with ui-monospace/monospace fallback.
 
-Archivo Black makes headings and extruded lettering dense and physical. IBM Plex Mono carries readable sentence-case prose as well as the compact instrument data. Mesh lettering is decorative duplication; the identity remains a real HTML heading.
+Dense Archivo geometry gives the identity physical mass. IBM Plex Mono carries sentence-case facts as well as compact instrument data. Mesh lettering is decorative duplication: identity has a real DOM h1, visually hidden in the spatial experience and visible in reading mode.
 
 ### Hierarchy
 
-- **Display:** the frontmatter display role is the desktop identity heading. The actual mobile identity override is 44px with 1.05 line height; its line break is suppressed. The generic mobile h1 rule is 58px but is overridden on this identity surface.
-- **Headline:** the frontmatter headline role is used for chapter titles. Mobile uses 38px; short desktop viewports use 43px.
-- **Title:** monospaced h3 uses the frontmatter title role. Journey detail changes to 17px on mobile; the complete journey list uses 16px.
-- **Body:** root text and sustained qualification/journey prose use the body role. The final cascade explicitly sets honesty notes and journey detail paragraphs to 15px desktop and 14px at mobile widths. This supersedes earlier compact-note declarations.
-- **Deck:** chapter introductions use the deck role, ordinarily up to 44ch. The desktop identity deck is 17px, bone, and 25ch; other paragraphs allow 62ch. Mobile chapter decks are 14px, and reader decks allow 65ch.
-- **Control and label:** primary buttons are 13px/500; native fields and field labels are 13px. Choice controls, stack lists and metric captions are 12px. Individual compact readouts remain 10–12px; mobile prompt-result metadata is 11px. Console telemetry is the 10px role, not the prose scale.
-- **Metrics:** tabular numeric figures use `clamp(23px, 2.2vw, 32px)`, 500 weight, 1.1 line height and -0.035em tracking; mobile uses 23px and the intermediate desktop layout uses 24px.
+- **Display:** the frontmatter display role is the visible reader h1; mobile reader size is 42px. The spatial name is extruded geometry, not a CSS display-size token.
+- **Headline:** chapter h2 uses the headline role. Floating mobile captions use 27px, with Contact at 25px; short desktop uses 28px. Drawer headings are 32px desktop and 28px mobile.
+- **Title:** monospaced research h3 uses the title role.
+- **Body:** root text is the body role. Drawer/inline research paragraphs use 15px at 1.75, becoming 14px mobile. Paragraphs allow up to 65ch. Journey detail intentionally uses 13px at 1.55 (1.5 mobile) as a short active-item readout.
+- **Deck:** caption introductions use the deck role, becoming 13px at 1.5 mobile and 15px on wide desktops. Identity's tagline is 20px at 1.5, becoming 19px mobile and 18px on short desktops.
+- **Control and label:** primary actions use 13px/500; combobox triggers use 13px/400. Standard entry text is 14px; mobile command input and composer textarea are 16px. Field labels and metric captions are 12px, with mobile metric captions at 11px.
+- **Telemetry and annotations:** desktop chapter navigation and console data are 10px. Supporting results, portrait readout and compact tabs are 11px. Projected labels use 11px at 1.35 with 9px subordinate labels; mobile uses 10px labels and 9px comments/subordinates. These are intentional compact instrument exceptions, not the sustained-prose scale.
+- **Metrics:** tabular figures use the metric role, with 25px mobile, 24px short desktop and 30px wide desktop overrides. Model recommendations use a separate 19px figure.
 
-**The Prose Is Not Telemetry Rule.** Sustained factual qualifications and journey explanation keep the 15px desktop/14px mobile body scale. Compact coordinates, chapter metadata and numerical instruments retain their separate scale.
+These observed control-font sizes and compact mobile labels are conscious system entries. They do not authorize reducing research-note prose or inventing new display families.
+
+**The Prose Is Not Telemetry Rule.** Sustained research notes use 15px desktop and 14px mobile prose. Compact scene annotations, navigation and instruments keep their explicitly documented smaller roles.
 
 ## Layout
 
-The fixed world fills the viewport behind the DOM. Desktop copy begins at the shared responsive gutter, 17.5vh from the top, with width `min(32.5vw, 450px)` and a 75vh scrolling height. The object occupies the remaining spatial field. The fixed console shares the gutter, begins 22px from the top, and has an opaque obsidian backing. The scene is continuous rather than a stack of background panels.
+One fixed Canvas fills the viewport behind real HTML. Eight chapters run 00 Identity, 01 PRISM, 02 CommerceAI, 03 InstaGuard, 04 Code Reviewer, 05 OmniVision, 06 Journey and 07 Contact. A native 1100svh scroll rail drives the camera spline. Chapter buttons, next/back navigation and Alt+0 through Alt+7 provide equivalent jumps. Inactive chapters are invisible and inert.
 
-A 1000svh native scroll rail drives camera progress across seven chapter anchors. Chapter jumps, the next-chapter control and Alt+0 through Alt+6 provide equivalent navigation. The copy column has its own native thin scrollbar; a measured “Scroll notes” hint appears while more content remains. Closed/inactive chapters are inert and invisible. Details use native disclosure rather than a second reading surface.
+Each chapter owns a full-viewport overlay with a bottom-left floating caption. Base captions use the frontmatter width/padding, shared gutter and 32px bottom inset, with visible overflow and no internal scrollbar. Scene envelopes fit both axes at rest: ordinary desktop objects occupy up to 74% width and 70% height; Identity uses up to 84% width and Contact 62% height. Mobile fits up to 90% width and 45% height with objects lifted above captions. OmniVision uses its own lower framing offset to retain the complete apparatus.
 
-At widths 701–1100px, copy becomes 39vw and the console tightens. At desktop heights of 760px or less, copy starts at 20vh with a 73vh cap and denser introductory spacing. At widths of 700px or less, the gutter becomes 22px, the console becomes two columns with an expanded vertical chapter menu, and copy starts at 126px with a `calc(100svh - 162px)` height cap. A 250–270px gap before mobile controls makes room for the object; content remains reachable by native notes scrolling. Final mobile icons are 44px wide.
+Console top is 18px desktop with shared gutter and opaque backing. At 701-1199px, captions become 350px wide, inset 24px left/bottom with 20px padding, and chapter names hide. At desktop heights up to 760px, captions use a 20px bottom inset, 350px width and 18px 20px padding; Journey's deck hides. At widths at least 1600px, captions widen to 430px with 26px padding.
 
-Reading mode removes the WebGL world and scroll rail. Every chapter becomes a normal, visible HTML section, with an 800px maximum copy width, an optional grayscale owner portrait, and the same working controls. Its control column caps at 670px. Mobile reading sections use 58px vertical padding. Do not turn the 3D overlay dimensions into the reading layout.
+At widths up to 700px, gutter is 16px; captions inset 16px on sides/bottom with 16px 18px 12px padding. Console top is 12px, tools retain 44px targets and navigation opens as a two-column menu. Coordinates hide from compact telemetry. The drawer insets 8px on every side and body padding becomes 20px.
+
+Reading mode removes Canvas and scroll rail. All chapters become ordinary visible sections with inline complete notes, an 850px maximum caption width and no caption border. Desktop chapters use 50px vertical padding plus gutter, with 32px caption padding. Mobile sections use 20px 16px with 14px 0 caption padding. The authentic grayscale portrait appears in the reader. Ordinary document scroll is distinct from deliberate drawer body scroll.
 
 ## Elevation & Depth
 
-DOM controls and containers use tonal separation and thin rules, with no box-shadow vocabulary. Depth belongs to original scene geometry, warm neutral lighting and bounded physical materials. The shared chrome is sRGB `#c9c6bd`, metalness 1 and roughness 0.2; the shared dark instrument material is `#252520`, metalness 0.7 and roughness 0.28. Scene-specific roughness varies with the object. Rectangular neutral environment lights are captured once at resolution 128.
+Most DOM surfaces use opaque tonal separation and one-pixel rules. The hand-built combobox popover is the explicit diffuse-shadow exception (`0 14px 40px rgb(0 0 0 / 0.3)`), separating it from the spatial scene. Research notes use a neutral scrim (`rgb(13 12 10 / 0.62)`) and native modal layering. These observed treatments belong to the system; a blanket no-shadow rule would misdescribe the artifact.
 
-PRISM uses an extruded, bevelled physical glass mesh with transmission 1, IOR 1.5, thickness 1.35, roughness 0.07 and dispersion 0.6. Real calibration bars behind it make transmitted displacement visible. Dark glass is also used in the federation illustration. Small bloom is enabled only for desktop at higher DPR (intensity 0.12, threshold 2.2); it does not supply the material's shape.
+Shared chrome is sRGB `#c9c6bd`, metalness 1 and roughness 0.2; dark instruments use `#252520`, metalness 0.7 and roughness 0.28. HB/name use the frontmatter type-chrome colour. Name roughness is 0.13 with clearcoat 0.65 and environment intensity 1.7. Mobile-specific narrow environment strips preserve bright/dark reflected bands at neutral rest. The one-shot neutral environment capture uses resolution 128.
 
-**The Geometry Carries Depth Rule.** Material thickness, light, silhouette and occlusion establish depth. CSS cards, ambient page glows and coloured atmosphere are not substitutes for the owner's physical world.
+PRISM's bevelled physical prism uses transmission 1, thickness 1.25, IOR 1.5, dispersion 1.1 and roughness 0.035, with real calibration bars behind it. Desktop bloom is bounded to intensity 0.075/threshold 2.4 at DPR above 1.2; mobile and Contact omit it. Quiet atmosphere is four-octave warm procedural FBM plus 4,200 desktop/1,050 mobile dust points. Dust is toggleable, reduces strongly at Contact and respects pause/reduced motion; performance fallback can disable haze independently.
+
+**The Geometry Carries Depth Rule.** Material thickness, reflected light, silhouette and occlusion establish the world's depth. The floating option menu alone uses a diffuse DOM shadow to separate it from the scene.
 
 ## Shapes
 
-Controls are rectangular with the shared small corner radius. Fields and choices have one-pixel rules; active states become bone-filled. Instrument geometry uses actual rods, rails, housings, woven curves, calibration marks, glass and point fields. Circles occur where the world calls for them: particles, dials, joints, and the Training Run shockwave. They are not a general container shape.
+Rectangular controls, captions, fields, menus and drawer share small corners. Compact option rows and projected labels intentionally use the compact radius (2px), an exception to the general 4px control radius. One-pixel rules establish boundaries. Circles occur as particles, joints, dials and the single Training Run shockwave, rather than as a generic container system.
 
-The contact copy control carries a neutral metallic gradient and a restrained travelling highlight. This is a native material echo within the monochrome world; the PRISM-only colour rule does not prohibit neutral gradients. Small SVG icons are functional control glyphs with accessible labels, not decorative text-symbol substitutes.
+Contact copy echoes liquid metal with a neutral gradient and travelling sheen. Neutral gradients and warm procedural haze belong to this physical world. Inline SVG icons serve labelled controls; decorative text-symbol icons do not define a separate language.
 
 ## Components
 
 ### Buttons
 
-Primary actions are bone on deep, with a thin bone edge, the shared radius and the frontmatter primary inset. Hover changes the fill to metal. Outlined choices use rule borders, compact insets and bone text; selected `aria-pressed` choices invert to deep on bone. General hover uses a warmer raised neutral (`oklch(24% 0.008 85)`) and metal border. Standard button minimum height is 44px, and final icon controls are 44px square. Disabled buttons use 0.45 opacity. Text controls omit the border and background while retaining the 44px target.
+Primary actions use bone fill, deep text, shared corners and primary inset; hover changes fill to metal. Choice buttons use rule borders and transparent fill, then invert for `aria-pressed=true`. Generic hover uses hover neutral and metal edge. Base minimum height is 44px. Desktop icon controls are 40px wide with 44px minimum height; mobile makes them 44px wide. Disabled buttons use 0.5 opacity and wait cursor. Focus uses a 2px bone outline with 4px offset.
 
-All focusable controls use a bone 2px outline with 5px offset; fields use 3px offset. Pressed text controls, including the portrait resolve action, remain bone on transparent at rest, hover and keyboard focus; they do not inherit the filled-choice inversion. Colour does not signal ordinary success. Keep actual labels, pressed/current states and SVG icons in the DOM.
+Text actions remain transparent on hover. Pressed text toggles remain bone on transparent instead of inheriting choice inversion. Full-width contact copy uses a neutral metallic gradient, 12px padding/text and a 700ms sheen. Copy feedback stays factual and neutral, with an email fallback if clipboard access fails.
 
 ### Inputs / Fields
 
-Native select and textarea controls use deep backgrounds, rule borders, bone text and the shared radius/inset. Their minimum height is 46px; textareas begin at 95px, resize vertically, and use muted placeholders. Range controls are bone-accented, 36px high, with an equivalent native keyboard interaction for the draggable decision boundary.
+Native inputs and textareas use deep backgrounds, rule borders, shared corners and field inset. Minimum height is 46px; textareas start at 120px and resize vertically. Invalid input uses a dashed bone border. Placeholder text is muted. Mobile entry fields use the explicit 16px exceptions above.
+
+### Choice combobox
+
+The handmade select-only ARIA combobox has one tab stop, full-width deep trigger, portalled listbox and real option labels/descriptions. Arrow keys, Home/End, typeahead, Enter/Space, Escape, Tab and pointer selection have implemented behavior. Active options use raised neutral; selected options receive an inset rule outline. Options have at least 52px height, 12px padding and compact corners. The popover is viewport-positioned, bounded and independently scrollable, with the documented diffuse-shadow exception.
 
 ### Navigation
 
-The inference console combines the original HB SVG mark, chapter coordinates, real camera coordinates and journey progress. Current chapter buttons use bone fill and deep text. Desktop widths at or above 1200px show chapter names inline; intermediate widths reveal them on hover/focus. Mobile opens a vertical menu with visible names. Sound defaults off; pause and reader controls remain available. The console's telemetry describes position and navigation, not model inference.
+The fixed inference console combines original HB SVG, 00-07 chapter buttons, progress and coordinates, plus pause, opt-in sound, dust and reading controls. Current chapter uses bone fill/deep text with `aria-current=step`. Names show at 1200px and above. Intermediate layouts show numbers; mobile opens a two-column named menu with 46px targets. Telemetry describes navigation, not inference.
 
-### Disclosures and result instruments
+### Floating captions and Research notes
 
-Research notes and the full journey use native details/summary with thin rule edges and a 44px summary target. Metric rows reverse visual label/value ordering using semantic description lists. CommerceAI's recommendation is an open ruled row, not a card. Risk labels spell out LOW/MEDIUM/HIGH as well as applying their permitted colour. There is no generic card library or separate drawer component in the current artifact.
+Captions are opaque obsidian plates with rules, shared corners and short factual copy. Metrics use semantic description lists with values visually above captions. Result instruments remain open rows. Qualifications remain accessible through Research notes and the complete reader.
+
+Research notes use native `dialog.showModal()` for modal focus behavior, Escape and background inertness. The right drawer insets 16px, fills available viewport height and has a fixed header plus scrolling body. Header/body padding is 24px desktop. Heading and close control stand directly in the header: there is no field-label kicker or invented eyebrow. Clicking outside closes it. Reading mode places the same notes inline.
 
 ### Persistent world and Training Run
 
-One R3F Canvas follows a Catmull-Rom camera rail, coordinated with Lenis and GSAP ScrollTrigger. Seven lazy room modules mount only for the current chapter and its neighbours; room visibility is bounded to nearby progress. Repeated objects use instancing where implemented, and custom geometries/materials include unmount disposal. No GLB imports supply the world. Portrait pixel sampling uses an offscreen 2D canvas, not an additional scene Canvas.
+One R3F Canvas uses a Catmull-Rom rail. Eight lazy scenes mount current/adjacent chapters; Contact mounts only its own room. Geometry/materials dispose on unmount. Three.js uses revision 182 compatibility (the package requests ^0.182.0; the lockfile is the resolved engine authority). Original geometry, shaders and instancing supply objects; no imported GLB or external texture defines the world.
 
-Training Run samples an original extruded HB with MeshSurfaceSampler: one point becomes Gaussian noise, three semantic clusters, a sampled surface, liquid chrome, a brief stamp/shockwave, then a flight through the B counter. Its actual point counts are 120,000 desktop and 30,000 mobile. Asset progress is real; epoch/loss readouts are explicitly illustrative. Normal choreography is 6.6 seconds, with an 8-second wall-clock safety timer and immediate Skip intro/Escape. Reduced motion uses a 1.2-second fade. Browser startup and scheduling can add navigation-to-completion time; the regression report's slow-CPU observation is 9.153 seconds, not evidence of a universal eight-second navigation budget.
+Training Run samples original separated, bevelled HB with MeshSurfaceSampler: one point, Gaussian field, three clusters, surface convergence, liquid chrome, stamp/hit-stop, one shockwave, ejection and flight through the actual B counter. Counts are 120,000 desktop/30,000 mobile. Normal choreography is 6.6 seconds with an 8-second wall timer, immediate Skip intro/Escape and a 1.2-second reduced-motion fade. Real asset progress is labelled separately from illustrative epoch/loss. The asset percentage uses three zero-padded digits and a fixed readout width. Skip intro holds a 154px width and 44px minimum height with no wrapping; stable root scrollbar gutter prevents scroll-lock shifts.
 
-Continuous decorative movement respects pause/reduced motion; after the intro those settings use demand rendering, and hidden documents use `frameloop="never"`. State changes invalidate demand frames. Reduced motion removes the camera's interpolation/roll and settles interaction states directly. Standard DOM feedback is 160ms; chapter visibility uses 320ms with the shared ease `cubic-bezier(0.16, 1, 0.3, 1)`. The contact sheen is 700ms. Native reduced-motion CSS removes transitions and the sheen.
+State changes invalidate demand frames. After intro, pause/reduced motion use demand rendering, hidden documents use `never`, and reduced motion settles camera/interaction states directly. Self-hosted Archivo Black 400 and IBM Plex Mono 400/500 are preloaded. Production skips synchronous renderer compiler-log queries while development retains shader diagnostics. These stability changes do not alter the art direction. DOM feedback is 160ms; chapter opacity is 280ms with `cubic-bezier(0.16, 1, 0.3, 1)`. Reduced-motion CSS removes transitions, probe and sheen.
 
-### Authentic portrait and factual content
+### Authentic portrait and factual instruments
 
-The final photographic field samples 60,000 points desktop and 15,000 mobile from the owner's real portrait, using luminance for monochrome intensity and depth. Its subtle pointer rotation is bounded, and a real button disperses/resolves it. `src/content.ts` owns the portfolio facts and asset references. The active portrait is WebP, a format-only conversion of the preserved original AVIF following a WebKit decoding issue; the original crop is retained and public provenance records both assets. No generated portrait or invented research result belongs to the system.
+Contact uses the owner's portrait with offline rembg u2net_human_seg alpha matte. Baked attributes contain 28,000 desktop/11,200 mobile portrait points and the exact deterministic prefix of Training Run HB samples. One Points object performs morph, noise and bounded parallax through vertex uniforms; runtime does no image decode, 2D canvas readback or per-frame CPU attribute writes. Data preloads near Contact. Retrain replays noise-to-HB-to-person with an explicitly illustrative epoch/loss echo. Arrival lets HB rest before face resolution. Reduced motion resolves immediately; completed portrait idles with demand rendering, DPR capped at 1.25 and no bloom. Reader uses authentic photographic fallback.
 
-The stored PRISM dataset labels, purchase histories, decision boundary, retrieval context and navigation/federation controls are illustrations. Their qualification copy stays attached to the relevant interaction; manuscript preparation and research-in-progress statuses remain explicit. Contact opens a real mailto draft; copying email has a selectable-text fallback.
+CV.md is factual authority and src/content.ts centralizes copy. PRISM shows a pre-inference gate, labelled routes and difficulty/domain grid; CommerceAI shows ordered history, dot-product affinity and cache. InstaGuard's sieve/ALBERT sharing and repository-grounded Code Reviewer are distinct chapters. OmniVision shows ultrasonic/IMU/camera fusion and two-tier federation. These controls are illustrative, not live model claims. Manuscript/research-in-progress qualifications stay attached. Contact uses real mailto/copy/download links; phone stays absent from public CV and vCard.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** use warm neutral CSS tokens and corresponding scene materials; reserve colour for PRISM's spectrum and the three risk labels.
-- **Do** keep all substantive content and controls in real HTML, with a complete reader and no-WebGL recovery path.
-- **Do** preserve the 15px desktop/14px mobile sustained-prose scale, native notes scrolling and visible continuation hint.
-- **Do** keep the seven rooms inside one persistent scene Canvas, with lazy neighbours, bounded visibility, resource cleanup and visitor-controlled motion.
-- **Do** preserve source qualifications, authentic assets and provenance alongside every reported metric and illustrative control.
+- **Do** use warm neutral interface tokens and corresponding physical materials; reserve colour for PRISM and named risk categories.
+- **Do** preserve all eight chapters, real HTML facts and controls, and the complete reader/no-WebGL alternative.
+- **Do** keep floating captions free of internal scrolling; put expanded prose in Research notes or inline reader content.
+- **Do** preserve the offline portrait matte, exact HB sample correspondence, bounded rendering and visitor motion controls.
+- **Do** retain source qualifications, authentic assets and provenance alongside reported metrics and illustrative interactions.
 
 ### Don't:
 
-- **Don't** inherit an earlier portfolio theme, add coloured atmospheric decoration, or replace the continuous world with generic card sections.
-- **Don't** present stored examples or scripted visualisations as live trained-model inference or browser training.
-- **Don't** replace readable HTML with mesh text, conceal overflowing notes, or auto-enable sound.
-- **Don't** generalize one desktop GPU's measured frame rate into a universal 60fps or physical-device compatibility claim.
+- **Don't** inherit an earlier portfolio theme, introduce coloured atmosphere, or replace the continuous world with generic stacked card sections.
+- **Don't** present stored examples, scripted visualisations or epoch/loss readouts as live inference or browser training.
+- **Don't** replace readable HTML with mesh lettering, add decorative heading kickers, or auto-enable sound.
+- **Don't** generalize one GPU's frame measurements into universal 60fps or physical-device compatibility claims.
 
-Recorded verification is evidence, not a token: `.qa/regression.json` records 25 passing interaction checks and no runtime errors; `.qa/final-browsers.json` supersedes its stale initial browser harness results and records Chrome, Firefox and WebKit passing with empty error arrays. Driver shader precision warnings, Firefox's deprecated renderer diagnostic and expected context teardown remain recorded. RTX 3070 samples are mostly 165fps, with a 58fps first PRISM sample during shader warm-up; integrated-GPU 60fps and physical mobile testing are unverified. The final review's ship disposition covers its three scored fixes, not a new whole-surface audit. These limits are not canonized as visual rules, and this documentation pass does not repair unrelated product/configuration drift.
+This source-derived refresh is not a new visual or detector audit. `.impeccable/review/v2/finish-verdict-2.md` gives a ship disposition for three scored fixes only: mobile chrome/reflections, OmniVision framing and removed drawer eyebrows. The revision matrix reuses the v2 production capture paths. Later font-preload and asset-readout-width edits were outside that captured build and need separate measurement. No new audit, universal frame-rate result or physical-device validation is asserted here. No craft-floor defect becomes a future rule: heading kickers remain excluded, and obsolete drawer-kind CSS is not a component pattern.

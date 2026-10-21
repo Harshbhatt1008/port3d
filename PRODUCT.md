@@ -12,15 +12,18 @@ Owner specified Vite, React, TypeScript, Tailwind, Three.js, React Three Fiber, 
 People exploring Harsh's work and contacting him. Recruiters, research collaborators and engineering leads are an audience assumption; no personal or employment claims follow from it.
 
 ## Product Purpose
-An entire portfolio explored through a continuous, persistent 3D world. The owner supplied the name LATENT, the noise → structure → person story, seven chapters, the Training Run opener, monochrome colour rule, detailed interactions and complete factual copy. Success is a functioning, readable, responsive site with honest interactive demonstrations, working contacts and accessible alternatives.
+An entire portfolio explored through a continuous, persistent 3D world. The owner supplied LATENT, the noise → structure → person story, the Training Run opener, monochrome colour rule, detailed interactions and complete factual copy. The revised sequence has eight chapters. Success is a functioning, readable, responsive site with honest interactive demonstrations, working contacts and accessible alternatives.
 
 ## Operating Context
 New repository https://github.com/Harshbhatt1008/port3d cloned into K:/port3d/harsh-portfolio-3d. K:/pp and K:/hb-portfolio-exploration remain untouched. The owner explicitly authorizes pushing this new work to port3d. Development binds localhost:5173; preview binds localhost:4173. No deployment to the former Netlify site is requested.
 
+## Current revision
+The owner requests eight individually navigable chapters (00–07), full-bleed scenes behind floating captions, expandable Research notes instead of caption scrollbars, an offline-matted 28K/11.2K HB-to-person portrait, custom accessible controls and a quiet procedural latent-dust field. CV.md extracted from the updated supplied CV is now the factual authority. PRISM latency is removed; precision/recall retain their exact supplied meanings. Phone is omitted from public content, downloads and vCard. All existing manuscript and reported-results qualifications survive.
+
 ## Capabilities and Constraints
 - One persistent Canvas; scroll moves a camera along a continuous spline, with native chapter jumps and a reading mode.
 - Real loading status, visible immediate skip, keyboard Escape, 4–8 second maximum normal intro and a 1.2 second reduced-motion fade.
-- Seven chapters: identity; PRISM; CommerceAI; InstaGuard and Code Reviewer; OmniVision; journey/tools; contact/portrait.
+- Eight chapters: identity; PRISM; CommerceAI; InstaGuard; Code Reviewer; OmniVision; journey/tools; contact/portrait.
 - Every chapter has a usable DOM control with touch and keyboard equivalents. Decorative mesh lettering never substitutes for real DOM copy.
 - All supplied biography, project results, experience, education, milestones and courses live in src/content.ts. No fake work, inference, testimonials, clients or awards.
 - Reported model results are separated from illustrative interactions. PRISM and OmniVision manuscripts remain in preparation. OmniVision is research in progress.
@@ -30,7 +33,7 @@ New repository https://github.com/Harshbhatt1008/port3d cloned into K:/port3d/ha
 Harsh Bhatt, AI & ML researcher, Ahmedabad. LATENT is the owner-pinned concept: warm obsidian, bone, chrome and dark glass. Colour appears only in the PRISM spectrum and LOW/MEDIUM/HIGH labels. A single continuous world, not stacked card sections. Training Run is the authored focal sequence. It is an illustrative visual metaphor with real asset progress, never a claim that a model is being trained in the browser. Sound is procedural, opt-in and off by default.
 
 ## Evidence on Hand
-Owner's detailed brief and read-only original K:/pp/lib/portfolio.ts, CV, vCard and authentic portrait. The public dataset contains 107,584 prompts; curated labels must be copied from its API, not inferred. Original site https://harshbhattd.vercel.app/ will also be inspected in a real browser. ThreeUI Community source is cloned into gitignored _reference/threeui at 68802d5428071ada5c20db8094b1649e6bb770ed. Only actual Community techniques may be adapted, with MIT attribution. 21st.dev Magic is not connected; the owner has been asked about a key, with handmade controls explicitly permitted as fallback.
+The owner-supplied Harsh-Bhatt-CV (3).pdf, transcribed into CV.md, is the current factual authority. The original site and local code provided the authentic portrait, contact card and previously verified animated stats. The public dataset contains 107,584 prompts; curated rows preserve its API labels. ThreeUI Community source is cloned into ignored _reference/threeui at 68802d5428071ada5c20db8094b1649e6bb770ed. Only Community techniques may be adapted, with attribution. 21st.dev Magic has no connected key; handmade controls are the explicitly authorised fallback.
 
 ## Product Principles
 - Research facts survive every visual transformation.

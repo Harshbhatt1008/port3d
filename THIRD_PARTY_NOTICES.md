@@ -4,7 +4,7 @@ LATENT is an independently authored portfolio for Harsh Bhatt. No landing page, 
 
 ## Owner material
 
-Biography, project facts and reported metrics come from the owner's detailed brief and read-only `K:/pp/lib/portfolio.ts`. The authentic `harsh-hero-906.avif`, `Harsh-Bhatt-CV.pdf` and `Harsh-Bhatt.vcf` were copied from the original site's public assets. The live original site was verified with Chrome (HTTP 200); its animated stats show 2 manuscripts, 5 projects, ~100K prompts and 9 months' industry experience. Local verification is kept in gitignored `.qa/`.
+Biography, project facts and reported metrics are audited against `CV.md`, extracted from the owner's `Harsh-Bhatt-CV (3).pdf`, plus the explicit owner brief. `CONTENT_AUDIT.md` records corrections. The authentic portrait and vCard came from the read-only original site. The downloadable CV is the new owner PDF with its phone text redacted; it is not a byte-identical original. No telephone field ships in the site or vCard. The original site's animated stats were verified in Chrome: 2 manuscripts, 5 projects, ~100K prompts and 9 months' industry experience.
 
 Six prelabelled dataset examples are exact public first-rows API rows 0, 1, 2, 3, 13 and 18 from [Generalized Hallucination Risk Level](https://huggingface.co/datasets/hb0810/Generalized_Hallucination_Risk_Level_100k_Prompts). Dataset wording and labels are not generated or inferred by this website. The score is labelled confidence. Attribution and dataset terms remain with its Hugging Face card.
 
@@ -31,3 +31,7 @@ Archivo Black and IBM Plex Mono are self-hosted Fontsource packages under the SI
 React, Three.js, React Three Fiber, Drei, React Three Postprocessing, Zustand, Lenis, Vite and Tailwind retain their respective MIT/package notices. Lucide icons use ISC. Postprocessing uses its package licence. GSAP uses its GSAP Standard License, not MIT. OpenType.js is a build-time MIT tool; TypeScript is Apache-2.0. Full licence files remain in the installed dependency packages. `package-lock.json` pins exact installed versions.
 
 All project sculptures, HB paths, procedural robot/room, woven threads, decision cloud, retrieval lattice, journey rail and GPU portrait sampling are original code. Interactive results are explicitly illustrative, not live model inference or browser training. No external tracking or audio file is used.
+
+## Offline portrait processing
+
+The authentic owner photograph is locally matted with [rembg](https://github.com/danielgatis/rembg) and its `u2net_human_seg` model. rembg is MIT licensed; its Python/ONNX toolchain and downloaded model weights remain local build tools and are not shipped. Sharp (Apache-2.0) handles offline pixel access. The mask and cutout preserve the original face and clothing; no generative retouching or uploaded photo service is used. The custom bake performs alpha/edge/luminance importance sampling, a vignette and spatial pairing with the exact deterministic HB surface positions. Public binaries are derived owner assets, not a third-party portrait dataset. Origins and SHA-256 values are recorded in `public/ASSET_ORIGINS.json`.

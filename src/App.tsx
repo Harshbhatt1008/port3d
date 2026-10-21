@@ -1,4 +1,6 @@
 import {
+  lazy,
+  Suspense,
   useEffect,
   useRef,
   useState,
@@ -10,12 +12,12 @@ import {
   ArrowRight,
   ArrowUpRight,
   Check,
-  ChevronDown,
   Copy,
   FileDown,
   Menu,
   Pause,
   Play,
+  Plus,
   RotateCcw,
   Volume2,
   VolumeX,
@@ -24,7 +26,6 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import World from "./World";
 import {
   chapters,
   dataset,
@@ -38,11 +39,31 @@ import {
   toolGroups,
 } from "./content";
 import { useExperience } from "./state";
+import { Choice } from "./components/Choice";
+import { ResearchDrawer } from "./components/ResearchDrawer";
 
 gsap.registerPlugin(ScrollTrigger);
+// Paint the DOM/Skip control before downloading and initializing WebGL.
+const World = lazy(() => import("./World"));
+const LAST = chapters.length - 1;
+const navigationNames = [
+  "Identity",
+  "PRISM",
+  "CommerceAI",
+  "InstaGuard",
+  "Reviewer",
+  "OmniVision",
+  "Journey",
+  "Contact",
+];
 export function jumpTo(index: number) {
   const s = useExperience.getState();
-  if (s.introRunning) s.set({ introRunning: false, introTime: 6.6 });
+  s.set({
+    introRunning: false,
+    introTime: 6.6,
+    notesOpen: false,
+    hoverLabel: "",
+  });
   if (s.reader) {
     s.set({ chapter: index, progress: index, flying: false });
     document
@@ -51,16 +72,15 @@ export function jumpTo(index: number) {
     return;
   }
   const target =
-    (index * (document.documentElement.scrollHeight - innerHeight)) / 6;
+    (index * (document.documentElement.scrollHeight - innerHeight)) / LAST;
   if (window.__latentLenis)
     window.__latentLenis.scrollTo(target, {
       immediate: s.reduced,
-      duration: 1.2,
+      duration: 1.15,
     });
   else scrollTo({ top: target, behavior: s.reduced ? "instant" : "smooth" });
 }
-
-function useWorldNavigation() {
+function useNavigation() {
   const reader = useExperience((s) => s.reader),
     reduced = useExperience((s) => s.reduced),
     intro = useExperience((s) => s.introRunning);
@@ -81,14 +101,12 @@ function useWorldNavigation() {
   }, []);
   useEffect(() => {
     document.documentElement.dataset.reader = String(reader);
-    // Reader and 3D have different scroll ranges. Re-enter at a known pose.
     useExperience.getState().set({ chapter: 0, progress: 0, flying: false });
     scrollTo(0, 0);
   }, [reader]);
   useEffect(() => {
     document.documentElement.dataset.intro = String(intro);
     document.body.style.overflow = intro ? "hidden" : "";
-    // Wall-clock safety is independent of GPU frame rate and shader compilation.
     const cap = intro
       ? setTimeout(
           () =>
@@ -98,17 +116,16 @@ function useWorldNavigation() {
           reduced ? 1200 : 8000,
         )
       : undefined;
-    const key = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        useExperience
-          .getState()
-          .set({ introRunning: false, introTime: 6.6, hoverLabel: "" });
-      }
-      if ((event.target as HTMLElement).closest("input,textarea,select,button"))
-        return;
-      if (event.altKey && /^[0-6]$/.test(event.key)) {
-        event.preventDefault();
-        jumpTo(Number(event.key));
+    const key = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && useExperience.getState().introRunning)
+        useExperience.getState().set({ introRunning: false, introTime: 6.6 });
+      if (
+        e.altKey &&
+        /^[0-7]$/.test(e.key) &&
+        !(e.target as HTMLElement).closest("input,textarea")
+      ) {
+        e.preventDefault();
+        jumpTo(Number(e.key));
       }
     };
     window.addEventListener("keydown", key);
@@ -135,7 +152,7 @@ function useWorldNavigation() {
       start: "top top",
       end: "bottom bottom",
       onUpdate: (self) => {
-        const progress = self.progress * 6;
+        const progress = self.progress * LAST;
         useExperience.getState().set({
           progress,
           chapter: Math.round(progress),
@@ -151,16 +168,15 @@ function useWorldNavigation() {
     };
   }, [reader, reduced]);
 }
-
 function useSound() {
   const sound = useExperience((s) => s.sound);
   useEffect(() => {
     if (!sound) return;
-    const context = new AudioContext();
-    const gain = context.createGain();
+    const audio = new AudioContext(),
+      gain = audio.createGain(),
+      tone = audio.createOscillator();
     gain.gain.value = 0.025;
-    gain.connect(context.destination);
-    const tone = context.createOscillator();
+    gain.connect(audio.destination);
     tone.type = "sine";
     tone.frequency.value = 58;
     tone.connect(gain);
@@ -168,47 +184,48 @@ function useSound() {
     const unsubscribe = useExperience.subscribe((s) =>
       tone.frequency.setTargetAtTime(
         58 + s.progress * 8,
-        context.currentTime,
+        audio.currentTime,
         0.25,
       ),
     );
     const visibility = () => {
-      if (document.hidden) void context.suspend();
-      else void context.resume();
+      if (document.hidden) void audio.suspend();
+      else void audio.resume();
     };
     document.addEventListener("visibilitychange", visibility);
-    void context.resume();
+    void audio.resume();
     return () => {
       unsubscribe();
       document.removeEventListener("visibilitychange", visibility);
       tone.stop();
-      void context.close();
+      void audio.close();
     };
   }, [sound]);
 }
-
 function InferenceConsole() {
   const chapter = useExperience((s) => s.chapter),
     sound = useExperience((s) => s.sound),
     paused = useExperience((s) => s.paused),
     reader = useExperience((s) => s.reader);
   const [menu, setMenu] = useState(false);
-  const coords = useRef<HTMLOutputElement>(null);
-  const marker = useRef<SVGCircleElement>(null);
+  const coords = useRef<HTMLOutputElement>(null),
+    marker = useRef<SVGCircleElement>(null);
   useEffect(() => {
-    const timer = setInterval(() => {
-      const c = document.querySelector<HTMLCanvasElement>(".world canvas");
+    const id = setInterval(() => {
+      const s = useExperience.getState();
       if (coords.current)
-        coords.current.value = c?.dataset.coords ?? "0.00 / 0.00 / 12.00";
-      const p = useExperience.getState().progress / 6;
-      marker.current?.setAttribute("cx", String(4 + p * 84));
+        coords.current.value = reader
+          ? "READING VIEW"
+          : (document.querySelector<HTMLCanvasElement>(".world canvas")?.dataset
+              .coords ?? "0.00 / 0.00 / 12.00");
+      marker.current?.setAttribute("cx", String(4 + (s.progress / LAST) * 84));
       marker.current?.setAttribute(
         "cy",
-        String(30 - 23 * (1 - Math.exp(-4 * p))),
+        String(30 - 23 * (1 - Math.exp((-4 * s.progress) / LAST))),
       );
     }, 150);
-    return () => clearInterval(timer);
-  }, []);
+    return () => clearInterval(id);
+  }, [reader]);
   return (
     <header className="inference-console">
       <a
@@ -240,19 +257,7 @@ function InferenceConsole() {
             }}
           >
             <span>{String(i).padStart(2, "0")}</span>
-            <span className="nav-name">
-              {
-                [
-                  "Identity",
-                  "PRISM",
-                  "CommerceAI",
-                  "Signals",
-                  "OmniVision",
-                  "Journey",
-                  "Contact",
-                ][i]
-              }
-            </span>
+            <span className="nav-name">{navigationNames[i]}</span>
           </button>
         ))}
       </nav>
@@ -275,12 +280,11 @@ function InferenceConsole() {
         </button>
         <button
           className="reader-control"
-          onClick={() => {
+          onClick={() =>
             useExperience
               .getState()
-              .set({ reader: !reader, introRunning: false });
-            scrollTo(0, 0);
-          }}
+              .set({ reader: !reader, introRunning: false, notesOpen: false })
+          }
         >
           {reader ? "Enter 3D" : "Read instead"}
         </button>
@@ -308,49 +312,47 @@ function InferenceConsole() {
         </svg>
         <button
           className="skip-chapter"
-          onClick={() => jumpTo(chapter === 6 ? 0 : chapter + 1)}
+          onClick={() => jumpTo(chapter === LAST ? 0 : chapter + 1)}
         >
-          {chapter === 6 ? "Back to identity" : "Next chapter"}{" "}
+          {chapter === LAST ? "Back to identity" : "Next chapter"}
           <ArrowDown size={13} />
         </button>
       </div>
     </header>
   );
 }
-
 function TrainingReadout() {
   const intro = useExperience((s) => s.introRunning),
     reduced = useExperience((s) => s.reduced);
-  const [time, setTime] = useState(0),
-    [progress, setProgress] = useState(0);
+  const [state, setState] = useState({ time: 0, progress: 0 });
   useEffect(() => {
     if (!intro) return;
-    const timer = setInterval(() => {
+    const id = setInterval(() => {
       const s = useExperience.getState();
-      setTime(s.introTime);
-      setProgress(s.assetProgress);
-    }, 80);
-    return () => clearInterval(timer);
+      setState({ time: s.introTime, progress: s.assetProgress });
+    }, 60);
+    return () => clearInterval(id);
   }, [intro]);
   if (!intro) return null;
-  const phase =
-    time < 0.9
-      ? "INITIALISE"
-      : time < 2.25
-        ? "GAUSSIAN FIELD"
-        : time < 3.8
-          ? "CONVERGENCE"
-          : time < 4.7
-            ? "SURFACE FOUND"
-            : time < 5.1
-              ? "REGISTER"
-              : "ENTER LATENT";
+  const t = state.time,
+    phase =
+      t < 0.9
+        ? "INITIALISE"
+        : t < 2.25
+          ? "GAUSSIAN FIELD"
+          : t < 3.8
+            ? "CONVERGENCE"
+            : t < 4.65
+              ? "SURFACE FOUND"
+              : t < 5.1
+                ? "REGISTER / HOLD"
+                : "ENTER LATENT";
   return (
     <div
       className={`training-overlay ${reduced ? "is-reduced" : ""}`}
       data-testid="training"
+      data-time={t.toFixed(2)}
       data-phase={phase}
-      data-time={time.toFixed(2)}
     >
       <span className="training-title">HB / THE TRAINING RUN</span>
       <button
@@ -361,27 +363,31 @@ function TrainingReadout() {
       >
         Skip intro <ArrowRight size={16} />
       </button>
-      {time > 0.9 && time < 3.2 && !reduced && (
-        <div className="cluster-labels">
-          <span>Language</span>
-          <span>Learning</span>
-          <span>The physical world</span>
-        </div>
-      )}
+      <div
+        className="cluster-labels"
+        aria-hidden="true"
+        data-visible={t > 0.9 && t < 3.2 && !reduced}
+      >
+        {["Language", "Learning", "The physical world"].map((label, i) => (
+          <span id={`cluster-label-${i}`} key={label}>
+            {label}
+          </span>
+        ))}
+      </div>
       <div className="training-readout">
         <p>
           epoch{" "}
-          {String(Math.min(256, Math.floor((time / 6.6) * 256))).padStart(
-            3,
-            "0",
-          )}{" "}
-          / loss {(2.3026 * Math.exp(-time * 0.53)).toFixed(4)}
+          {String(Math.min(256, Math.floor((t / 6.6) * 256))).padStart(3, "0")}{" "}
+          / loss {(2.3026 * Math.exp(-t * 0.53)).toFixed(4)}
         </p>
         <div className="training-track">
-          <span style={{ transform: `scaleX(${progress / 100})` }} />
+          <span style={{ transform: `scaleX(${state.progress / 100})` }} />
         </div>
         <p className="training-meta">
-          {phase} <span>ASSETS {Math.round(progress)}%</span>
+          {phase}
+          <span>
+            ASSETS {String(Math.round(state.progress)).padStart(3, "0")}%
+          </span>
         </p>
         <p className="training-note">
           Illustrative training sequence. Real asset progress.
@@ -390,7 +396,6 @@ function TrainingReadout() {
     </div>
   );
 }
-
 function Metrics({ items }: { items: string[][] }) {
   return (
     <dl className="metrics">
@@ -403,45 +408,27 @@ function Metrics({ items }: { items: string[][] }) {
     </dl>
   );
 }
-function Stack({ items }: { items: string[] }) {
-  return <p className="stack">{items.join(" / ")}</p>;
-}
 function Note({ children }: { children: ReactNode }) {
   return <p className="honesty-note">{children}</p>;
 }
+function Stack({ items }: { items: string[] }) {
+  return <p className="stack">{items.join(" / ")}</p>;
+}
+function NotesButton() {
+  return (
+    <button
+      className="notes-button"
+      onClick={() => useExperience.getState().set({ notesOpen: true })}
+    >
+      Research notes <Plus size={16} />
+    </button>
+  );
+}
 function Chapter({ index, children }: { index: number; children: ReactNode }) {
-  const column = useRef<HTMLDivElement>(null);
-  const hint = useRef<HTMLParagraphElement>(null);
   const active = useExperience((s) => s.chapter === index),
     intro = useExperience((s) => s.introRunning),
     flying = useExperience((s) => s.flying),
     reader = useExperience((s) => s.reader);
-  useEffect(() => {
-    const el = column.current;
-    if (!el) return;
-    const sync = () => {
-      if (hint.current)
-        hint.current.hidden =
-          reader || el.scrollHeight - el.scrollTop - el.clientHeight < 16;
-    };
-    const resize = new ResizeObserver(sync);
-    resize.observe(el);
-    const changes = new MutationObserver(sync);
-    changes.observe(el, {
-      subtree: true,
-      childList: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ["open"],
-    });
-    el.addEventListener("scroll", sync, { passive: true });
-    sync();
-    return () => {
-      resize.disconnect();
-      changes.disconnect();
-      el.removeEventListener("scroll", sync);
-    };
-  }, [active, reader, intro]);
   return (
     <section
       id={chapters[index].id}
@@ -450,105 +437,76 @@ function Chapter({ index, children }: { index: number; children: ReactNode }) {
       inert={!reader && (!active || intro || flying)}
       aria-labelledby={`title-${index}`}
     >
-      <div className="chapter-copy" ref={column}>
+      <div className="caption-card">
         {index === 0 ? (
           <>
-            <h1 id="title-0">
-              Harsh <br />
-              Bhatt.
+            <h1 id="title-0" className="hero-hidden-title">
+              Harsh Bhatt.
             </h1>
             <p className="hero-role">
               {profile.role}
-              <br />
-              {profile.location}
+              <span>{profile.location}</span>
             </p>
-            <p className="chapter-deck">{profile.tagline}</p>
+            <p className="chapter-deck hero-tagline">{profile.tagline}</p>
           </>
         ) : (
           <>
             <h2 id={`title-${index}`}>{chapters[index].name}</h2>
-            <p className="chapter-deck">{chapters[index].description}</p>
+            <p className="chapter-deck">{chapters[index].caption}</p>
           </>
         )}
         {children}
+        {reader && (
+          <div className="inline-research">
+            <NotesContent index={index} />
+          </div>
+        )}
       </div>
-      <p className="notes-scroll-hint" ref={hint} hidden>
-        Scroll notes <ArrowDown size={12} />
-      </p>
     </section>
   );
 }
-
 function Identity() {
   return (
     <Chapter index={0}>
-      <div className="chapter-controls identity-controls">
+      <div className="caption-actions">
         <button className="primary" onClick={() => jumpTo(1)}>
-          Enter the work <ArrowRight size={18} />
+          Enter the work <ArrowRight size={17} />
         </button>
-        <p className="scene-hint">
-          Scroll to fly. Move the light with your pointer.
-        </p>
-        <Note>
-          A continuous collection of research and applied AI. Interactive scenes
-          are illustrative. Reported results stay attached to the work.
-        </Note>
+        <NotesButton />
       </div>
+      <p className="scene-hint">
+        Scroll to fly. Move the light with your pointer.
+      </p>
     </Chapter>
   );
 }
-
 function PrismChapter() {
   const index = useExperience((s) => s.sampleIndex),
     sample = datasetSamples[index];
   return (
     <Chapter index={1}>
-      <div className="chapter-controls">
-        <Metrics items={projects.prism.metrics} />
-        <label className="field-label" htmlFor="prompt-choice">
-          Route a labelled prompt
-        </label>
-        <select
-          id="prompt-choice"
-          value={index}
-          onChange={(e) =>
-            useExperience
-              .getState()
-              .set({ sampleIndex: Number(e.target.value) })
-          }
-        >
-          {datasetSamples.map((s, i) => (
-            <option key={s.row} value={i}>
-              {String(i + 1).padStart(2, "0")} / {s.prompt}
-            </option>
-          ))}
-        </select>
-        <div className="prompt-result" aria-live="polite">
-          <span className={`risk risk-${sample.risk.toLowerCase()}`}>
-            {sample.risk}
-          </span>
-          <span>Dataset label / {sample.confidence}% confidence</span>
-        </div>
-        <p className="prompt-preview">“{sample.prompt}”</p>
-        <Stack items={projects.prism.stack} />
-        <div className="link-row">
-          <a href={dataset.url} target="_blank" rel="noreferrer">
-            {dataset.count} prompts <ArrowUpRight size={14} />
-          </a>
-          <a href={projects.prism.repository} target="_blank" rel="noreferrer">
-            Repository <ArrowUpRight size={14} />
-          </a>
-        </div>
-        <details>
-          <summary>
-            Research notes <ChevronDown size={14} />
-          </summary>
-          <p>{projects.prism.description}</p>
-          <p>{dataset.note}</p>
-        </details>
-        <Note>
-          {projects.prism.note} Prelabelled examples; no live inference.
-        </Note>
+      <Metrics items={projects.prism.metrics} />
+      <Choice
+        label="Route a labelled prompt"
+        value={String(index)}
+        options={datasetSamples.map((s, i) => ({
+          value: String(i),
+          label: `${String(i + 1).padStart(2, "0")} / ${s.prompt}`,
+          description: `${s.risk} · stored dataset label`,
+        }))}
+        onChange={(v) =>
+          useExperience.getState().set({ sampleIndex: Number(v) })
+        }
+      />
+      <div className="prompt-result" aria-live="polite">
+        <span className={`risk risk-${sample.risk.toLowerCase()}`}>
+          {sample.risk}
+        </span>
+        <span>Stored label / {sample.confidence}% confidence</span>
+      </div>
+      <div className="caption-footer">
+        <span>Reported results. Manuscript in preparation.</span>
+        <NotesButton />
       </div>
     </Chapter>
   );
@@ -557,187 +515,154 @@ function CommerceChapter() {
   const index = useExperience((s) => s.historyIndex);
   return (
     <Chapter index={2}>
-      <div className="chapter-controls">
-        <Metrics items={projects.commerce.metrics} />
-        <fieldset className="history-field">
-          <legend>Choose a purchase history</legend>
-          <div className="choice-row">
-            {histories.map((h, i) => (
-              <button
-                key={h.name}
-                aria-pressed={index === i}
-                onClick={() =>
-                  useExperience.getState().set({ historyIndex: i })
-                }
-              >
-                {h.name}
-              </button>
-            ))}
-          </div>
-        </fieldset>
-        <p className="history-sequence">{histories[index].items.join(" → ")}</p>
-        <div className="recommendation" aria-live="polite">
-          <span>Woven match</span>
-          <strong>{histories[index].match}</strong>
-          <ArrowUpRight size={22} />
-        </div>
-        <Stack items={projects.commerce.stack} />
-        <details>
-          <summary>
-            Inside the two towers <ChevronDown size={14} />
-          </summary>
-          <p>{projects.commerce.description}</p>
-        </details>
-        <Note>{projects.commerce.note}</Note>
+      <Metrics items={projects.commerce.metrics} />
+      <div className="choice-row" role="group" aria-label="Purchase history">
+        {histories.map((h, i) => (
+          <button
+            key={h.name}
+            aria-pressed={index === i}
+            onClick={() => useExperience.getState().set({ historyIndex: i })}
+          >
+            {h.name}
+          </button>
+        ))}
+      </div>
+      <p className="recommendation" aria-live="polite">
+        <span>Woven match</span>
+        <strong>{histories[index].match}</strong>
+      </p>
+      <div className="caption-footer">
+        <span>Illustrative histories. Reported results.</span>
+        <NotesButton />
       </div>
     </Chapter>
   );
 }
-function SignalsChapter() {
-  const mode = useExperience((s) => s.signalMode),
-    boundary = useExperience((s) => s.boundary),
-    file = useExperience((s) => s.fileIndex);
-  const project = mode === "guard" ? projects.guard : projects.review;
+const commentChoices = [
+  {
+    label: "A useful comment",
+    value: "0",
+    description: "Illustrative, grounded conversation",
+  },
+  {
+    label: "A repeated promotion",
+    value: "1",
+    description: "Illustrative, unwanted comment",
+  },
+  {
+    label: "A meaningful question",
+    value: "2",
+    description: "Illustrative, useful conversation",
+  },
+];
+function GuardChapter() {
+  const choice = useExperience((s) => s.guardSample);
   return (
     <Chapter index={3}>
-      <div className="chapter-controls">
-        <div className="choice-row" role="group" aria-label="Signal experiment">
-          <button
-            aria-pressed={mode === "guard"}
-            onClick={() =>
-              useExperience.getState().set({ signalMode: "guard" })
-            }
-          >
-            InstaGuard
-          </button>
-          <button
-            aria-pressed={mode === "review"}
-            onClick={() =>
-              useExperience.getState().set({ signalMode: "review" })
-            }
-          >
-            Code Reviewer
-          </button>
-        </div>
-        <Metrics items={project.metrics} />
-        {mode === "guard" ? (
-          <>
-            <label className="field-label" htmlFor="boundary">
-              Move the decision boundary
-            </label>
-            <input
-              id="boundary"
-              aria-label="Decision boundary"
-              type="range"
-              min="0"
-              max="1"
-              step=".01"
-              value={boundary}
-              onChange={(e) =>
-                useExperience
-                  .getState()
-                  .set({ boundary: Number(e.target.value) })
-              }
-            />
-            <p className="scene-hint">
-              Drag the plane, or move this control. Watch what crosses it.
-            </p>
-          </>
-        ) : (
-          <>
-            <label className="field-label" htmlFor="retrieve">
-              Retrieve repository context
-            </label>
-            <select
-              id="retrieve"
-              value={file}
-              onChange={(e) =>
-                useExperience
-                  .getState()
-                  .set({ fileIndex: Number(e.target.value) })
-              }
-            >
-              {retrievalFiles.map((f, i) => (
-                <option key={f.name} value={i}>
-                  {f.name}
-                </option>
-              ))}
-            </select>
-            <p className="scene-hint" aria-live="polite">
-              {retrievalFiles[file].role}: {retrievalFiles[file].description}
-            </p>
-          </>
-        )}
-        <Stack items={project.stack} />
-        <details>
-          <summary>
-            Method & reported results <ChevronDown size={14} />
-          </summary>
-          <p>{project.description}</p>
-        </details>
-        <Note>{project.note}</Note>
+      <Metrics items={projects.guard.metrics.slice(0, 3)} />
+      <Choice
+        label="Send a comment through the sieve"
+        value={String(choice)}
+        options={commentChoices}
+        onChange={(v) =>
+          useExperience.getState().set({ guardSample: Number(v) })
+        }
+      />
+      <div className="caption-footer">
+        <span>Reported results. Illustrative comment routes.</span>
+        <NotesButton />
       </div>
+      <p className="selection-result" role="status">
+        {choice === 1
+          ? "Illustrative route: unwanted comment"
+          : "Illustrative route: useful conversation"}
+      </p>
+    </Chapter>
+  );
+}
+function ReviewerChapter() {
+  const file = useExperience((s) => s.fileIndex);
+  return (
+    <Chapter index={4}>
+      <Metrics items={projects.review.metrics} />
+      <Choice
+        label="Retrieve repository context"
+        value={String(file)}
+        options={retrievalFiles.map((f, i) => ({
+          value: String(i),
+          label: f.name,
+          description: f.role,
+        }))}
+        onChange={(v) => useExperience.getState().set({ fileIndex: Number(v) })}
+      />
+      <div className="caption-footer">
+        <span>Versus single-prompt review. No live inference.</span>
+        <NotesButton />
+      </div>
+      <p className="selection-result" role="status">
+        {retrievalFiles[file].description}
+      </p>
     </Chapter>
   );
 }
 function OmniChapter() {
-  const goal = useExperience((s) => s.goal),
-    status = useExperience((s) => s.robotStatus),
-    fed = useExperience((s) => s.fedAvg);
+  const fed = useExperience((s) => s.fedAvg),
+    status = useExperience((s) => s.robotStatus);
+  const [command, setCommand] = useState("Go to the plant"),
+    [error, setError] = useState("");
+  function run(e: FormEvent) {
+    e.preventDefault();
+    const goal = (["plant", "desk", "door"] as const).find((g) =>
+      new RegExp(`\\b${g}\\b`, "i").test(command),
+    );
+    if (!goal) {
+      setError("Try ‘Go to the plant’, ‘desk’ or ‘door’.");
+      return;
+    }
+    setError("");
+    useExperience.getState().set({
+      goal,
+      robotRun: useExperience.getState().robotRun + 1,
+      fedAvg: false,
+    });
+  }
   return (
-    <Chapter index={4}>
-      <div className="chapter-controls">
-        <p className="research-status">Research in progress</p>
-        <Metrics items={projects.omni.metrics} />
-        <label className="field-label" htmlFor="destination">
-          Tell the robot where
-        </label>
-        <div className="destination-row">
-          <select
-            id="destination"
-            value={goal}
-            onChange={(e) =>
-              useExperience
-                .getState()
-                .set({ goal: e.target.value as typeof goal })
-            }
-          >
-            <option value="plant">Go to the plant</option>
-            <option value="desk">Go to the desk</option>
-            <option value="door">Go to the door</option>
-          </select>
-          <button
-            className="primary"
-            onClick={() =>
-              useExperience.getState().set({
-                robotRun: useExperience.getState().robotRun + 1,
-                fedAvg: false,
-              })
-            }
-          >
-            Plan & go <ArrowRight size={16} />
+    <Chapter index={5}>
+      <Metrics items={projects.omni.metrics} />
+      <form className="command-form" onSubmit={run}>
+        <label htmlFor="robot-command">Tell the robot where</label>
+        <div>
+          <input
+            id="robot-command"
+            value={command}
+            onChange={(e) => setCommand(e.target.value)}
+            aria-invalid={!!error}
+            aria-describedby="robot-status"
+            autoComplete="off"
+            spellCheck={false}
+          />
+          <button className="primary" type="submit" aria-label="Plan and go">
+            <ArrowRight size={18} />
           </button>
         </div>
-        <p className="robot-status" role="status">
-          {status}
-        </p>
+      </form>
+      <p id="robot-status" className="robot-status" role="status">
+        {error || status}
+      </p>
+      <div className="caption-actions">
         <button
-          className="fed-control"
+          className="text-control"
           aria-pressed={fed}
           onClick={() => useExperience.getState().set({ fedAvg: !fed })}
         >
-          {fed ? "Return to navigation" : "Explore weight exchange"}{" "}
-          <ArrowRight size={14} />
+          {fed ? "Return to navigation" : "Two-tier learning"}
+          <ArrowRight size={15} />
         </button>
-        <Stack items={projects.omni.stack} />
-        <details>
-          <summary>
-            How the real system works <ChevronDown size={14} />
-          </summary>
-          <p>{projects.omni.description}</p>
-        </details>
-        <Note>{projects.omni.note}</Note>
+        <NotesButton />
       </div>
+      <p className="caption-qualifier">
+        Research in progress. Manuscript in preparation.
+      </p>
     </Chapter>
   );
 }
@@ -745,207 +670,369 @@ function JourneyChapter() {
   const node = useExperience((s) => s.nodeIndex),
     tool = useExperience((s) => s.toolIndex);
   return (
-    <Chapter index={5}>
-      <div className="chapter-controls journey-controls">
-        <div className="journey-selector">
-          <label htmlFor="journey-node">Follow a point on the curve</label>
-          <select
-            id="journey-node"
-            value={node}
-            onChange={(e) =>
-              useExperience
-                .getState()
-                .set({ nodeIndex: Number(e.target.value) })
+    <Chapter index={6}>
+      <Choice
+        label="Follow a point on the curve"
+        value={String(node)}
+        options={timeline.map((n, i) => ({
+          value: String(i),
+          label: n.title,
+          description: n.year,
+        }))}
+        onChange={(v) => useExperience.getState().set({ nodeIndex: Number(v) })}
+      />
+      <p className="journey-detail" aria-live="polite">
+        <strong>{timeline[node].year}</strong>
+        {timeline[node].detail}
+      </p>
+      <div className="tool-tabs" role="group" aria-label="Tool constellations">
+        {toolGroups.map((g, i) => (
+          <button
+            key={g.name}
+            aria-pressed={tool === i}
+            onPointerEnter={() =>
+              useExperience.getState().set({ toolIndex: i })
             }
+            onFocus={() => useExperience.getState().set({ toolIndex: i })}
+            onClick={() => useExperience.getState().set({ toolIndex: i })}
           >
-            {timeline.map((n, i) => (
-              <option key={n.title} value={i}>
-                {n.year} / {n.title}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="journey-detail" aria-live="polite">
-          <span>{timeline[node].year}</span>
-          <h3>{timeline[node].title}</h3>
-          <p>{timeline[node].place}</p>
-          <p>{timeline[node].detail}</p>
-        </div>
-        <div
-          className="tool-tabs"
-          role="group"
-          aria-label="Tool constellations"
-        >
-          {toolGroups.map((g, i) => (
-            <button
-              key={g.name}
-              aria-pressed={tool === i}
-              onPointerEnter={() =>
-                useExperience.getState().set({ toolIndex: i })
-              }
-              onFocus={() => useExperience.getState().set({ toolIndex: i })}
-              onClick={() => useExperience.getState().set({ toolIndex: i })}
-            >
-              {g.name}
-            </button>
-          ))}
-        </div>
-        <p className="tool-list" aria-live="polite">
-          {toolGroups[tool].tools.join(" / ")}
-        </p>
-        <details className="full-journey">
-          <summary>
-            Read the full journey <ChevronDown size={14} />
-          </summary>
-          <dl className="personal-stats">
-            {stats.map((s) => (
-              <div key={s.label}>
-                <dt>{s.label}</dt>
-                <dd>{s.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <ol>
-            {timeline.map((n) => (
-              <li key={n.title}>
-                <span>{n.year}</span>
-                <h3>{n.title}</h3>
-                <p>
-                  {n.place}. {n.detail}
-                </p>
-              </li>
-            ))}
-          </ol>
-          <p>Languages: {profile.languages.join(" / ")}.</p>
-        </details>
-        <Note>
-          The curve is an illustrative learning metaphor. Education and project
-          details are from my CV; no loss values represent a training benchmark.
-        </Note>
+            {g.name}
+          </button>
+        ))}
+      </div>
+      <div className="caption-footer">
+        <span>Completed Jul 2026 · IELTS 7.5 / C1</span>
+        <NotesButton />
       </div>
     </Chapter>
   );
 }
+function PortraitReadout() {
+  const output = useRef<HTMLOutputElement>(null);
+  useEffect(() => {
+    const tick = () => {
+      const c = document.querySelector<HTMLCanvasElement>(".world canvas");
+      const t = Number(c?.dataset.portraitTime ?? 0);
+      if (output.current)
+        output.current.value = `epoch ${String(Math.min(256, Math.floor((t / 4.4) * 256))).padStart(3, "0")} / loss ${(2.3026 * Math.exp(-t * 0.82)).toFixed(4)}`;
+    };
+    tick();
+    const id = setInterval(tick, 100);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <output
+      ref={output}
+      className="portrait-readout"
+      aria-label="Illustrative portrait training readout"
+    >
+      epoch 000 / loss 2.3026
+    </output>
+  );
+}
 function ContactChapter() {
+  const reader = useExperience((s) => s.reader);
   const [copied, setCopied] = useState(false),
-    [copyFailed, setCopyFailed] = useState(false),
-    [compose, setCompose] = useState(false),
-    [message, setMessage] = useState("");
-  const resolved = useExperience((s) => s.portraitResolved);
+    [copyFailed, setCopyFailed] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(timer.current), []);
   async function copy() {
     try {
       await navigator.clipboard.writeText(profile.email);
       setCopied(true);
       setCopyFailed(false);
-      setTimeout(() => setCopied(false), 2500);
+      clearTimeout(timer.current);
+      timer.current = setTimeout(() => setCopied(false), 2500);
     } catch {
       setCopyFailed(true);
     }
   }
+  return (
+    <Chapter index={7}>
+      <p className="closing-line">{profile.closing}</p>
+      <PortraitReadout />
+      <span className="sequence-note">Illustrative sequence</span>
+      <button
+        className="liquid-button"
+        onClick={copy}
+        aria-label="Copy email address"
+      >
+        {copied ? <Check size={18} /> : <Copy size={18} />}
+        <span>{copied ? "Email copied" : profile.email}</span>
+      </button>
+      <p className="copy-status" role="status">
+        {copyFailed ? (
+          <a href={`mailto:${profile.email}`}>
+            Copy unavailable. Email directly.
+          </a>
+        ) : copied ? (
+          "Ready when you are."
+        ) : (
+          ""
+        )}
+      </p>
+      <div className="contact-links">
+        <a href={profile.linkedin} target="_blank" rel="noreferrer">
+          LinkedIn
+          <ArrowUpRight size={13} />
+        </a>
+        <a href={profile.github} target="_blank" rel="noreferrer">
+          GitHub
+          <ArrowUpRight size={13} />
+        </a>
+        <a href={profile.cv} download>
+          CV
+          <FileDown size={13} />
+        </a>
+        <a href={profile.vcard} download>
+          vCard
+          <ArrowDown size={13} />
+        </a>
+      </div>
+      <div className="caption-actions">
+        <button
+          className="text-control"
+          onClick={() =>
+            useExperience
+              .getState()
+              .set({ portraitRun: useExperience.getState().portraitRun + 1 })
+          }
+        >
+          Re-train
+          <RotateCcw size={15} />
+        </button>
+        <NotesButton />
+      </div>
+      {reader && (
+        <img
+          className="portrait-fallback"
+          src="/images/portrait-cutout.png"
+          alt="Harsh Bhatt smiling, wearing glasses"
+          width="906"
+          height="805"
+        />
+      )}
+    </Chapter>
+  );
+}
+function ContactComposer() {
+  const [message, setMessage] = useState("");
   function draft(e: FormEvent) {
     e.preventDefault();
     location.href = `mailto:${profile.email}?subject=${encodeURIComponent("A note from LATENT")}&body=${encodeURIComponent(message)}`;
   }
   return (
-    <Chapter index={6}>
-      <div className="chapter-controls">
-        <p className="closing-line">{profile.closing}</p>
-        <button className="liquid-button" onClick={copy}>
-          {copied ? <Check size={18} /> : <Copy size={18} />}
-          <span>{copied ? "Email copied" : profile.email}</span>
-          <ArrowUpRight size={16} />
-        </button>
-        <p className="copy-status" role="status">
-          {copyFailed ? (
-            <>
-              Copy is unavailable.{" "}
-              <a href={`mailto:${profile.email}`}>Email directly</a>.
-            </>
-          ) : copied ? (
-            "Ready when you are."
-          ) : (
-            ""
-          )}
-        </p>
-        <div className="link-row contact-links">
-          <a href={profile.linkedin} target="_blank" rel="noreferrer">
-            LinkedIn <ArrowUpRight size={14} />
-          </a>
-          <a href={profile.github} target="_blank" rel="noreferrer">
-            GitHub <ArrowUpRight size={14} />
-          </a>
-          <a href={profile.cv} download>
-            CV <FileDown size={14} />
-          </a>
-          <a href={profile.vcard} download>
-            vCard <ArrowDown size={14} />
-          </a>
-        </div>
-        <button
-          className="text-control"
-          aria-expanded={compose}
-          onClick={() => setCompose(!compose)}
-        >
-          Draft a note <ArrowRight size={14} />
-        </button>
-        {compose && (
-          <form className="contact-composer" onSubmit={draft}>
-            <label htmlFor="contact-message">Your message</label>
-            <textarea
-              id="contact-message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              required
-              rows={3}
-              placeholder="What are you working on?"
-            />
-            <button className="primary" type="submit">
-              Open email draft <ArrowUpRight size={16} />
-            </button>
-            <Note>Opens your email app. Nothing is sent from this page.</Note>
-          </form>
-        )}
-        <button
-          className="text-control portrait-control"
-          aria-pressed={!resolved}
-          onClick={() =>
-            useExperience.getState().set({ portraitResolved: !resolved })
-          }
-        >
-          {resolved ? "Disperse the portrait" : "Resolve the portrait"}{" "}
-          <RotateCcw size={14} />
-        </button>
-        <img
-          className="portrait-fallback"
-          src={profile.portrait}
-          width="906"
-          height="805"
-          alt="Harsh Bhatt smiling, wearing glasses, with a green hill behind him"
-        />
-        <span className="sr-only">
-          The 3D portrait uses Harsh’s own photo, sampled into monochrome
-          points.
-        </span>
-        <Note>
-          {profile.location} / {profile.languages.join(" · ")}
-        </Note>
-      </div>
-    </Chapter>
+    <form className="contact-composer" onSubmit={draft}>
+      <h3>Draft a note</h3>
+      <label htmlFor="contact-message">Your message</label>
+      <textarea
+        id="contact-message"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        required
+        rows={5}
+        placeholder="What are you working on?"
+      />
+      <button className="primary" type="submit">
+        Open email draft
+        <ArrowUpRight size={16} />
+      </button>
+      <Note>Opens your email app. Nothing is sent from this page.</Note>
+    </form>
   );
 }
-
+function NotesContent({ index }: { index: number }) {
+  const sampleIndex = useExperience((s) => s.sampleIndex);
+  if (index === 0)
+    return (
+      <>
+        <h3>Language. Learning. The physical world.</h3>
+        <p>{chapters[0].description}</p>
+        <Metrics items={stats.map((s) => [s.value, s.label])} />
+        <p>
+          {profile.location}. English (IELTS7.5, CEFR C1), Hindi and Gujarati.
+        </p>
+        <Note>
+          The scenes are illustrative. Model and project figures are reported
+          results, not live inference or training.
+        </Note>
+      </>
+    );
+  if (index === 1)
+    return (
+      <>
+        <h3>{projects.prism.subtitle}</h3>
+        <p>{projects.prism.description}</p>
+        <Metrics items={projects.prism.metrics} />
+        <blockquote>{datasetSamples[sampleIndex].prompt}</blockquote>
+        <p>
+          The unlit LLM is never asked to generate an answer here. Selecting a
+          dataset row highlights its existing label. Difficulty/domain positions
+          and model destinations illustrate DARF; they are not new predictions.
+        </p>
+        <Stack items={projects.prism.stack} />
+        <div className="link-row">
+          <a href={dataset.url} target="_blank" rel="noreferrer">
+            {dataset.count} prompts
+            <ArrowUpRight size={15} />
+          </a>
+          <a href={projects.prism.repository} target="_blank" rel="noreferrer">
+            PRISM repository
+            <ArrowUpRight size={15} />
+          </a>
+        </div>
+        <Note>
+          {projects.prism.note} {dataset.note}
+        </Note>
+      </>
+    );
+  if (index === 2)
+    return (
+      <>
+        <h3>{projects.commerce.subtitle}</h3>
+        <p>{projects.commerce.description}</p>
+        <p>
+          Ordered purchases enter the user tower. The two vectors meet at a dot
+          product; a Redis shelf holds cached embeddings. The loom and the three
+          history/match examples are illustrative.
+        </p>
+        <Metrics items={projects.commerce.metrics} />
+        <ol>
+          {histories.map((h) => (
+            <li key={h.name}>
+              <strong>{h.name}</strong>
+              <p>
+                {h.items.join(" → ")} / {h.match}
+              </p>
+            </li>
+          ))}
+        </ol>
+        <Stack items={projects.commerce.stack} />
+        <Note>{projects.commerce.note}</Note>
+      </>
+    );
+  if (index === 3)
+    return (
+      <>
+        <h3>{projects.guard.subtitle}</h3>
+        <p>{projects.guard.description}</p>
+        <Metrics items={projects.guard.metrics} />
+        <p>
+          A single ALBERT parameter block is reused across the sieve's
+          processing stages. The few hand-authored comment examples only
+          demonstrate filtering; their labels are illustrative.
+        </p>
+        <Stack items={projects.guard.stack} />
+        <Note>{projects.guard.note}</Note>
+      </>
+    );
+  if (index === 4)
+    return (
+      <>
+        <h3>{projects.review.subtitle}</h3>
+        <p>{projects.review.description}</p>
+        <Metrics items={projects.review.metrics} />
+        <p>
+          Files become vectors, a query retrieves code chunks, and supported
+          flags are connected to those chunks. Floating unsupported flags
+          deliberately have no source thread. Code Reviewer reports bugs,
+          security issues and refactors.
+        </p>
+        <Stack items={projects.review.stack} />
+        <Note>{projects.review.note}</Note>
+      </>
+    );
+  if (index === 5)
+    return (
+      <>
+        <h3>{projects.omni.subtitle}</h3>
+        <p>{projects.omni.description}</p>
+        <Metrics items={projects.omni.metrics} />
+        <p>
+          Ultrasonic pulses measure depth; the IMU supplies heading; the camera
+          identifies objects. The three streams meet in a weighted fusion node.
+          Shown weights are an illustrative visual balance, not measured sensor
+          coefficients.
+        </p>
+        <p>
+          Tier1 shares module updates inside each robot. Tier2 exchanges robot
+          weights across the fleet with FedAvg. The jars keep their raw data.
+          The room activity uses a real breadth-first shortest-path planner over
+          its occupied grid.
+        </p>
+        <Stack items={projects.omni.stack} />
+        <Note>{projects.omni.note}</Note>
+      </>
+    );
+  if (index === 6)
+    return (
+      <>
+        <Metrics items={stats.map((s) => [s.value, s.label])} />
+        <ol className="full-journey">
+          {timeline.map((n) => (
+            <li key={n.title}>
+              <span>{n.year}</span>
+              <h3>{n.title}</h3>
+              <p>
+                {n.place}. {n.detail}
+              </p>
+            </li>
+          ))}
+        </ol>
+        {toolGroups.map((g) => (
+          <div key={g.name}>
+            <h3>{g.name}</h3>
+            <p>{g.tools.join(" / ")}</p>
+          </div>
+        ))}
+        <Note>
+          The curve is an illustrative learning metaphor, not a training
+          benchmark. Education, projects, work and qualifications are from the
+          supplied CV.
+        </Note>
+      </>
+    );
+  return (
+    <>
+      <p>{profile.closing}</p>
+      <p>
+        The same authored HB geometry is sampled offline and paired spatially
+        with the actual-photo portrait points. Re-train returns the points to
+        noise, through HB, and into the person. The epoch/loss readout is
+        illustrative, not browser training.
+      </p>
+      <ContactComposer />
+      <Note>
+        {profile.location}. English (IELTS7.5/C1), Hindi and Gujarati. The
+        public CV and vCard omit the phone number.
+      </Note>
+    </>
+  );
+}
 function Probe() {
   const label = useExperience((s) => s.hoverLabel),
     mobile = useExperience((s) => s.mobile),
     reader = useExperience((s) => s.reader);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    let raf = 0,
+      x = 0,
+      y = 0;
     const move = (e: PointerEvent) => {
-      if (ref.current)
-        ref.current.style.transform = `translate3d(${e.clientX + 18}px,${e.clientY + 18}px,0)`;
+      x = e.clientX;
+      y = e.clientY;
+      if (!raf)
+        raf = requestAnimationFrame(() => {
+          if (ref.current)
+            ref.current.style.transform = `translate3d(${Math.min(x + 18, innerWidth - 270)}px,${Math.min(y + 18, innerHeight - 65)}px,0)`;
+          raf = 0;
+        });
     };
     window.addEventListener("pointermove", move, { passive: true });
-    return () => window.removeEventListener("pointermove", move);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", move);
+    };
   }, []);
   return !mobile && !reader ? (
     <div ref={ref} className="probe" data-visible={!!label} aria-hidden="true">
@@ -954,11 +1041,10 @@ function Probe() {
     </div>
   ) : null;
 }
-
 export default function App() {
-  useWorldNavigation();
+  useNavigation();
   useSound();
-  const intro = useExperience((s) => s.introRunning),
+  const chapter = useExperience((s) => s.chapter),
     reader = useExperience((s) => s.reader);
   return (
     <>
@@ -971,27 +1057,26 @@ export default function App() {
       >
         Skip to portfolio content
       </a>
-      <World />
+      <Suspense fallback={null}>
+        <World />
+      </Suspense>
       <InferenceConsole />
       <main id="main-content" tabIndex={-1}>
-        <div className="scroll-rail" aria-hidden="true">
-          {chapters.map((c) => (
-            <div key={c.id} className="rail-anchor" />
-          ))}
-        </div>
+        <div className="scroll-rail" aria-hidden="true" />
         <div className={`chapter-overlays ${reader ? "reader-layout" : ""}`}>
           <Identity />
           <PrismChapter />
           <CommerceChapter />
-          <SignalsChapter />
+          <GuardChapter />
+          <ReviewerChapter />
           <OmniChapter />
           <JourneyChapter />
           <ContactChapter />
         </div>
       </main>
-      <div className="world-caption" aria-hidden="true">
-        {intro ? "" : "NOISE → STRUCTURE → A PERSON"}
-      </div>
+      <ResearchDrawer title={chapters[chapter].name}>
+        <NotesContent index={chapter} />
+      </ResearchDrawer>
       <Probe />
       <TrainingReadout />
     </>

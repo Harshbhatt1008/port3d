@@ -17,32 +17,33 @@ import {
 } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import {
+  ACESFilmicToneMapping,
   CatmullRomCurve3,
   MathUtils,
-  TextureLoader,
   Vector3,
   type Group,
 } from "three";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { Training } from "./scenes/Training";
+import Backdrop from "./scenes/Backdrop";
 import { SCENE_GAP, useExperience } from "./state";
-import { profile } from "./content";
 
 const scenes = [
   lazy(() => import("./scenes/Hero").then((m) => ({ default: m.Hero }))),
   lazy(() => import("./scenes/Prism")),
   lazy(() => import("./scenes/Loom")),
-  lazy(() => import("./scenes/Signals")),
+  lazy(() => import("./scenes/InstaGuard")),
+  lazy(() => import("./scenes/CodeReviewer")),
   lazy(() => import("./scenes/Omni")),
   lazy(() => import("./scenes/Journey")),
   lazy(() => import("./scenes/Portrait")),
 ];
-// The rail bends between rooms; resting poses retain a clear reading axis.
 const origins = [
   [0, 0],
   [3.8, -1.2],
   [-3, 1.2],
   [2.5, 0],
+  [-2.8, 0.6],
   [-1.5, -1],
   [3, -2],
   [0, 0],
@@ -53,6 +54,17 @@ const originCurve = new CatmullRomCurve3(
   "catmullrom",
   0.35,
 );
+// Authored object envelopes. Fit both axes, rather than clipping tall portraits.
+const envelopes = [
+  [6.7, 2.8],
+  [10.5, 4.5],
+  [6.6, 5],
+  [7.7, 4.5],
+  [8, 5],
+  [8.1, 6.8],
+  [7.8, 4.8],
+  [5.9, 5.5],
+];
 declare global {
   interface Window {
     __latentPerf?: {
@@ -72,10 +84,8 @@ declare global {
     };
   }
 }
-
 function Assets() {
   useLoader(FontLoader, "/fonts/archivo-black.typeface.json");
-  useLoader(TextureLoader, profile.portrait);
   useEffect(() => {
     useExperience.getState().set({ assetsReady: true });
   }, []);
@@ -88,36 +98,37 @@ function LoadingStatus() {
   }, [progress]);
   return null;
 }
-
 function CameraRail() {
   const { camera, gl, invalidate } = useThree();
-  const target = useMemo(() => new Vector3(), []);
-  const aim = useMemo(() => new Vector3(), []);
-  const timer = useRef({ time: 0, frames: 0 });
-  const wasIntro = useRef(true);
-  const rendererName = useMemo(() => {
+  const target = useMemo(() => new Vector3(), []),
+    aim = useMemo(() => new Vector3(), []),
+    timer = useRef({ time: 0, frames: 0 }),
+    wasIntro = useRef(true);
+  const renderer = useMemo(() => {
     const ctx = gl.getContext();
+    if (navigator.userAgent.includes("Firefox"))
+      return String(ctx.getParameter(ctx.RENDERER));
     const ext = ctx.getExtension("WEBGL_debug_renderer_info");
     return ext
       ? String(ctx.getParameter(ext.UNMASKED_RENDERER_WEBGL))
-      : "WebGL renderer";
+      : "WebGL";
   }, [gl]);
   useEffect(() => useExperience.subscribe(() => invalidate()), [invalidate]);
   useFrame((_, delta) => {
     const s = useExperience.getState();
     if (s.introRunning && !s.reduced) {
-      const t = s.introTime;
-      // A continuous counter flight joins the same world's first camera pose.
-      const flight = MathUtils.smoothstep(t, 5.1, 6.6);
-      const z = MathUtils.lerp(12, -10, flight);
-      const aperture = Math.sin(flight * Math.PI);
-      camera.position.set(1.05 * aperture, 0.65 * aperture, z);
-      const stamp = Math.max(0, 1 - Math.abs(t - 4.72) / 0.08);
-      camera.position.x += Math.sin(t * 220) * stamp * 0.055;
-      camera.position.y += Math.cos(t * 190) * stamp * 0.035;
+      const t = s.introTime,
+        flight = MathUtils.smoothstep(t, 5.25, 6.6),
+        z = MathUtils.lerp(12, -10, flight),
+        aperture = Math.sin(flight * Math.PI),
+        scale = s.mobile ? 0.46 : 1;
+      camera.position.set(1.05 * scale * aperture, 0.65 * scale * aperture, z);
+      const stamp = Math.max(0, 1 - Math.abs(t - 4.7) / 0.055);
+      camera.position.x += Math.sin(t * 220) * stamp * 0.065;
+      camera.position.y += Math.cos(t * 190) * stamp * 0.045;
       camera.lookAt(camera.position.x * 0.4, camera.position.y * 0.4, z - 14);
     } else {
-      originCurve.getPoint(MathUtils.clamp(s.progress / 6, 0, 1), aim);
+      originCurve.getPoint(MathUtils.clamp(s.progress / 7, 0, 1), aim);
       target.copy(aim);
       target.y += 0.3;
       target.z += 12;
@@ -126,14 +137,23 @@ function CameraRail() {
       else camera.position.lerp(target, blend);
       camera.lookAt(aim);
       if (!s.reduced)
-        camera.rotateZ(Math.sin(s.progress * Math.PI * 2) * 0.025);
+        camera.rotateZ(Math.sin(s.progress * Math.PI * 2) * 0.018);
+      const moving = camera.position.distanceToSquared(target) > 0.00001;
+      if (s.cameraMoving !== moving) s.set({ cameraMoving: moving });
+      if (moving) invalidate();
     }
     wasIntro.current = s.introRunning;
     gl.domElement.dataset.coords = camera.position
       .toArray()
       .map((n) => n.toFixed(2))
       .join(" / ");
-    // Actual renderer samples, not a promised or simulated FPS value.
+    gl.domElement.dataset.chapter = String(s.chapter);
+    gl.domElement.dataset.dpr = gl.getPixelRatio().toFixed(2);
+    gl.domElement.dataset.dust = String(s.dustEnabled);
+    gl.domElement.dataset.frameMode =
+      s.chapter === 7 && !s.portraitBusy && !s.cameraMoving
+        ? "demand"
+        : "continuous";
     timer.current.time += delta;
     timer.current.frames++;
     if (timer.current.time >= 1) {
@@ -141,7 +161,7 @@ function CameraRail() {
         fps: Math.round(timer.current.frames / timer.current.time),
         frames: timer.current.frames,
         dpr: gl.getPixelRatio(),
-        renderer: rendererName,
+        renderer,
         drawCalls: gl.info.render.calls,
         triangles: gl.info.render.triangles,
         points: gl.info.render.points,
@@ -152,7 +172,36 @@ function CameraRail() {
   });
   return null;
 }
-
+function LightRig() {
+  const ref = useRef<Group>(null);
+  useFrame(({ camera }) => {
+    ref.current?.position.set(
+      camera.position.x,
+      camera.position.y,
+      camera.position.z - 12,
+    );
+  });
+  return (
+    <group ref={ref}>
+      <rectAreaLight
+        position={[3.7, 4, 5]}
+        rotation={[-0.45, 0.3, 0]}
+        width={3.5}
+        height={5}
+        intensity={3.2}
+        color="#e7e3d7"
+      />
+      <rectAreaLight
+        position={[-5, -1, 3]}
+        rotation={[0, -0.5, 0]}
+        width={2}
+        height={6}
+        intensity={1.3}
+        color="#c5c1b6"
+      />
+    </group>
+  );
+}
 function Room({
   index,
   mobile,
@@ -162,22 +211,27 @@ function Room({
   mobile: boolean;
   children: ReactNode;
 }) {
-  const ref = useRef<Group>(null);
+  const ref = useRef<Group>(null),
+    { size } = useThree();
+  const chapter = useExperience((s) => s.chapter);
   useFrame(() => {
     const s = useExperience.getState();
     if (ref.current)
       ref.current.visible =
-        (!s.introRunning || s.introTime > 5.6) &&
-        Math.abs(s.progress - index) < 0.8;
+        (!s.introRunning || s.introTime > 5.9) &&
+        Math.abs(s.progress - index) < 0.8 &&
+        (s.chapter !== 7 || index === 7);
   });
-  const [x, y] = origins[index];
-  const scale = mobile
-    ? index === 6
-      ? 0.7
-      : index === 0 || index === 5
-        ? 0.75
-        : 0.8
-    : 1;
+  const [x, y] = origins[index],
+    [w, h] = envelopes[index];
+  // Fit the authored plane at the resting 12-unit camera distance, independent
+  // of camera world coordinates after a deep-rail resize.
+  const height = 2 * Math.tan((40 * Math.PI) / 360) * 12;
+  const width = (height * size.width) / size.height;
+  const scale = Math.min(
+    (width * (mobile ? 0.9 : index === 0 ? 0.84 : 0.74)) / w,
+    (height * (mobile ? 0.45 : index === 7 ? 0.62 : 0.7)) / h,
+  );
   return (
     <group
       ref={ref}
@@ -185,15 +239,19 @@ function Room({
       position={[x, y, -SCENE_GAP * (index + 1)]}
     >
       <group
-        position={mobile ? [0, index === 6 ? -1.05 : -0.65, 0] : [0, 0, 0]}
         scale={scale}
+        position={[
+          0,
+          mobile ? 1.35 : index === 5 ? -0.8 : index === 0 ? 0.2 : -0.1,
+          0,
+        ]}
+        visible={chapter !== 7 || index === 7}
       >
         {children}
       </group>
     </group>
   );
 }
-
 class GraphicsBoundary extends Component<
   { children: ReactNode },
   { failed: boolean }
@@ -209,38 +267,47 @@ class GraphicsBoundary extends Component<
     return this.state.failed ? null : this.props.children;
   }
 }
-
 export default function World() {
   const chapter = useExperience((s) => s.chapter),
     mobile = useExperience((s) => s.mobile),
     reduced = useExperience((s) => s.reduced),
     reader = useExperience((s) => s.reader),
     paused = useExperience((s) => s.paused),
-    intro = useExperience((s) => s.introRunning);
-  const [visible, setVisible] = useState(!document.hidden);
-  const [dpr, setDpr] = useState(Math.min(devicePixelRatio, 1.5));
-  const [preloading, setPreloading] = useState(false);
+    intro = useExperience((s) => s.introRunning),
+    portraitBusy = useExperience((s) => s.portraitBusy),
+    cameraMoving = useExperience((s) => s.cameraMoving),
+    flying = useExperience((s) => s.flying);
+  const [visible, setVisible] = useState(!document.hidden),
+    [dpr, setDpr] = useState(Math.min(devicePixelRatio, 1.5)),
+    [preloading, setPreloading] = useState(false);
   useEffect(() => {
     useLoader.preload(FontLoader, "/fonts/archivo-black.typeface.json");
-    useLoader.preload(TextureLoader, profile.portrait);
     setPreloading(true);
   }, []);
+  useEffect(() => {
+    if (chapter >= 6)
+      void import("./scenes/Portrait")
+        .then((m) => m.preloadPortrait(mobile))
+        .catch(() => {});
+  }, [chapter, mobile]);
   useEffect(() => {
     const update = () => setVisible(!document.hidden);
     document.addEventListener("visibilitychange", update);
     return () => document.removeEventListener("visibilitychange", update);
   }, []);
   if (reader) return null;
+  const contactIdle =
+    chapter === 7 && !portraitBusy && !cameraMoving && !flying;
   return (
     <div className="world" aria-hidden="true" data-testid="world">
       <GraphicsBoundary>
         <Canvas
-          camera={{ position: [0, 0, 12], fov: 40, near: 0.05, far: 230 }}
-          dpr={Math.min(dpr, mobile ? 1.5 : 1.75)}
+          camera={{ position: [0, 0, 12], fov: 40, near: 0.05, far: 450 }}
+          dpr={Math.min(dpr, chapter === 7 ? 1.25 : mobile ? 1.5 : 1.65)}
           frameloop={
             !visible
               ? "never"
-              : !intro && (paused || reduced)
+              : !intro && (paused || reduced || contactIdle)
                 ? "demand"
                 : "always"
           }
@@ -250,7 +317,12 @@ export default function World() {
             powerPreference: "high-performance",
           }}
           onCreated={({ gl }) => {
+            // Keep shader diagnostics in dev. Querying ANGLE's compiler logs
+            // synchronously stalls production startup even for valid programs.
+            gl.debug.checkShaderErrors = import.meta.env.DEV;
             gl.setClearColor("#171612");
+            gl.toneMapping = ACESFilmicToneMapping;
+            gl.toneMappingExposure = 0.78;
             gl.info.autoReset = false;
             gl.domElement.addEventListener(
               "webglcontextlost",
@@ -261,71 +333,64 @@ export default function World() {
               { once: true },
             );
           }}
-          fallback={
-            <span>Use “Read instead” for the complete text portfolio.</span>
-          }
+          fallback={<span>Use Read instead for the full portfolio.</span>}
         >
           <color attach="background" args={["#171612"]} />
-          <fog attach="fog" args={["#171612", 30, 85]} />
           <CameraRail />
           <LoadingStatus />
-          <ambientLight intensity={1.2} color="#e4dfd2" />
-          <directionalLight
-            position={[8, 12, 10]}
-            intensity={2.3}
-            color="#e4dfd2"
-          />
-          <directionalLight
-            position={[-8, 6, 2]}
-            intensity={1}
-            color="#c8c4b9"
-          />
+          <ambientLight intensity={0.32} color="#d5d0c4" />
+          <LightRig />
           <Environment resolution={128} frames={1}>
             <Lightformer
               form="rect"
-              color="#eeece3"
-              intensity={2.5}
-              scale={[3.2, 5, 1]}
-              position={[1, 1, 7]}
+              color="#e5e2d8"
+              intensity={4.2}
+              scale={[mobile ? 0.3 : 0.8, 9, 1]}
+              position={[mobile ? -0.35 : -1.6, 1, 5]}
+              rotation={[0, 0, -0.35]}
             />
             <Lightformer
               form="rect"
-              color="#dedbd2"
-              intensity={0.35}
-              scale={[14, 8, 1]}
-              position={[-1, 1, 9]}
+              color="#c5c1b6"
+              intensity={mobile ? 0.65 : 0.45}
+              scale={[12, 8, 1]}
+              position={[0, 0, 9]}
             />
             <Lightformer
               form="rect"
-              color="#eeece3"
-              intensity={4}
-              scale={[16, 4, 1]}
-              position={[0, 6, 4]}
+              color="#ede9df"
+              intensity={1.6}
+              scale={[10, 1.3, 1]}
+              position={[0, 6, 2]}
               rotation={[Math.PI / 2, 0, 0]}
             />
             <Lightformer
               form="rect"
-              color="#dedbd2"
-              intensity={3}
-              scale={[4, 14, 1]}
-              position={[-7, 0, 2]}
-              rotation={[0, Math.PI / 2, 0]}
-            />
-            <Lightformer
-              form="rect"
-              color="#f3f0e7"
-              intensity={2}
-              scale={[10, 2, 1]}
-              position={[4, -3, -4]}
+              color="#d7d2c7"
+              intensity={3.4}
+              scale={[mobile ? 0.38 : 1.4, 10, 1]}
+              position={[mobile ? 0.45 : 2, 0, 4]}
+              rotation={[0, -Math.PI / 3, 0]}
             />
           </Environment>
           <PerformanceMonitor
-            bounds={() => [38, 58]}
+            bounds={() => [50, 58]}
             flipflops={3}
-            onDecline={() => setDpr(mobile ? 1 : 1.15)}
+            onDecline={() => {
+              setDpr(1);
+              if (
+                !useExperience.getState().introRunning &&
+                (mobile || navigator.hardwareConcurrency <= 4)
+              )
+                useExperience.getState().set({ hazeDisabled: true });
+            }}
             onIncline={() => setDpr(mobile ? 1.25 : 1.5)}
-            onFallback={() => setDpr(1)}
+            onFallback={() => {
+              setDpr(1);
+              useExperience.getState().set({ hazeDisabled: true });
+            }}
           />
+          <Backdrop mobile={mobile} reduced={reduced} />
           {preloading && (
             <Suspense fallback={null}>
               <Assets />
@@ -335,7 +400,7 @@ export default function World() {
           {preloading &&
             scenes.map(
               (Scene, i) =>
-                Math.abs(chapter - i) <= 1 && (
+                (chapter === 7 ? i === 7 : Math.abs(chapter - i) <= 1) && (
                   <Room index={i} mobile={mobile} key={i}>
                     <Suspense fallback={null}>
                       <Scene
@@ -347,9 +412,9 @@ export default function World() {
                   </Room>
                 ),
             )}
-          {!mobile && dpr > 1.2 && (
+          {!mobile && chapter !== 7 && dpr > 1.2 && (
             <EffectComposer multisampling={0}>
-              <Bloom intensity={0.12} luminanceThreshold={2.2} mipmapBlur />
+              <Bloom intensity={0.075} luminanceThreshold={2.4} mipmapBlur />
             </EffectComposer>
           )}
         </Canvas>

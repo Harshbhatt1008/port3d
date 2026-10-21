@@ -9,11 +9,14 @@ import {
   Mesh,
   MeshPhysicalMaterial,
   ShaderMaterial,
+  Points,
+  RectAreaLight,
   Vector3,
 } from "three";
 import { MeshSurfaceSampler } from "three/addons/math/MeshSurfaceSampler.js";
 import { useExperience } from "../state";
-import { createMonogramGeometry } from "./monogram";
+import { createMonogramGeometry, createMonogramRandom } from "./monogram";
+import { dustPosition } from "./dustData";
 
 // Shared elapsed clock remains live after the training UI and solid HB have gone.
 export const trainingClock = { elapsed: 0 };
@@ -46,7 +49,7 @@ function sampleMonogram(count: number) {
     sampler as MeshSurfaceSampler & {
       setRandomGenerator: (generator: () => number) => MeshSurfaceSampler;
     }
-  ).setRandomGenerator(random);
+  ).setRandomGenerator(createMonogramRandom());
   sampler.build();
   const point = new Vector3();
   const arrays: ParticleArrays = {
@@ -71,10 +74,7 @@ function sampleMonogram(count: number) {
     sampler.sample(point);
     arrays.surface.set([point.x, point.y, point.z], j);
     // Stars fill the complete seven-room world, rather than following the camera.
-    arrays.star.set(
-      [(random() - 0.5) * 56, (random() - 0.5) * 35, 20 - random() * 180],
-      j,
-    );
+    arrays.star.set(dustPosition(i), j);
     arrays.seed[i] = 0.0001 + random() * 0.9999;
   }
   arrays.seed[0] = 0;
@@ -89,12 +89,16 @@ const vertex = /* glsl */ `
   attribute vec3 aSurface;
   attribute vec3 aStar;
   attribute float aSeed;
+  attribute float aIndex;
   uniform float uTime;
   uniform float uElapsed;
   uniform float uProgress;
   uniform float uFinished;
   uniform float uReduced;
   uniform float uPixelRatio;
+  uniform float uAfter;
+  uniform float uDustCount;
+  uniform vec3 uBackgroundShift;
   varying float vAlpha;
   varying float vLight;
   // Analytic curl of a trigonometric vector potential: divergence-free GPU flow.
@@ -105,21 +109,22 @@ const vertex = /* glsl */ `
   }
   void main() {
     float clusters = smoothstep(0.9, 2.05, uTime);
-    float convergence = smoothstep(2.25, 3.65, uTime) * smoothstep(0.55, 1.0, uProgress);
+    float convergence = smoothstep(2.9, 4.0, uTime) * smoothstep(0.55, 1.0, uProgress);
     vec3 noise = position;
     noise += curlField(noise*.65,uTime*.45)*.22;
     vec3 p = mix(noise, aCluster, clusters);
     p = mix(p, aSurface, convergence);
-    float eject = max(smoothstep(4.82, 6.25, uTime), uFinished);
-    p = mix(p, aStar, 1.0 - pow(1.0 - eject, 3.0));
+    float eject = max(smoothstep(5.02, 6.6, uTime), uFinished);
+    p = mix(p, aStar + uBackgroundShift, 1.0 - pow(1.0 - eject, 3.0));
     // Very small ambient drift stops exactly for pause / reduced motion.
     p.x += sin(uElapsed * 0.035 + aSeed * 40.0) * eject * 0.12 * (1.0 - uReduced);
     float reveal = smoothstep(0.5, 1.15, uTime);
     float onePoint = 1.0 - step(0.000009, aSeed);
     float visiblePoint = mix(onePoint, 1.0, reveal);
-    float chromeFade = 1.0 - smoothstep(3.4, 3.8, uTime);
-    float sparseStar = 1.0 - step(0.065, aSeed);
-    vAlpha = visiblePoint * mix(chromeFade * 0.62, sparseStar * 0.22, eject);
+    float chromeFade = 1.0 - smoothstep(3.65, 4.05, uTime);
+    float sparseStar = 1.0 - step(uDustCount, aIndex);
+    vAlpha = visiblePoint * mix(chromeFade * 0.62, sparseStar * 0.13, eject);
+    vAlpha *= 1.0 - smoothstep(0.0, 1.4, uAfter);
     vAlpha *= 1.0 - uReduced;
     vLight = 0.5 + aSeed * 0.5;
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -153,7 +158,14 @@ export function Training({
   const solid = useRef<Group>(null);
   const shockwave = useRef<Mesh>(null);
   const wallTime = useRef(0);
+  const after = useRef(0);
+  const field = useRef<Points>(null);
+  const key = useRef<RectAreaLight>(null);
+  const labels = useRef<(HTMLElement | null)[]>([]);
+  const projected = useMemo(() => new Vector3(), []);
+  const scale = mobile ? 0.46 : 1;
   const wasRunning = useRef(useExperience.getState().introRunning);
+  const warmed = useRef(false);
   const liquid = useMemo(
     () => ({ time: { value: 0 }, strength: { value: 0 } }),
     [],
@@ -165,8 +177,16 @@ export function Training({
     result.setAttribute("position", new BufferAttribute(array.noise, 3));
     result.setAttribute("aCluster", new BufferAttribute(array.cluster, 3));
     result.setAttribute("aSurface", new BufferAttribute(array.surface, 3));
-    result.setAttribute("aStar", new BufferAttribute(array.star, 3));
+    const star = mobile ? array.star.map((n) => n / 0.46) : array.star;
+    result.setAttribute("aStar", new BufferAttribute(star, 3));
     result.setAttribute("aSeed", new BufferAttribute(array.seed, 1));
+    result.setAttribute(
+      "aIndex",
+      new BufferAttribute(
+        Float32Array.from({ length: array.seed.length }, (_, i) => i),
+        1,
+      ),
+    );
     return result;
   }, [mobile]);
   const material = useMemo(
@@ -179,6 +199,9 @@ export function Training({
           uFinished: { value: 0 },
           uReduced: { value: reduced ? 1 : 0 },
           uPixelRatio: { value: 1 },
+          uAfter: { value: 0 },
+          uDustCount: { value: mobile ? 1050 : 4200 },
+          uBackgroundShift: { value: new Vector3() },
         },
         vertexShader: vertex,
         fragmentShader: fragment,
@@ -190,11 +213,12 @@ export function Training({
   );
   const chromeMaterial = useMemo(() => {
     const result = new MeshPhysicalMaterial({
-      color: new Color("#bdbbb2"),
+      color: new Color("#b9b9b3"),
       metalness: 1,
-      roughness: 0.17,
-      clearcoat: 1,
-      clearcoatRoughness: 0.12,
+      roughness: 0.22,
+      clearcoat: 0.55,
+      clearcoatRoughness: 0.18,
+      envMapIntensity: 1.7,
       transparent: true,
     });
     result.onBeforeCompile = (shader) => {
@@ -231,7 +255,7 @@ export function Training({
       trainingClock.elapsed += dt;
       if (state.introRunning) {
         wallTime.current += delta;
-        let time = state.introTime + dt;
+        let time = state.introTime + delta;
         if (!reduced && !state.assetsReady && wallTime.current < 6.8)
           time = Math.min(time, 2.65);
         const finished = reduced
@@ -244,8 +268,16 @@ export function Training({
       }
     }
     const now = useExperience.getState();
+    // Compile the chrome permutation while the one-point/noise phase is visible.
+    // All three area lights exist from the beginning, so it stays the same shader.
+    if (!warmed.current && frame.scene.environment && chrome.current) {
+      warmed.current = true;
+      void frame.gl.compileAsync(frame.scene, frame.camera);
+    }
     const time = now.introTime;
     const running = now.introRunning;
+    if (!running && !now.paused) after.current += dt;
+    if (field.current) field.current.visible = running || after.current < 1.4;
     // A skipped intro is a permanent state transition, including a time-zero skip.
     if (wasRunning.current && !running) material.uniforms.uFinished.value = 1;
     wasRunning.current = running;
@@ -255,24 +287,50 @@ export function Training({
     material.uniforms.uFinished.value = running ? 0 : 1;
     material.uniforms.uReduced.value = reduced ? 1 : 0;
     material.uniforms.uPixelRatio.value = frame.gl.getPixelRatio();
+    material.uniforms.uAfter.value = after.current;
+    material.uniforms.uBackgroundShift.value
+      .copy(frame.camera.position)
+      .multiplyScalar(0.08 / scale);
+    if (running && time < 3.2) {
+      frame.camera.updateMatrixWorld();
+      for (let i = 0; i < 3; i++) {
+        labels.current[i] ||= document.getElementById(`cluster-label-${i}`);
+        projected
+          .set(
+            (i - 1) * 3.1 * scale,
+            ((i === 1 ? 0.75 : -0.4) - 1.55) * scale,
+            0,
+          )
+          .project(frame.camera);
+        if (labels.current[i])
+          labels.current[i]!.style.transform =
+            `translate3d(${(projected.x * 0.5 + 0.5) * frame.size.width}px,${(-projected.y * 0.5 + 0.5) * frame.size.height}px,0) translateX(-50%)`;
+      }
+    }
     liquid.time.value = time;
     liquid.strength.value = reduced ? 0 : 0.045 * (1 - smooth(3.6, 4.4, time));
     if (solid.current) {
-      solid.current.visible = running && (reduced || time > 3.35);
+      solid.current.visible = running && (reduced || time > 3.65);
       const chromeIn = reduced
         ? (1 - smooth(0.15, 1.2, time)) * 0.65
-        : smooth(3.35, 3.85, time) * (1 - smooth(6.0, 6.5, time));
+        : smooth(3.65, 4.1, time) * (1 - smooth(6.0, 6.5, time));
       chromeMaterial.opacity = chromeIn;
       // The short frozen interval gives the industrial stamp one precise impact.
-      const stampTime = time > 4.7 && time < 4.77 ? 4.7 : time;
+      const stampTime = time > 4.7 && time < 5.02 ? 4.7 : time;
       solid.current.position.z = reduced
         ? 0
         : 0.95 *
           smooth(4.48, 4.7, stampTime) *
-          (1 - smooth(4.77, 5.03, stampTime));
+          (1 - smooth(5.02, 5.25, stampTime));
       chromeMaterial.roughness = reduced
         ? 0.23
-        : 0.13 + 0.13 * (1 - smooth(3.5, 4.25, time));
+        : 0.13 + 0.05 * (1 - smooth(3.5, 4.25, time));
+      if (key.current) {
+        key.current.position.x = mobile
+          ? Math.sin(stampTime * 1.2) * 0.7
+          : -1 + Math.sin(stampTime * 1.2) * 3.2;
+        key.current.intensity = running ? 3.5 : 0;
+      }
     }
     if (chrome.current) {
       chrome.current.rotation.y = reduced
@@ -280,28 +338,34 @@ export function Training({
         : 0.045 * Math.sin(time * 2.5) * (1 - smooth(4.2, 4.65, time));
     }
     if (shockwave.current) {
-      const ring = smooth(4.7, 5.3, time);
+      const ring = smooth(5.02, 5.65, time);
       shockwave.current.visible =
-        running && !reduced && time > 4.7 && time < 5.3;
+        running && !reduced && time > 4.7 && time < 5.65;
       shockwave.current.scale.setScalar(0.65 + ring * 7);
       (shockwave.current.material as MeshPhysicalMaterial).opacity =
         (1 - ring) * 0.48;
     }
   });
   return (
-    <group>
-      <points geometry={particles} material={material} frustumCulled={false} />
+    <group scale={scale}>
+      <points
+        ref={field}
+        geometry={particles}
+        material={material}
+        frustumCulled={false}
+      />
       <group ref={solid} visible={false}>
         <mesh ref={chrome} geometry={geometry} material={chromeMaterial} />
-        <rectAreaLight
-          position={[0, 3, 4]}
-          rotation={[-0.45, 0, 0]}
-          width={8}
-          height={1.5}
-          color="#ede9df"
-          intensity={9}
-        />
       </group>
+      <rectAreaLight
+        ref={key}
+        position={[-1, 3.5, 5]}
+        rotation={[-0.45, 0, 0]}
+        width={2.8}
+        height={4}
+        color="#ede9df"
+        intensity={3.5}
+      />
       <mesh ref={shockwave} visible={false} position={[0, 0, 0.35]}>
         <ringGeometry args={[1, 1.012, 128]} />
         <meshBasicMaterial

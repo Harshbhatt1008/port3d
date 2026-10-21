@@ -5,4 +5,5 @@
 *.webp binary
 *.woff binary
 *.woff2 binary
+*.bin binary
 *.vcf -text whitespace=cr-at-eol

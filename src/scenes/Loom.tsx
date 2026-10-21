@@ -12,6 +12,8 @@ import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { CHROME, DARK, probe, useExperience } from "../state";
 import type { SceneProps } from "../state";
 import { Rod } from "./researchGeometry";
+import { histories as purchaseHistories } from "../content";
+import { SceneLabel } from "./SceneLabel";
 
 function makeHistory(history: number, count: number) {
   const curves = Array.from({ length: count }, (_, i) => {
@@ -187,13 +189,52 @@ export default function Loom({ active, mobile, reduced }: SceneProps) {
       plateLight.current.emissiveIntensity = 0.3 + settling.current * 0.9;
   });
   return (
-    <group
-      position={mobile ? [0, 1.05, 0] : [2.15, 0, 0]}
-      scale={mobile ? 0.55 : 0.9}
-      rotation={[0.035, -0.14, 0]}
-    >
+    <group position={[0, 0, 0]} rotation={[0.035, -0.14, 0]}>
       <Tower side={-1} />
       <Tower side={1} />
+      <SceneLabel active={active} position={[-2.08, 2.35, 0]}>
+        User tower<small>ordered purchases</small>
+      </SceneLabel>
+      <SceneLabel active={active} position={[2.08, 2.35, 0]}>
+        Item tower
+      </SceneLabel>
+      {purchaseHistories[history].items.map((item, i) => (
+        <SceneLabel
+          key={i}
+          active={active}
+          position={[-2.8, 1.1 - i * 0.52, 0.3]}
+          className="no-surface"
+        >
+          {String(i + 1).padStart(2, "0")} / {item}
+        </SceneLabel>
+      ))}
+      <mesh position={[0, 0, 0.48]}>
+        <sphereGeometry args={[0.13, 20, 16]} />
+        <meshStandardMaterial
+          {...CHROME}
+          emissive="#bdb7a9"
+          emissiveIntensity={0.3}
+        />
+      </mesh>
+      <SceneLabel active={active} position={[0, 0.58, 0.65]}>
+        u · v<small>dot-product match</small>
+      </SceneLabel>
+      <group position={[2.25, -2.48, 0.15]}>
+        {[0, 1, 2].map((i) => (
+          <mesh key={i} position={[(i - 1) * 0.35, 0, 0]}>
+            <boxGeometry args={[0.27, 0.28, 0.38]} />
+            <meshStandardMaterial {...CHROME} roughness={0.4} />
+          </mesh>
+        ))}
+        <Rod
+          from={[-0.65, -0.18, 0.22]}
+          to={[0.65, -0.18, 0.22]}
+          radius={0.025}
+        />
+        <SceneLabel active={active} position={[0, -0.5, 0.3]}>
+          Redis<small>cached embeddings</small>
+        </SceneLabel>
+      </group>
       {/* The different histories change real curve endpoints and crossings. */}
       {selected.geometry && (
         <mesh

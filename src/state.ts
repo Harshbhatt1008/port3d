@@ -25,6 +25,14 @@ export type ExperienceState = {
   nodeIndex: number;
   toolIndex: number;
   portraitResolved: boolean;
+  portraitRun: number;
+  portraitBusy: boolean;
+  portraitPhase: "hb" | "morph" | "resolved" | "noise";
+  cameraMoving: boolean;
+  dustEnabled: boolean;
+  hazeDisabled: boolean;
+  notesOpen: boolean;
+  guardSample: number;
   set: (patch: Partial<Omit<ExperienceState, "set">>) => void;
 };
 export const useExperience = create<ExperienceState>()((set) => ({
@@ -57,6 +65,16 @@ export const useExperience = create<ExperienceState>()((set) => ({
   nodeIndex: 0,
   toolIndex: 0,
   portraitResolved: true,
+  portraitRun: 0,
+  portraitBusy: false,
+  portraitPhase: "hb",
+  cameraMoving: false,
+  dustEnabled:
+    !new URLSearchParams(location.search).has("dust") ||
+    new URLSearchParams(location.search).get("dust") !== "off",
+  hazeDisabled: false,
+  notesOpen: false,
+  guardSample: 0,
   set: (patch) => set(patch),
 }));
 export type SceneProps = { active: boolean; mobile: boolean; reduced: boolean };

@@ -15,7 +15,7 @@ import { timeline } from "../content";
 
 // Seven supplied journey landmarks; the rail is illustrative, not measured loss.
 // Dates belong to the source timeline: the internships and awards have no invented years.
-const ANCHORS = [
+const ORIGINAL_ANCHORS = [
   new Vector3(-3.1, 1.8, -0.4),
   new Vector3(-2.25, 1.04, 0.12),
   new Vector3(-1.22, 0.42, 0.45),
@@ -24,6 +24,9 @@ const ANCHORS = [
   new Vector3(2.02, -0.87, -0.05),
   new Vector3(3.02, -1.02, 0.32),
 ];
+const ANCHORS = timeline.map((_, i) =>
+  new CatmullRomCurve3(ORIGINAL_ANCHORS).getPoint(i / (timeline.length - 1)),
+);
 const CURVE = new CatmullRomCurve3(ANCHORS, false, "catmullrom", 0.4);
 
 function makeRibbon() {
@@ -97,14 +100,15 @@ function toolNetwork(mode: number) {
   return { nodes, edges };
 }
 
-export default function Journey({ active, mobile, reduced }: SceneProps) {
+export default function Journey({ active, reduced }: SceneProps) {
   const nodeIndex = useExperience((s) => s.nodeIndex);
   const toolIndex = useExperience((s) => s.toolIndex);
   const focus = useRef<Group>(null);
   const network = useRef<Group>(null);
   const ribbon = useMemo(makeRibbon, []);
   const topology = useMemo(() => toolNetwork(toolIndex), [toolIndex]);
-  const selected = ANCHORS[Math.max(0, Math.min(6, nodeIndex))];
+  const selected =
+    ANCHORS[Math.max(0, Math.min(ANCHORS.length - 1, nodeIndex))];
   useEffect(() => () => ribbon.dispose(), [ribbon]);
   useEffect(() => {
     if (focus.current && reduced) focus.current.position.copy(selected);
@@ -119,11 +123,7 @@ export default function Journey({ active, mobile, reduced }: SceneProps) {
   });
   const rail = useMemo(() => CURVE.getPoints(100), []);
   return (
-    <group
-      position={mobile ? [0, 1.05, 0] : [2.2, -0.05, 0]}
-      scale={mobile ? 0.55 : 0.93}
-      rotation={[0.06, -0.14, 0]}
-    >
+    <group position={[0, 0, 0]} rotation={[0.06, -0.14, 0]}>
       <mesh
         geometry={ribbon}
         {...probe(

@@ -1,0 +1,4 @@
+rembg[cpu]==2.0.85
+Pillow==12.3.0
+pypdf==6.21.1
+PyMuPDF>=1.26,<2

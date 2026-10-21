@@ -3,32 +3,74 @@
     {
       "file": "images/harsh-hero-906.avif",
       "origin": "https://harshbhattd.vercel.app/images/harsh-hero-906.avif",
-      "process": "Owner photograph, copied unchanged.",
+      "process": "Owner photograph, unchanged.",
       "sha256": "55ef79f321011668332e06611a61a250da48488a2800ec5fe25aa167187f657b"
     },
     {
       "file": "images/harsh-hero-906.webp",
       "origin": "images/harsh-hero-906.avif",
-      "process": "Same owner photograph, format conversion only: Sharp WebP quality92, effort6; original906x805 crop.",
+      "process": "Sharp WebP quality92, original906x805 crop.",
       "sha256": "af8f0d7a2eb9cca7f8fc33fe9e949b256d2ee4526035614b69794f3c9f04cbb2"
     },
     {
+      "file": "images/portrait-mask.png",
+      "origin": "images/harsh-hero-906.webp",
+      "process": "Offline rembg u2net_human_seg CPU alpha matte; original subject.",
+      "sha256": "b16ab60436a106641fcfec9ca01243cb24cef5041c1cafeff705089cc0204488"
+    },
+    {
+      "file": "images/portrait-cutout.png",
+      "origin": "images/harsh-hero-906.webp",
+      "process": "Original photograph with offline matte applied; no generated retouch.",
+      "sha256": "0d01af6860aafd924cecebf0f9dfa352948f4106d9bed61d07b6460477208d12"
+    },
+    {
       "file": "Harsh-Bhatt-CV.pdf",
-      "origin": "https://harshbhattd.vercel.app/Harsh-Bhatt-CV.pdf",
-      "process": "Owner CV, copied unchanged.",
-      "sha256": "4bb7eda1b9f685d3b85d52bd34f68b8e3fb68714ba09fdacf3f799fbfb4d06f8"
+      "origin": "Owner-supplied Harsh-Bhatt-CV (3).pdf",
+      "process": "Phone text redacted with PyMuPDF, garbage collection and stream compression.",
+      "sha256": "5a44852cae87281c5f2f5ababd023227fae422c5fe04c97dc7b1d49ec8950f5c"
     },
     {
       "file": "Harsh-Bhatt.vcf",
       "origin": "https://harshbhattd.vercel.app/Harsh-Bhatt.vcf",
-      "process": "Owner contact card, copied unchanged.",
+      "process": "Owner contact card, unchanged, no TEL field.",
       "sha256": "458d96cf1ad6ef7eac84d5b4727fde2e96db30423d3ca34d21fe7869548358e8"
     },
     {
       "file": "og-latent.png",
-      "origin": "This application, identity chapter, http://localhost:5173",
-      "process": "Actual Chrome screenshot at1200x630, captured2026-10-21 by .qa/capture-og.cjs. No generated imagery.",
-      "sha256": "6bc148e198ca3cd877a59943d01b815ba10d2c5a5cc4140cbfa1586837b6ce93"
+      "origin": "This application, http://localhost:5173",
+      "process": "Actual Chrome identity screenshot1200x630, 2026-10-21.",
+      "sha256": "0eefb1ae04dee93a53c4972829e7fcaa4a4ce696fe2e40ca08409ade17918bb1"
+    },
+    {
+      "file": "portrait-points.bin",
+      "origin": "scripts/bake-portrait.mjs",
+      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
+      "sha256": "e26e4438c853ad77f4f9e66f8bff2f80c0b376e77eb4d837f24323421df08fd2"
+    },
+    {
+      "file": "portrait-points-mobile.bin",
+      "origin": "scripts/bake-portrait.mjs",
+      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
+      "sha256": "c3840b90713ab63f95ad57e894062dbda7fc864fed8eb2f9f94f53b097fafd40"
+    },
+    {
+      "file": "hb-points.bin",
+      "origin": "scripts/bake-portrait.mjs",
+      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
+      "sha256": "e625721bd06afff850fa6a2cb1f21f0ab551f6408d6ab8ec6d827e2622bfc9c0"
+    },
+    {
+      "file": "hb-points-mobile.bin",
+      "origin": "scripts/bake-portrait.mjs",
+      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
+      "sha256": "d8a2d651b89a9da8eb4cdb0eaac80f409b333a0f3a255141fd664ef6c2bf4266"
+    },
+    {
+      "file": "portrait-meta.json",
+      "origin": "scripts/bake-portrait.mjs",
+      "process": "Deterministic offline alpha/edge/luminance sampling and shared HB surface-prefix spatial pairing.",
+      "sha256": "0af1e12d759a2f6ec641be9133f77f3fa530da6603ea1fdaf51ee7d6dcae5fd7"
     }
   ]
 }

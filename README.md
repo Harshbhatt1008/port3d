@@ -1,10 +1,10 @@
 # LATENT | Harsh Bhatt
 
-A portfolio you travel through: noise becomes structure, then a person. Seven research instruments occupy one persistent WebGL world. Real project facts and accessible controls remain HTML layered over the scene.
+Noise becomes structure, then a person. Eight chapters share one persistent WebGL Canvas; factual copy and keyboard controls remain HTML. This independent Vite/React/TypeScript project does not modify either earlier portfolio.
 
-## Run locally
+## Run
 
-Requires Node.js 22.12+ and npm. This project lives at `K:\port3d\harsh-portfolio-3d`; neither previous portfolio is a dependency.
+Node.js 22.12+ and npm:
 
 ```powershell
 cd K:\port3d\harsh-portfolio-3d
@@ -12,84 +12,77 @@ npm ci
 npm run dev
 ```
 
-Open **http://localhost:5173**. The port is strict: an occupied port is reported rather than silently changed.
+Open **http://localhost:5173**. For the production build:
 
 ```powershell
 npm run build
 npm run preview
 ```
 
-The production preview is **http://localhost:4173**. `dist/` is the complete static deployment output. There is no backend, API key, inference service or account requirement.
+Preview runs at **http://localhost:4173**; `dist/` is deployable static output. Ports are strict. `Start-Local.ps1` starts a hidden Windows process and records it in ignored `.qa/`; it never stops another service. No backend or runtime API key is required.
 
-On Windows, `powershell -ExecutionPolicy Bypass -File .\Start-Local.ps1` starts a hidden local development process. Add `-Mode preview` after building for a hidden production preview. It records the process in gitignored `.qa/`, refuses occupied ports and never stops another service.
+## Chapters
 
-## Inside the world
-
-| Chapter | Set piece | Hands-on control |
+| Chapter | Instrument | Interaction |
 | --- | --- | --- |
-| Training Run | 120K GPU particles, three clusters, sampled HB, chrome stamp, counter flight | Immediate Skip intro / Escape |
-| Identity | Extruded Archivo Black name, neutral moving light | Pointer lean and light |
-| PRISM | Transmissive dispersive glass on an optical bench | Six curated public dataset rows route their stored risk |
-| CommerceAI | Two spool towers joined by an affinity loom | Three purchase histories re-form the weave and match |
-| Signal / Noise | Decision cloud and repository retrieval lattice | Drag/keyboard boundary; switch mode and retrieved context |
-| OmniVision | Furnished room, procedural rover, depth scan and detection boxes | BFS navigation to plant, desk or door; federated weight exchange |
-| Journey | Descending learning curve and three tool constellations | Select seven true milestones; reshape tool connections |
-| Contact | Authentic portrait sampled into 60K monochrome depth points | Disperse/resolve, copy email, compose an email draft, downloads |
+| Training Run | 120K desktop / 30K mobile particles, projected cluster names, chrome HB, stamp and counter flight | Immediate Skip intro / Escape |
+| 00 Identity | Huge reflected Archivo Black name | Bounded pointer lean |
+| 01 PRISM | Idle LLM, dispersive glass, three risk beams, difficulty/domain grid and model destinations | Six stored dataset rows; no inference |
+| 02 CommerceAI | Affinity loom, ordered purchase tower, dot-product meeting and Redis shelf | Three histories reweave the match |
+| 03 InstaGuard | Comment sieve and one reused ALBERT parameter block | Three illustrative comment routes |
+| 04 Code Reviewer | Files become vectors; retrieved chunks thread into a report | Four repository-context choices |
+| 05 OmniVision | Room, rover, ultrasonic cones, IMU heading and weighted fusion | Plain-English destinations, BFS and two-tier learning |
+| 06 Journey | Descending curve and three tool constellations | Eight milestones and tool-group selection |
+| 07 Contact | Exact loader HB positions morph into an offline-matted particle bust | Re-train, copy email, draft, links and downloads |
 
-The loader is an illustration of training, **not browser model training**. Its asset percentage is real Drei loading progress. Project metrics are reported results; interactive recommendations, classification boundaries, retrieval, robot federation and the learning curve are illustrative. PRISM selections use existing dataset labels and perform no inference. OmniVision is research in progress. Manuscript qualifications stay visible with the projects.
+All metrics are **reported results**. PRISM and OmniVision retain **manuscript in preparation**; OmniVision is **research in progress**. Histories, routes, retrieval, sensor exchange and epoch/loss are explicitly illustrative. The website performs no model inference, training or remote code review.
 
 ## Controls and accessibility
 
-- Scroll travels along the camera rail. The left notes column has its own native scrollbar when needed; “Scroll notes” appears only while more content remains.
-- The console provides named chapter destinations, next/return, sound, motion pause and **Read instead**. The mobile chapter menu exposes the same destinations.
-- `Alt+0` through `Alt+6` jump chapters while focus is outside a form control. All interactions also have native keyboard-operable HTML controls.
-- Sound is off by default and uses a quiet procedural WebAudio oscillator after explicit opt-in. No audio files load.
-- Reduced motion uses a 1.2-second opening fade, direct chapter poses and static scene states. Pausing stops continuous motion while preserving controls.
-- Reader mode removes the Canvas and presents every chapter as normal, selectable HTML. It activates automatically on WebGL creation/context failure. Contact includes a real photo with descriptive alt text in this mode.
-- Copy failure exposes a direct email link. “Draft a note” opens the visitor's configured email application; the website sends nothing.
+Scroll travels along the camera rail. The console has named destinations, next/return, sound off by default, pause and **Read instead**. `Alt+0` through `Alt+7` jump chapters outside forms. Mobile has the same destinations in its chapter menu. The custom comboboxes support arrows, Home/End, typeahead, Enter and Escape.
 
-## Structure and editing
+Floating captions never have an internal scrollbar. **Research notes** opens a native modal drawer for full context, qualifications, stacks and the email composer. Escape closes it and returns focus. The composer opens a correctly encoded `mailto:` draft in the visitor's email application; the page sends nothing. Clipboard failure supplies a direct email link.
+
+Reduced motion uses a short opening fade and static resolved scenes. Reader mode removes the Canvas and exposes all substantive notes as normal HTML; it also handles WebGL failure. The Contact image has meaningful alternative text in this mode. Sound uses procedural WebAudio after opt-in; no audio files load.
+
+## Structure and content
 
 ```text
-src/
-  content.ts             Biography, metrics, dataset samples, journey, tools, links
-  App.tsx                HTML console, chapters, forms, navigation, audio
-  World.tsx              Single Canvas, camera spline, asset progress, adaptive DPR
-  state.ts               Small shared Zustand store and scene contracts
-  styles.css             OKLCH tokens, type, responsive layout, reader mode
-  scenes/
-    Training.tsx         GPU particle morph and chrome register sequence
-    monogram.ts          Original extruded HB paths, with real B counters
-    Hero.tsx             Subset Archivo Black 3D lettering
-    Prism.tsx            Physical glass and prelabelled routing
-    Loom.tsx             Cached woven threads and moving shuttles
-    Signals.tsx          Point classification and retrieval geometry
-    Omni.tsx             Room occupancy, shortest-path planner and rover
-    Journey.tsx          Loss-curve metaphor and tool topology
-    Portrait.tsx         Actual-photo sampling and luminance depth
-    researchGeometry.tsx Shared rods and particle shaders
-public/
-  images/                Owner's AVIF, compatible WebP, provenance sidecars
-  fonts/                 4.5KB decorative name glyph subset
-  Harsh-Bhatt-CV.pdf      Original CV
-  Harsh-Bhatt.vcf         Original contact card
-  og-latent.png          Actual rendered social preview
+src/content.ts             Biography, project metrics, dataset rows, journey, tools, links
+src/App.tsx                DOM console, captions, controls, drawers and email composer
+src/World.tsx              Lazy engine, persistent Canvas, camera rail, lighting, adaptive DPR
+src/state.ts               Zustand state and shared scene contracts
+src/styles.css             OKLCH palette, typography, responsive layout and reader mode
+src/components/            Keyboard combobox and research drawer
+src/scenes/                One procedural instrument per chapter
+scripts/bake-portrait.mjs  Offline matte/importance sampling and spatial HB pairing
+CV.md                     Owner-supplied CV transcription, phone omitted
+CONTENT_AUDIT.md           Mismatches and corrections against that source
+public/                    Baked points, owner assets, redacted CV, vCard and OG image
 ```
 
-Edit factual copy in **`src/content.ts`**. Keep source metrics, qualifications and manuscript status together. Add curated dataset examples only from the real public dataset, preserving labels and confidence. UI interaction instructions live next to their controls in `App.tsx`.
+Edit factual content in **`src/content.ts`**, preserving result qualifiers and source labels. Interaction instructions are beside controls in `App.tsx`. `CV.md` is transcribed from the supplied `Harsh-Bhatt-CV (3).pdf`; the phone is removed from the public PDF and vCard. The six dataset examples preserve their published wording, labels and confidence. Difficulty/domain placement is an illustration, not a new prediction.
 
-Tune the palette/type/spacing in `styles.css`; the authoritative rationale is in `DESIGN.md`. Tune room origins and camera damping in `World.tsx`, desktop/mobile counts and sequence beats in `Training.tsx`, and each experiment's geometry in its chapter module. Scene materials use matching warm sRGB neutrals because WebGL material values are not CSS strings. Colour is reserved for PRISM's spectrum and risk labels.
+Palette, type and motion rationale are in `DESIGN.md` and `.impeccable/design.json`. Room fits use the fixed resting camera distance so resizing after deep navigation does not enlarge the scenes. The low-contrast dust can be disabled for comparison with `?dust=off`.
 
-## Rendering and verification
+## Rebuild the portrait
 
-GPU particle shaders, instancing, procedural meshes and cached geometry avoid large model downloads. Current and adjacent chapters load lazily. An adaptive DPR controller, reduced mobile counts, demand rendering when paused/reduced, and hidden-document suspension bound continuous work. Geometry and materials are disposed on unmount. The environment map is captured once; restrained bloom is disabled on mobile/lower settings.
+The shipped binaries require no Python or image decoding at runtime. To regenerate the matte, install Python 3.11+ and the isolated requirements:
 
-See **[TESTING.md](TESTING.md)** for the actual browser matrix, measured frame rates, checks and remaining hardware limits. A successful build is not a claim of integrated-GPU or physical-iPhone certification. The Three engine remains a substantial first load, and first-time shader compilation can briefly reduce frame rate.
+```powershell
+python -m venv .qa/bake-venv
+.qa/bake-venv/Scripts/python.exe -m pip install -r scripts/portrait-requirements.txt
+npm run bake:portrait -- --remask
+```
 
-## Sources and design tooling
+On another platform set `BAKE_PYTHON` to the Python executable. The first matte run downloads the `u2net_human_seg` model into ignored `.qa/models`; it runs locally on CPU. Existing mask/cutout files are reused without `--remask`.
 
-**[PRODUCT.md](PRODUCT.md)** records the brief and truth rules. **[DESIGN.md](DESIGN.md)** and `.impeccable/design.json` document the shipped design. **[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)** records fonts, dependencies, original owner assets and ThreeUI Community research.
+The source is the owner's 906×805 portrait. Keep the face/shoulders crop, export a high-quality WebP or PNG without resizing the face, then replace `public/images/harsh-hero-906.webp`. Re-run the bake after any image/monogram change. Alpha removal, edge/luminance importance sampling, depth and vignette are baked offline. Desktop: **28,000 points**, mobile: **11,200**. Portrait stride is four little-endian Float32 values (`x,y,z,tone`); HB stride is three. The deterministic shared surface stream makes each HB set an exact prefix of loader positions, then spatial sorting pairs it with the face. `portrait-meta.json` records sizes and hashes.
 
-Impeccable and Taste Skill were used. The installed Taste package has no separate `output-skill`. 21st.dev Magic had no connected key, so the explicitly permitted handmade controls were built. ThreeUI Community was studied from an ignored local clone, with its MIT notice preserved; no paid components, template layouts or Envato assets ship. No tracking, external fonts or remote texture runtime dependency is required.
+At runtime one portrait Points object morphs/parallaxes in its vertex shader. No per-frame CPU buffer writes, image sampling or Canvas2D readback occurs. Contact disables bloom, caps DPR at 1.25, removes other chapter scenes and uses demand rendering once settled.
 
-This is an independent repository. Pushing it does not modify the existing Netlify/Vercel portfolio.
+## Verification and limits
+
+See **[TESTING.md](TESTING.md)** for measured frame rates, Lighthouse scores, responsive captures and known limits. GPU measurements on an RTX 3070 do not certify an integrated laptop or physical phone. First-time engine initialization and shader compilation remain more expensive than settled animation.
+
+**[PRODUCT.md](PRODUCT.md)** records the brief; **[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)** records sources and licences. Impeccable and Taste Skill were used. No Magic key was connected, so the owner-permitted handmade controls ship. Only ThreeUI Community techniques were studied, with attribution; no Pro or Envato assets are included. Source pushes target the authorised `Harshbhatt1008/port3d` repository, not the old site's deployment.
